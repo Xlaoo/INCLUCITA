@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Doctor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-login-page">
+
+  <div class="doctor-login-card">
+
+    <div class="doctor-login-header">
+      <div class="brand">
+        <div class="logo">♡</div>
+        <div>
+          <div class="brand-title">IncluCita</div>
+          <div class="brand-subtitle">Doctor</div>
+        </div>
+      </div>
+        <button class="doctor-regresar-btn" onclick="location.href='pantallaPrincipal.html'">
+    ← Regresar
+  </button>
+    </div>
+
+    <div class="doctor-login-content">
+
+      <div class="doctor-portada">
+        <img src="doctorpng.png" alt="Doctor IncluCita" class="doctor-portada-img">
+      </div>
+
+      <div class="doctor-dni-box">
+        <h1>Ingreso de DNI</h1>
+        <p>Digite los 8 dígitos de su DNI</p>
+
+        <div id="doctorDniDisplay" class="doctor-dni-display">_ _ _ _ _ _ _ _</div>
+
+        <div class="doctor-keypad">
+          <button onclick="addDoctorDni('1')">1</button>
+          <button onclick="addDoctorDni('2')">2</button>
+          <button onclick="addDoctorDni('3')">3</button>
+          <button onclick="addDoctorDni('4')">4</button>
+          <button onclick="addDoctorDni('5')">5</button>
+          <button onclick="addDoctorDni('6')">6</button>
+          <button onclick="addDoctorDni('7')">7</button>
+          <button onclick="addDoctorDni('8')">8</button>
+          <button onclick="addDoctorDni('9')">9</button>
+          <button onclick="deleteDoctorDni()">⌫</button>
+          <button onclick="addDoctorDni('0')">0</button>
+          <button onclick="clearDoctorDni()">Limpiar</button>
+        </div>
+
+        <button class="doctor-ingresar-btn" onclick="loginDoctorDni()">
+          🔒 Ingresar
+        </button>
+
+        <p id="doctorLoginError" class="doctor-login-error"></p>
+      </div>
+
+    </div>
+
+    <div class="doctor-login-footer">
+      Ingrese su DNI para acceder al módulo del doctor
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

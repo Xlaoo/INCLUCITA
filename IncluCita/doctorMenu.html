@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Menú Doctor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-menu-page">
+
+  <div class="doctor-menu-card">
+
+    <div class="doctor-menu-header">
+      <div class="brand">
+        <div class="logo">♡</div>
+        <div>
+          <div class="brand-title">IncluCita</div>
+          <div class="brand-subtitle">Doctor</div>
+        </div>
+      </div>
+
+      <button class="doctor-logout-btn" onclick="cerrarSesionDoctor()">
+        ← Cerrar sesión
+      </button>
+    </div>
+
+    <h1 id="doctorBienvenida">¡Bienvenido, Doctor!</h1>
+    <p id="doctorEspecialidad" class="doctor-especialidad">
+  Especialidad
+</p>
+    <p class="doctor-menu-subtitle">Seleccione una opción para continuar</p>
+
+    <div class="doctor-menu-options">
+
+      <button class="doctor-menu-option" onclick="location.href='doctorPacientesHoy.html'">
+        <div class="doctor-option-icon azul">👥</div>
+        <h3>Mis Pacientes<br>de Hoy</h3>
+        <p>Ver la lista de pacientes asignados para el día de hoy.</p>
+      </button>
+
+      <button class="doctor-menu-option" onclick="location.href='doctorAgenda.html'">
+        <div class="doctor-option-icon verde">📅</div>
+        <h3>Mi Agenda</h3>
+        <p>Ver su horario de consultorios y citas programadas.</p>
+      </button>
+
+      <button class="doctor-menu-option" onclick="location.href='doctorCitasAtendidas.html'">
+        <div class="doctor-option-icon morado">📋</div>
+        <h3>Mis Citas<br>Atendidas</h3>
+        <p>Ver el historial de citas que ha atendido.</p>
+      </button>
+
+    </div>
+
+    <div class="doctor-info-box">
+      <div class="doctor-info-icon">i</div>
+      <div>
+        <strong>Aquí puede gestionar sus pacientes y citas del día.</strong>
+        <p>Seleccione la opción que desea realizar.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="doctor-menu-footer">
+    👆 Toque la opción que desea realizar
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

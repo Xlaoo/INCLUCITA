@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Pacientes de Hoy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-hoy-page">
+
+  <div class="doctor-hoy-card">
+
+    <div class="doctor-hoy-header">
+      <div class="brand">
+        <div class="logo">♡</div>
+        <div>
+          <div class="brand-title">IncluCita</div>
+          <div class="brand-subtitle">Doctor</div>
+        </div>
+      </div>
+
+      <button class="doctor-hoy-back" onclick="location.href='doctorMenu.html'">
+        ← Volver al menú
+      </button>
+    </div>
+
+    <h1>Pacientes asignados para hoy</h1>
+    <p class="doctor-hoy-fecha" id="doctorHoyFecha">📅 Fecha de hoy</p>
+
+    <div id="doctorPacientesHoyLista" class="doctor-hoy-lista"></div>
+
+  </div>
+
+  <div class="doctor-hoy-footer">
+    Seleccione un paciente para ver detalles
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

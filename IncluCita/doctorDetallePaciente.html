@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Detalle del Paciente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-detalle-page">
+
+  <div class="doctor-detalle-card">
+
+    <div class="doctor-detalle-header">
+      <button class="doctor-detalle-back" onclick="location.href='doctorPacientesHoy.html'">
+        ← Volver a pacientes
+      </button>
+    </div>
+
+    <div class="doctor-paciente-head">
+      <div class="doctor-paciente-avatar">👤</div>
+      <div>
+        <h1 id="docDetNombre">Paciente</h1>
+        <p>DNI: <span id="docDetDni"></span></p>
+      </div>
+    </div>
+
+    <div class="doctor-detalle-info">
+      <div><strong>🩺 Especialidad:</strong><span id="docDetEspecialidad"></span></div>
+      <div><strong>🏥 Consultorio:</strong><span id="docDetConsultorio"></span></div>
+      <div><strong>📅 Fecha:</strong><span id="docDetFecha"></span></div>
+      <div><strong>⏰ Hora:</strong><span id="docDetHora"></span></div>
+      <div><strong>📌 Estado:</strong><span class="estado-pendiente">Pendiente</span></div>
+    </div>
+
+    <div class="doctor-acciones-box">
+      <h3>Acciones</h3>
+
+      <button class="btn-observacion" onclick="location.href='doctorObservacion.html'">
+        💬 Agregar observación
+      </button>
+    </div>
+
+  </div>
+
+  <div class="doctor-detalle-footer">
+    Revise los datos del paciente
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

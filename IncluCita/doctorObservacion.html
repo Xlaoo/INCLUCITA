@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IncluCita - Observación</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-observacion-page">
+  <div class="doctor-observacion-card">
+
+    <div class="doctor-observacion-header">
+      <button class="doctor-detalle-back" onclick="location.href='doctorDetallePaciente.html'">
+        ← Volver a detalle
+      </button>
+    </div>
+
+    <h1>Agregar observación</h1>
+
+    <div class="doctor-paciente-head">
+      <div class="doctor-paciente-avatar">👤</div>
+      <div>
+        <h2 id="obsNombre">Paciente</h2>
+        <p>DNI: <span id="obsDni"></span></p>
+      </div>
+    </div>
+
+    <div class="doctor-detalle-info">
+      <div><strong>🩺 Especialidad:</strong><span id="obsEspecialidad"></span></div>
+      <div><strong>🏥 Consultorio:</strong><span id="obsConsultorio"></span></div>
+      <div><strong>📅 Fecha:</strong><span id="obsFecha"></span></div>
+      <div><strong>⏰ Hora:</strong><span id="obsHora"></span></div>
+    </div>
+
+<div class="obs-form-box">
+
+  <h3>Tipo de observación</h3>
+  <p>Seleccione el tipo de información que desea registrar.</p>
+
+  <div class="obs-tipos-grid">
+    <button id="btnObsGeneral" class="obs-tipo-btn active"
+        onclick="toggleTipoObs('general')">
+  📋
+  <span>Observación<br>General</span>
+</button>
+
+<button id="btnObsDiagnostico" class="obs-tipo-btn"
+        onclick="toggleTipoObs('diagnostico')">
+  💙
+  <span>Diagnóstico</span>
+</button>
+
+<button id="btnObsMedicamentos" class="obs-tipo-btn"
+        onclick="toggleTipoObs('medicamentos')">
+  💊
+  <span>Medicamentos</span>
+</button>
+  </div>
+
+<div id="contenedorTextosObs"></div>
+
+  <button class="btn-imprimir-observacion" onclick="imprimirObservacionDoctor()">
+    🖨️ Imprimir observación
+  </button>
+
+</div>
+
+  </div>
+
+  <div class="doctor-detalle-footer">
+    La observación quedará registrada en el historial del paciente
+  </div>
+</div>
+<div id="printAreaObs"></div>
+<script src="script.js"></script>
+</body>
+</html>

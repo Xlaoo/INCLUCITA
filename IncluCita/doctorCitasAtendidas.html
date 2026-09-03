@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IncluCita - Citas Atendidas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-atendidas-page">
+  <div class="doctor-atendidas-card">
+
+    <div class="doctor-atendidas-header">
+      <div class="brand">
+        <div class="logo">♡</div>
+        <div>
+          <div class="brand-title">IncluCita</div>
+          <div class="brand-subtitle">Doctor</div>
+        </div>
+      </div>
+
+      <button class="doctor-detalle-back" onclick="location.href='doctorMenu.html'">
+        ← Volver al menú
+      </button>
+    </div>
+
+    <h1>Historial de citas atendidas</h1>
+
+    <div class="tabla-atendidas">
+      <div class="fila-atendida encabezado">
+        <span>Paciente</span>
+        <span>Fecha</span>
+        <span>Hora</span>
+        <span>Especialidad</span>
+        <span>Consultorio</span>
+        <span></span>
+      </div>
+
+      <div id="listaCitasAtendidasDoctor"></div>
+    </div>
+
+  </div>
+
+  <div class="doctor-atendidas-footer">
+    Toque el ícono para ver o imprimir el comprobante de la cita
+  </div>
+</div>
+
+<div id="printAreaObs"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

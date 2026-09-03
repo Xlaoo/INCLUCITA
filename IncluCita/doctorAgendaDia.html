@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Horario del día</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="doctor-agenda-dia-page">
+
+  <div class="doctor-agenda-dia-card">
+
+    <div class="doctor-agenda-dia-header">
+      <div class="brand">
+        <div class="logo">♡</div>
+        <div>
+          <div class="brand-title">IncluCita</div>
+          <div class="brand-subtitle">Doctor</div>
+        </div>
+      </div>
+
+      <button class="doctor-detalle-back" onclick="location.href='doctorAgenda.html'">
+        ← Volver
+      </button>
+    </div>
+
+    <div class="doctor-agenda-dia-title">
+      <div class="agenda-date-icon-small">📅</div>
+      <h1 id="doctorAgendaDiaFecha">Horario del día</h1>
+      <p>Horario de consultorios y citas programadas</p>
+    </div>
+
+    <div class="doctor-agenda-table-box">
+      <table class="doctor-agenda-table">
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Consultorio</th>
+            <th>Paciente</th>
+            <th>Tipo de cita</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody id="doctorAgendaDiaBody">
+          <!-- JS llenará los horarios -->
+        </tbody>
+      </table>
+    </div>
+
+    <p class="agenda-edit-hint-text">✎ Toque una cita para cambiar su estado</p>
+
+<div class="agenda-legend">
+  <div><span class="legend-dot pendiente"></span> Pendiente</div>
+  <div><span class="legend-dot programada"></span> Programada</div>
+  <div><span class="legend-dot atendida"></span> Atendida</div>
+  <div><span class="legend-dot cancelada"></span> Cancelada</div>
+  <div><span class="legend-dot disponible"></span> Disponible</div>
+</div>
+
+  </div>
+
+  <div class="doctor-menu-footer">
+    Revise su horario del día seleccionado
+  </div>
+
+</div>
+
+<!-- Slicer para cambiar el estado de la cita -->
+<div class="agenda-sheet-overlay" id="slicerEstadoOverlay" onclick="if(event.target === this) cerrarSlicerEstadoCita()">
+  <div class="agenda-sheet">
+    <div class="agenda-sheet-handle"></div>
+
+    <div class="agenda-sheet-header">
+      <h3>Cambiar estado de la cita</h3>
+      <button class="agenda-sheet-close" onclick="cerrarSlicerEstadoCita()">✕</button>
+    </div>
+
+    <div class="agenda-sheet-info" id="slicerCitaInfo"></div>
+
+    <div class="estado-chip-grid">
+      <button class="estado-chip chip-pendiente" data-estado="Pendiente" onclick="elegirEstadoSlicer('Pendiente')">
+        <span class="chip-dot"></span> Pendiente
+      </button>
+      <button class="estado-chip chip-programada" data-estado="Programada" onclick="elegirEstadoSlicer('Programada')">
+        <span class="chip-dot"></span> Programada
+      </button>
+      <button class="estado-chip chip-atendida" data-estado="Atendida" onclick="elegirEstadoSlicer('Atendida')">
+        <span class="chip-dot"></span> Atendida
+      </button>
+      <button class="estado-chip chip-cancelada" data-estado="Cancelada" onclick="elegirEstadoSlicer('Cancelada')">
+        <span class="chip-dot"></span> Cancelada
+      </button>
+    </div>
+
+    <div class="agenda-sheet-actions">
+      <button class="btn-cancelar-estado" onclick="cerrarSlicerEstadoCita()">Cancelar</button>
+      <button class="btn-guardar-estado" onclick="guardarEstadoCitaSlicer()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

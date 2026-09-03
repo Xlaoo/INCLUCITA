@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Pantalla Principal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app principal-app">
+
+  <div class="principal-top">
+    <div class="brand">
+      <div class="logo">♡</div>
+      <div>
+        <div class="brand-title">IncluCita</div>
+        <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="principal-screen">
+    <div class="principal-logo-css">♡</div>
+
+    <h1>Bienvenido a IncluCita</h1>
+    <p>Seleccione el tipo de acceso para continuar</p>
+
+    <div class="access-grid">
+
+      <div class="access-card">
+        <div class="access-avatar doctor-avatar">
+  <img src="doctor.png" alt="Doctor">
+</div>
+        <h2>Doctor</h2>
+        <p>Acceda para gestionar sus pacientes y citas médicas.</p>
+        <button onclick="location.href='DoctorLogin.html'">→</button>
+      </div>
+
+      <div class="access-card">
+        <div class="access-avatar secretaria-avatar">
+  <img src="secretaria.png" alt="Secretaria"> 
+</div>
+        <h2>Secretaria</h2>
+        <p>Acceda para administrar citas, agenda y pacientes.</p>
+        <button onclick="window.location.href='SecretariaLogin.html'">
+  →
+</button>
+      </div>
+
+      <div class="access-card">
+        <div class="access-avatar paciente-avatar">
+  <img src="Usuario.png" alt="Paciente">
+</div>
+        <h2>Paciente</h2>
+        <p>Acceda para reservar, consultar o cancelar sus citas.</p>
+        <button onclick="location.href='IncluCita.html'">→</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="principal-footer">
+    ☝ Toque el botón correspondiente para continuar
+  </div>
+
+</div>
+</body>
+</html>
