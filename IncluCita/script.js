@@ -694,13 +694,6 @@ function horaAMinutos(hora) {
   return parseInt(partes[0]) * 60 + parseInt(partes[1]);
 }
 
-function fechaHoyTexto() {
-  const hoy = new Date();
-  return String(hoy.getDate()).padStart(2, "0") + "/" +
-         String(hoy.getMonth() + 1).padStart(2, "0") + "/" +
-         hoy.getFullYear();
-}
-
 function horarioYaPaso(hora) {
   const selectedDate = localStorage.getItem("selectedDate") || "";
   if (selectedDate !== fechaHoyTexto()) return false;
@@ -964,16 +957,6 @@ function fakePrint() {
 function resetSystem() {
   limpiarPacienteActual();
   window.location.href = "IncluCita.html";
-}
-function limpiarPacienteActual() {
-  dni = "";
-  patientFullName = "";
-
-  localStorage.removeItem("dni");
-  localStorage.removeItem("patientFullName");
-  localStorage.removeItem("selectedSpecialty");
-  localStorage.removeItem("selectedDate");
-  localStorage.removeItem("selectedTime");
 }
 function t(es, qu) {
   return selectedLanguage === "qu" ? qu : es;
@@ -2841,78 +2824,6 @@ function obtenerHorasOcupadasPorFecha(fecha) {
 
   return ocupadas;
 }
-
-function cargarFechasReprogramar() {
-  const fechaSelect = document.getElementById("nuevaFechaRep");
-  if (!fechaSelect) return;
-
-  fechaSelect.innerHTML = '<option value="">Seleccione nueva fecha</option>';
-
-  const especialidadActual = localStorage.getItem("detalleEspecialidad") || "";
-  localStorage.setItem("selectedSpecialty", especialidadActual);
-
-  const hoy = new Date();
-
-  for (let i = 0; i < 30; i++) {
-    const fechaTemp = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + i);
-
-    const fecha = formatDate(
-      fechaTemp.getDate(),
-      fechaTemp.getMonth() + 1,
-      fechaTemp.getFullYear()
-    );
-
-    if (!doctorAtiendeEseDia(fecha)) continue;
-    if (diaYaNoTieneHorariosDisponibles(fecha)) continue;
-
-    const horariosDoctor = obtenerHorariosDelDoctorActual();
-    const ocupadas = obtenerHorasOcupadasPorFecha(fecha);
-
-    if (ocupadas.length >= horariosDoctor.length) continue;
-
-    const option = document.createElement("option");
-    option.value = fecha;
-    option.textContent = ocupadas.length > 0
-      ? fecha + " - 🟡 Algunos horarios ocupados"
-      : fecha + " - 🟢 Disponible";
-
-    fechaSelect.appendChild(option);
-  }
-}
-
-function cargarHorasReprogramar() {
-  const fecha = document.getElementById("nuevaFechaRep").value;
-  const horaSelect = document.getElementById("nuevaHoraRep");
-
-  if (!horaSelect) return;
-
-  horaSelect.innerHTML = '<option value="">Seleccione nueva hora</option>';
-  if (fecha === "") return;
-
-  const especialidadActual = localStorage.getItem("detalleEspecialidad") || "";
-  localStorage.setItem("selectedSpecialty", especialidadActual);
-  localStorage.setItem("selectedDate", fecha);
-
-  const bloqueados = obtenerHorasOcupadasPorFecha(fecha);
-  const horariosDoctor = obtenerHorariosDelDoctorActual();
-
-  horariosDoctor.forEach(slot => {
-    const option = document.createElement("option");
-    option.value = slot.value;
-
-    if (bloqueados.includes(slot.value)) {
-      option.textContent = slot.label + " - 🔴 Ocupado";
-      option.disabled = true;
-    } else if (horarioYaPaso(slot.value)) {
-      option.textContent = slot.label + " - ⚫ Vencido";
-      option.disabled = true;
-    } else {
-      option.textContent = slot.label + " - 🟢 Libre";
-    }
-
-    horaSelect.appendChild(option);
-  });
-}
 function cargarFechasReprogramar() {
   const fechaSelect = document.getElementById("nuevaFechaRep");
   if (!fechaSelect) return;
@@ -3290,35 +3201,9 @@ function obtenerDoctorDeEspecialidad(especialidad) {
 
   return "Dr. Luis Ramírez";
 }
-function estadoRealCita(cita) {
-  if (cita.estado === "No Ingreso") return "No Ingreso";
-
-  if (
-    cita.estado === "Atendida" ||
-    (cita.observacionesDoctor && cita.observacionesDoctor.length > 0)
-  ) {
-    return "Atendida";
-  }
-
-  if (cita.enviada === true || cita.estado === "Programada") {
-    return "Programada";
-  }
-
-  return "Confirmada";
-}
 
 function estaAtendida(cita) {
   return estadoRealCita(cita) === "Atendida";
-}
-
-function claseEstadoReal(cita) {
-  const estado = estadoRealCita(cita);
-
-  if (estado === "No Ingreso") return "estado-no-ingreso";
-  if (estado === "Atendida") return "estado-atendida";
-  if (estado === "Programada") return "estado-programada";
-
-  return "estado-confirmada";
 }
 function estadoRealCita(cita) {
   if (cita.estado === "No Ingreso") return "No Ingreso";
@@ -4332,27 +4217,6 @@ function renderOtrasEspecialidadesPaciente() {
 document.addEventListener("DOMContentLoaded", function() {
   renderOtrasEspecialidadesPaciente();
 });
-function bloquearImagenEspecialidad() {
-
-    const emoji =
-        document.getElementById("inputIconoEspecialidad").value.trim();
-
-    const imagen =
-        document.getElementById("inputImagenEspecialidad");
-
-    imagen.disabled = emoji !== "";
-}
-
-function bloquearEmojiEspecialidad() {
-
-    const emoji =
-        document.getElementById("inputIconoEspecialidad");
-
-    const imagen =
-        document.getElementById("inputImagenEspecialidad");
-
-    emoji.disabled = imagen.files.length > 0;
-}
 function mostrarIconoEspecialidad(especialidad) {
   const info = doctorsBySpecialty[especialidad];
 
@@ -5031,29 +4895,6 @@ function cargarDetallePacienteDoctor() {
 }
 
 document.addEventListener("DOMContentLoaded", cargarDetallePacienteDoctor);
-function cargarObservacionDoctor() {
-  const nombre = document.getElementById("obsNombre");
-  if (!nombre) return;
-
-  const dniPaciente = localStorage.getItem("doctorDetallePacienteDni") || "";
-  const citas = JSON.parse(localStorage.getItem("citasSecretaria")) || citasSecretaria || [];
-  const cita = citas.find(c => c.dni === dniPaciente);
-
-  if (!cita) {
-    alert("No se encontró el paciente.");
-    location.href = "doctorPacientesHoy.html";
-    return;
-  }
-
-  const infoDoctor = doctorsBySpecialty[cita.especialidad] || {};
-
-  document.getElementById("obsNombre").textContent = cita.nombre;
-  document.getElementById("obsDni").textContent = cita.dni;
-  document.getElementById("obsEspecialidad").textContent = cita.especialidad;
-  document.getElementById("obsConsultorio").textContent = infoDoctor.consultorio || "Sin consultorio";
-  document.getElementById("obsFecha").textContent = cita.fecha;
-  document.getElementById("obsHora").textContent = cita.hora;
-}
 let tiposObsSeleccionados = ["general"];
 
 const datosTiposObs = {

@@ -2,16 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>IncluCita - Citas Atendidas</title>
-  <link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="bootstrap-responsive">
 
-<div class="doctor-atendidas-page">
+<div class="doctor-atendidas-page container-fluid px-2 px-sm-3">
   <div class="doctor-atendidas-card">
 
-    <div class="doctor-atendidas-header">
+    <div class="doctor-atendidas-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 gap-2 gap-sm-3">
       <div class="brand">
         <div class="logo">♡</div>
         <div>
@@ -27,7 +30,7 @@
 
     <h1>Historial de citas atendidas</h1>
 
-    <div class="tabla-atendidas">
+    <div class="tabla-atendidas table-responsive">
       <div class="fila-atendida encabezado">
         <span>Paciente</span>
         <span>Fecha</span>
@@ -48,7 +51,7 @@
 </div>
 
 <div id="printAreaObs"></div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

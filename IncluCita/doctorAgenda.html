@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IncluCita - Mi Agenda</title>
-  <link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="bootstrap-responsive">
 
-<div class="doctor-agenda-page">
+<div class="doctor-agenda-page container-fluid px-2 px-sm-3">
 
   <div class="doctor-agenda-card">
 
-    <div class="doctor-agenda-header">
+    <div class="doctor-agenda-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 gap-2 gap-sm-3">
       <div class="brand">
         <div class="logo">♡</div>
         <div>
@@ -32,9 +33,9 @@
       Seleccione la fecha para ver su horario de consultorios y citas
     </p>
 
-    <div class="doctor-agenda-content">
+   <div class="doctor-agenda-content row g-4 align-items-stretch">
 
-      <div class="agenda-calendar-box">
+      <div class="agenda-calendar-box col-12 col-lg-7">
         <div class="agenda-calendar-header">
           <button onclick="cambiarMesAgenda(-1)">‹</button>
           <h2 id="agendaMesTexto">Junio 2026</h2>
@@ -54,7 +55,7 @@
         <div id="agendaDias" class="agenda-days"></div>
       </div>
 
-      <div class="agenda-selected-box">
+      <div class="agenda-selected-box col-12 col-lg-5">
         <p>Fecha seleccionada</p>
 
         <div class="agenda-date-icon">📅</div>
@@ -83,7 +84,7 @@
   </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

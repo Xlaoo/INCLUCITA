@@ -2,16 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>IncluCita - Observación</title>
-  <link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="bootstrap-responsive">
 
-<div class="doctor-observacion-page">
+<div class="doctor-observacion-page container-fluid px-2 px-sm-3">
   <div class="doctor-observacion-card">
 
-    <div class="doctor-observacion-header">
+    <div class="doctor-observacion-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 gap-sm-3">
       <button class="doctor-detalle-back" onclick="location.href='doctorDetallePaciente.html'">
         ← Volver a detalle
       </button>
@@ -19,7 +22,7 @@
 
     <h1>Agregar observación</h1>
 
-    <div class="doctor-paciente-head">
+    <div class="doctor-paciente-head d-flex flex-column flex-sm-row align-items-center gap-3 text-center text-sm-start">
       <div class="doctor-paciente-avatar">👤</div>
       <div>
         <h2 id="obsNombre">Paciente</h2>
@@ -27,7 +30,7 @@
       </div>
     </div>
 
-    <div class="doctor-detalle-info">
+    <div class="doctor-detalle-info row g-3">
       <div><strong>🩺 Especialidad:</strong><span id="obsEspecialidad"></span></div>
       <div><strong>🏥 Consultorio:</strong><span id="obsConsultorio"></span></div>
       <div><strong>📅 Fecha:</strong><span id="obsFecha"></span></div>
@@ -39,7 +42,7 @@
   <h3>Tipo de observación</h3>
   <p>Seleccione el tipo de información que desea registrar.</p>
 
-  <div class="obs-tipos-grid">
+<div class="obs-tipos-grid row g-3">
     <button id="btnObsGeneral" class="obs-tipo-btn active"
         onclick="toggleTipoObs('general')">
   📋
@@ -74,6 +77,7 @@
   </div>
 </div>
 <div id="printAreaObs"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
