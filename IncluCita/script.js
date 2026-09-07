@@ -2234,7 +2234,14 @@ function agregarCitaParcial(fecha, hora, nombre, dni, especialidad) {
 }
 let filtroCitasSecretaria = "todas";
 let paginaCitasSecretaria = 1;
-const citasPorPagina = 5;
+
+function obtenerCitasPorPagina() {
+  if (window.innerWidth <= 575.98) {
+    return 3; // CELULAR
+  }
+
+  return 5; // PC / TABLET
+}
 
 function filtrarCitasSecretaria(tipo) {
   filtroCitasSecretaria = tipo;
@@ -2324,8 +2331,11 @@ function renderCitasSecretaria() {
 
   if (!lista || !info || !pagination) return;
 
-  const citas = obtenerCitasFiltradas();
-  const totalPaginas = Math.ceil(citas.length / citasPorPagina) || 1;
+const citas = obtenerCitasFiltradas();
+const citasPorPagina = obtenerCitasPorPagina();
+
+const totalPaginas =
+  Math.ceil(citas.length / citasPorPagina) || 1;
 
   if (paginaCitasSecretaria > totalPaginas) {
     paginaCitasSecretaria = totalPaginas;
@@ -2656,12 +2666,19 @@ function renderAlertasNoAtendidas(noAtendidas) {
 document.addEventListener("DOMContentLoaded", cargarDashboardSecretaria);
 
 function cambiarPaginaCitas(pagina) {
-  const citas = obtenerCitasFiltradas();
-  const totalPaginas = Math.ceil(citas.length / citasPorPagina) || 1;
 
-  if (pagina < 1 || pagina > totalPaginas) return;
+  const citas = obtenerCitasFiltradas();
+  const citasPorPagina = obtenerCitasPorPagina();
+
+  const totalPaginas =
+    Math.ceil(citas.length / citasPorPagina) || 1;
+
+  if (pagina < 1 || pagina > totalPaginas) {
+    return;
+  }
 
   paginaCitasSecretaria = pagina;
+
   renderCitasSecretaria();
 }
 
@@ -6055,3 +6072,13 @@ function actualizarNoIngresosAutomaticos() {
   localStorage.setItem("citasSecretaria", JSON.stringify(citas));
   citasSecretaria = citas;
 }
+window.addEventListener("resize", function () {
+
+  if (!document.getElementById("citasList")) {
+    return;
+  }
+
+  paginaCitasSecretaria = 1;
+
+  renderCitasSecretaria();
+});

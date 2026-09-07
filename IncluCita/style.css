@@ -2774,22 +2774,7 @@ body {
   border-radius: 18px 18px 0 0 !important;
   z-index: 50 !important;
 }
-/* ===== FIX FINAL GESTION CITAS SIN SCROLL ===== */
 
-.secretaria-citas-page {
-  max-width: 1000px !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
-  padding: 18px 45px 0 !important;
-  overflow: hidden !important;
-}
-
-.secretaria-citas-card {
-  height: calc(100vh - 78px) !important;
-  min-height: auto !important;
-  padding: 24px 38px 18px !important;
-  overflow: hidden !important;
-}
 
 .secretaria-citas-card h1 {
   font-size: 30px !important;
@@ -3364,23 +3349,6 @@ body {
     display: none !important;
   }
 }
-.cancelar-page{
-    min-height:100vh;
-    background:#eaf8fb;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:30px;
-}
-
-.cancelar-card{
-    width:700px;
-    background:white;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
 .warning-box{
     margin-top:20px;
     background:#fff7e6;
@@ -3419,23 +3387,6 @@ body {
     border-radius:12px;
     font-weight:bold;
     cursor:pointer;
-}
-.cancelar-page{
-  position: relative;
-  padding-bottom: 65px;
-}
-
-.cancelar-footer{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #2563eb, #0f3f91);
-  color: white;
-  text-align: center;
-  padding: 16px;
-  font-weight: bold;
-  border-radius: 0 0 18px 18px;
 }
 .modal-cancelacion{
     position:fixed;
@@ -10122,19 +10073,37 @@ body {
     height: auto !important;
     min-height: 300px !important;
   }
+.doctor-image-box {
+    width: 92% !important;
+    max-width: 350px !important;
 
-  .doctor-image-box {
-    height: auto !important;
-    min-height: 260px !important;
-    margin-bottom: 20px !important;
-  }
+    height: 330px !important;
+    min-height: 330px !important;
 
-  .doctor-img {
+    margin: 0 auto 18px !important;
+
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+
+    overflow: hidden !important;
+
+    border-radius: 34px !important;
+}
+
+.doctor-img {
     width: auto !important;
-    max-width: 100% !important;
-    height: 280px !important;
+
+    height: 320px !important;
+    max-height: 320px !important;
+
     object-fit: contain !important;
-  }
+
+    display: block !important;
+
+    margin: 0 auto !important;
+}
+
 
   .dni-card {
     padding: 24px 16px !important;
@@ -10733,4 +10702,1513 @@ body {
   display: block !important;
   opacity: 1 !important;
 }
+/* =========================================================
+   CORRECCION FINAL ANDROID / CELULAR - INCLUCITA
+   PEGAR AL FINAL DE style.css
+   ========================================================= */
 
+@media (max-width: 575.98px) {
+
+    /* =============================================
+       PANTALLA DNI - PANEL DE LA DOCTORA
+       ============================================= */
+
+    #screen-dni .dni-layout {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+
+        width: 100% !important;
+        padding: 20px 12px 30px !important;
+        gap: 20px !important;
+    }
+
+
+    #screen-dni .doctor-panel {
+        width: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+
+        padding: 22px 15px 28px !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        align-items: center !important;
+        justify-content: flex-start !important;
+
+        border-radius: 24px !important;
+
+        overflow: hidden !important;
+    }
+
+
+    /* Contenedor de la doctora */
+    #screen-dni .doctor-scene {
+        width: 100% !important;
+        max-width: 330px !important;
+
+        height: 260px !important;
+        min-height: 260px !important;
+
+        margin: 0 auto 12px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        border-radius: 28px !important;
+    }
+
+
+    /* Reduce ligeramente la doctora */
+    #screen-dni .doctor-face {
+        transform: scale(0.95) !important;
+        transform-origin: center center !important;
+    }
+
+
+    /* IMPORTANTE:
+       quitar position absolute para que el texto
+       quede DEBAJO de la imagen
+    */
+    #screen-dni .doctor-panel h3 {
+        position: static !important;
+
+        width: 100% !important;
+
+        margin: 6px 0 6px !important;
+
+        text-align: center !important;
+
+        font-size: 21px !important;
+        line-height: 1.2 !important;
+
+        color: #075985 !important;
+    }
+
+
+    #screen-dni .doctor-panel p {
+        position: static !important;
+
+        width: 100% !important;
+        max-width: 310px !important;
+
+        margin: 0 auto !important;
+
+        text-align: center !important;
+
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+
+        color: #075985 !important;
+    }
+
+
+    /* Tarjeta DNI */
+    #screen-dni .dni-card {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 auto !important;
+
+        padding: 28px 16px !important;
+
+        border-radius: 22px !important;
+    }
+
+
+    #screen-dni .dni-card h1 {
+        font-size: 27px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 14px !important;
+    }
+
+
+    #screen-dni .dni-card p {
+        font-size: 14px !important;
+        text-align: center !important;
+    }
+
+
+    /* =============================================
+       MODAL ASISTENCIA POR VOZ
+       ============================================= */
+
+    #assistantModal.modal-bg {
+        padding: 12px !important;
+
+        align-items: flex-start !important;
+
+        overflow-y: auto !important;
+    }
+
+
+    #assistantModal > .modal {
+        width: 100% !important;
+        max-width: 390px !important;
+
+        height: auto !important;
+        max-height: calc(100dvh - 24px) !important;
+
+        margin: 10px auto !important;
+
+        padding: 20px 16px 16px !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+
+        border-radius: 12px !important;
+    }
+
+
+    /* Título del modal */
+    #assistantModal .modal h2 {
+        width: 100% !important;
+
+        padding-right: 95px !important;
+
+        margin: 6px 0 16px !important;
+
+        text-align: left !important;
+
+        font-size: 22px !important;
+        line-height: 1.25 !important;
+
+        white-space: normal !important;
+
+        overflow-wrap: break-word !important;
+    }
+
+
+    /* Botón cerrar */
+    #assistantModal .close {
+        position: absolute !important;
+
+        top: 14px !important;
+        right: 14px !important;
+
+        width: auto !important;
+
+        padding: 8px 10px !important;
+
+        font-size: 14px !important;
+
+        z-index: 20 !important;
+    }
+
+
+    /* Idiomas */
+    #assistantModal .lang-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+
+        gap: 10px !important;
+
+        width: 100% !important;
+    }
+
+
+    #assistantModal .lang-btn {
+        width: 100% !important;
+
+        padding: 13px 8px !important;
+
+        font-size: 15px !important;
+    }
+
+
+    /* Caja audio */
+    #assistantModal .audio-box {
+        width: 100% !important;
+
+        padding: 12px !important;
+
+        margin-top: 12px !important;
+    }
+
+
+    #assistantModal .audio-btn {
+        width: 100% !important;
+
+        min-height: 52px !important;
+
+        white-space: normal !important;
+    }
+
+
+    /* Texto reconocido */
+    #assistantModal .voice-result {
+        width: 100% !important;
+
+        padding: 12px !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* Mensaje inferior del asistente */
+    #assistantModal .voice-status {
+        margin: 12px -16px -16px !important;
+
+        padding: 13px 14px !important;
+
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+
+        white-space: normal !important;
+    }
+}
+/* =========================================
+   AJUSTE FINAL DOCTORA + BIENVENIDO CELULAR
+   ========================================= */
+@media (max-width: 575.98px) {
+
+    #screen-dni .doctor-panel {
+        position: relative !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+
+        padding: 22px 15px 58px !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+
+        overflow: hidden !important;
+    }
+
+
+    /* Caja de la doctora */
+    #screen-dni .doctor-scene {
+        width: 100% !important;
+        max-width: 330px !important;
+
+        height: 300px !important;
+        min-height: 300px !important;
+
+        margin: 0 auto 22px !important;
+
+        position: relative !important;
+        z-index: 5 !important;
+    }
+
+
+    /* Doctora */
+    #screen-dni .doctor-face {
+        transform: scale(1.05) !important;
+        transform-origin: center center !important;
+    }
+
+
+    /* BIENVENIDO */
+    #screen-dni .doctor-panel h3 {
+        position: static !important;
+
+        width: 100% !important;
+
+        margin: 0 0 4px !important;
+        padding: 0 !important;
+
+        text-align: center !important;
+
+        font-size: 20px !important;
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+
+        color: #075985 !important;
+
+        z-index: 10 !important;
+    }
+
+
+    /* Texto debajo de Bienvenido */
+    #screen-dni .doctor-panel p {
+        position: static !important;
+
+        width: 90% !important;
+        max-width: 310px !important;
+
+        margin: 0 auto !important;
+        padding: 0 !important;
+
+        text-align: center !important;
+
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+
+        color: #075985 !important;
+
+        z-index: 10 !important;
+    }
+
+
+    /* Curva azul */
+    #screen-dni .doctor-panel::after {
+        left: -25px !important;
+        right: -25px !important;
+
+        bottom: -45px !important;
+
+        height: 75px !important;
+
+        z-index: 2 !important;
+    }
+}
+/* =====================================================
+   CORRECCION CONFIRMAR CITA - CELULAR
+   ===================================================== */
+@media (max-width: 575.98px) {
+
+    /* Contenido */
+    #screen-confirm .content {
+        padding: 20px 14px 90px !important;
+    }
+
+    /* Fila superior: volver + título */
+    #screen-confirm .header-line {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+
+        gap: 12px !important;
+
+        width: 100% !important;
+        margin-bottom: 16px !important;
+    }
+
+    /* BOTÓN VOLVER PEQUEÑO */
+    #screen-confirm .header-line .back-btn {
+        width: auto !important;
+        min-width: 82px !important;
+        height: 42px !important;
+
+        padding: 7px 12px !important;
+        margin: 0 !important;
+
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        flex: 0 0 auto !important;
+
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+
+        white-space: nowrap !important;
+
+        border-radius: 10px !important;
+    }
+
+    /* TÍTULO */
+    #screen-confirm .header-line strong {
+        flex: 1 1 auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+
+        color: #0f3f91 !important;
+    }
+
+    /* Tarjeta */
+    #screen-confirm .summary-card {
+        width: 100% !important;
+
+        padding: 16px 18px !important;
+        margin-top: 0 !important;
+
+        border-radius: 18px !important;
+    }
+
+    /* Cada dato */
+    #screen-confirm .summary-row {
+        grid-template-columns: 38px 1fr !important;
+        gap: 4px 10px !important;
+
+        padding: 14px 0 !important;
+    }
+
+    /* Iconos */
+    #screen-confirm .summary-icon {
+        grid-column: 1 !important;
+        grid-row: 1 / 3 !important;
+
+        font-size: 25px !important;
+
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+
+        padding-top: 2px !important;
+    }
+
+    /* Paciente, Especialidad, Médico... */
+    #screen-confirm .summary-row strong {
+        grid-column: 2 !important;
+
+        font-size: 14px !important;
+        line-height: 1.2 !important;
+
+        margin: 0 !important;
+    }
+
+    /* Rafael Rosales, Cardiología, etc. */
+    #screen-confirm .summary-row span {
+        grid-column: 2 !important;
+
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+
+        margin-top: 3px !important;
+    }
+
+    /* Botones inferiores */
+    #screen-confirm .actions {
+        grid-template-columns: 1fr 1.35fr !important;
+        gap: 10px !important;
+    }
+
+    #screen-confirm .actions .secondary-btn,
+    #screen-confirm .actions .main-btn {
+        width: 100% !important;
+        height: 48px !important;
+
+        padding: 8px 10px !important;
+
+        font-size: 14px !important;
+        white-space: nowrap !important;
+    }
+}
+/* =========================================================
+   GESTION DE CITAS - RESPONSIVE MOVIL FINAL
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    /* PÁGINA */
+    .secretaria-citas-page {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: auto !important;
+        min-height: 100vh !important;
+
+        padding: 12px 10px 90px !important;
+
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+    }
+
+
+    /* TARJETA PRINCIPAL */
+    .secretaria-citas-card {
+        width: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+
+        padding: 18px 14px 20px !important;
+
+        overflow: visible !important;
+
+        border-radius: 20px !important;
+    }
+
+
+    /* CABECERA */
+    .secretaria-citas-header {
+        margin-bottom: 10px !important;
+    }
+
+
+    .secretaria-citas-header .brand-title {
+        font-size: 18px !important;
+    }
+
+
+    .secretaria-citas-header .brand-subtitle {
+        font-size: 10px !important;
+    }
+
+
+    /* BOTÓN VOLVER */
+    .back-btn-citas {
+        padding: 8px 13px !important;
+
+        margin-top: 8px !important;
+
+        font-size: 13px !important;
+
+        border-radius: 10px !important;
+    }
+
+
+    /* TÍTULO */
+    .secretaria-citas-card h1 {
+        font-size: 25px !important;
+
+        margin: 16px 0 4px !important;
+    }
+
+
+    .citas-subtitle {
+        font-size: 13px !important;
+
+        margin-bottom: 18px !important;
+    }
+
+
+    .citas-label {
+        font-size: 13px !important;
+    }
+
+
+    /* BUSCADOR */
+    .citas-search-box {
+        width: 100% !important;
+
+        height: 48px !important;
+
+        margin: 8px 0 14px !important;
+
+        padding: 0 12px !important;
+    }
+
+
+    .citas-search-box input {
+        width: 100% !important;
+        min-width: 0 !important;
+
+        font-size: 13px !important;
+    }
+
+
+    .citas-search-box span {
+        font-size: 18px !important;
+    }
+
+
+    /* TABS */
+    .citas-tabs {
+        width: 100% !important;
+
+        display: grid !important;
+
+        grid-template-columns: repeat(3, 1fr) !important;
+
+        gap: 0 !important;
+
+        margin-bottom: 6px !important;
+    }
+
+
+    .citas-tabs button {
+        width: 100% !important;
+
+        padding: 10px 2px !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* LISTA */
+    .citas-list {
+        width: 100% !important;
+
+        margin-bottom: 12px !important;
+    }
+
+
+    /* CADA CITA */
+    .cita-item {
+        width: 100% !important;
+
+        display: grid !important;
+
+        grid-template-columns: 42px 1fr auto !important;
+
+        grid-template-areas:
+            "avatar datos arrow"
+            "avatar fecha arrow"
+            "avatar estado arrow" !important;
+
+        gap: 5px 10px !important;
+
+        align-items: center !important;
+
+        padding: 14px 4px !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* AVATAR */
+    .cita-avatar {
+        grid-area: avatar !important;
+
+        width: 38px !important;
+        height: 38px !important;
+
+        font-size: 19px !important;
+
+        align-self: center !important;
+    }
+
+
+    /* BLOQUE NOMBRE + DNI + ESPECIALIDAD */
+    .cita-item > div:nth-child(2) {
+        grid-area: datos !important;
+
+        min-width: 0 !important;
+    }
+
+
+    .cita-item > div:nth-child(2) strong {
+        display: block !important;
+
+        font-size: 14px !important;
+        line-height: 1.2 !important;
+
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+
+
+    .cita-item > div:nth-child(2) p {
+        margin: 2px 0 !important;
+
+        font-size: 11px !important;
+        line-height: 1.25 !important;
+
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+
+
+    /* FECHA Y HORA */
+    .cita-date {
+        grid-area: fecha !important;
+
+        display: flex !important;
+        flex-wrap: wrap !important;
+
+        align-items: center !important;
+
+        gap: 5px 8px !important;
+
+        min-width: 0 !important;
+    }
+
+
+    .cita-date strong {
+        font-size: 12px !important;
+    }
+
+
+    .cita-date p {
+        margin: 0 !important;
+
+        font-size: 11px !important;
+    }
+
+
+    /* ESTADOS */
+    .estado-confirmada,
+    .estado-programada,
+    .estado-atendida,
+    .estado-no-ingreso {
+        grid-area: estado !important;
+
+        justify-self: start !important;
+
+        width: auto !important;
+
+        padding: 5px 10px !important;
+
+        font-size: 11px !important;
+
+        border-radius: 12px !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    /* FLECHA */
+    .cita-arrow,
+    .cita-arrow-disabled {
+        grid-area: arrow !important;
+
+        align-self: center !important;
+
+        width: 28px !important;
+
+        padding: 0 !important;
+        margin: 0 !important;
+
+        font-size: 27px !important;
+    }
+
+
+    /* INFORMACIÓN Y PAGINACIÓN */
+    .citas-bottom {
+        width: 100% !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        gap: 9px !important;
+
+        margin: 12px 0 8px !important;
+        padding: 0 !important;
+
+        font-size: 11px !important;
+
+        text-align: center !important;
+    }
+
+
+    /* BOTONES PAGINACIÓN */
+    .pagination {
+        display: flex !important;
+
+        flex-wrap: wrap !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        gap: 5px !important;
+    }
+
+
+    .pagination button {
+        width: 31px !important;
+        height: 31px !important;
+
+        padding: 0 !important;
+
+        font-size: 12px !important;
+
+        border-radius: 7px !important;
+    }
+
+
+    /* FOOTER */
+    .secretaria-citas-footer {
+        position: fixed !important;
+
+        left: 10px !important;
+        right: 10px !important;
+        bottom: 0 !important;
+
+        transform: none !important;
+
+        width: auto !important;
+        max-width: none !important;
+
+        height: 54px !important;
+
+        padding: 0 12px !important;
+
+        font-size: 12px !important;
+
+        text-align: center !important;
+
+        border-radius: 15px 15px 0 0 !important;
+
+        z-index: 100 !important;
+    }
+}
+/* =====================================================
+   CANCELAR CITA - DISEÑO FINAL
+   ===================================================== */
+
+.cancelar-page {
+    width: 100%;
+    max-width: 760px;
+
+    min-height: 100vh;
+
+    margin: 0 auto;
+    padding: 24px 24px 90px;
+
+    background: #eaf8fb;
+
+    position: relative;
+}
+
+.cancelar-card {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    background: white;
+
+    border: 1px solid #bfdbfe;
+    border-radius: 22px;
+
+    padding: 28px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+
+/* CABECERA */
+
+.cancelar-card .brand {
+    margin-bottom: 12px;
+}
+
+.cancelar-card .back-btn-citas {
+    margin: 10px 0 18px;
+}
+
+
+/* ADVERTENCIA */
+
+.warning-box {
+    width: 100%;
+
+    margin: 10px 0 20px;
+
+    padding: 14px 16px;
+
+    background: #fff7e6;
+
+    border: 1px solid #ffd591;
+    border-radius: 12px;
+
+    color: #ad6800;
+
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+
+/* TÍTULO */
+
+.cancelar-card h3 {
+    margin: 18px 0 !important;
+
+    font-size: 21px;
+    line-height: 1.25;
+
+    color: #111827;
+}
+
+
+/* TABLA DATOS */
+
+.cancelar-card .detalle-table {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.cancelar-card .detalle-row {
+    display: grid;
+
+    grid-template-columns: 150px 1fr;
+
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid #dbeafe;
+}
+
+.cancelar-card .detalle-row:last-child {
+    border-bottom: none;
+}
+
+.cancelar-card .detalle-row strong {
+    color: #0b4aa5;
+}
+
+.cancelar-card .detalle-row span {
+    color: #111827;
+    font-weight: 600;
+}
+
+
+/* INPUTS */
+
+.cancelar-card label {
+    display: block;
+
+    margin: 14px 0 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #111827;
+}
+
+.cancel-input,
+.cancel-textarea {
+    width: 100%;
+
+    margin: 0 0 14px;
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    background: white;
+}
+
+.cancel-textarea {
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+
+/* BOTONES */
+
+.cancel-buttons {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.btn-volver-rep,
+.btn-cancelar-final {
+    width: 100%;
+    height: 48px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+}
+
+.btn-volver-rep {
+    border: 1px solid #2563eb;
+
+    background: white;
+
+    color: #2563eb;
+}
+
+.btn-cancelar-final {
+    border: none;
+
+    background: #ef4444;
+
+    color: white;
+}
+
+
+/* FOOTER */
+
+.cancelar-footer {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 18px auto 0;
+
+    min-height: 54px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 16px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #0f3f91
+    );
+
+    color: white;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    border-radius: 16px;
+}
+
+
+/* =====================================================
+   CANCELAR CITA - CELULAR
+   ===================================================== */
+
+@media (max-width: 575.98px) {
+
+    .cancelar-page {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-height: 100vh !important;
+
+        margin: 0 !important;
+
+        padding: 10px 10px 25px !important;
+
+        display: block !important;
+
+        overflow-x: hidden !important;
+    }
+
+
+    .cancelar-card {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        margin: 0 auto !important;
+
+        padding: 18px 14px !important;
+
+        border-radius: 18px !important;
+    }
+
+
+    /* LOGO */
+    .cancelar-card .brand {
+        margin-bottom: 8px !important;
+    }
+
+
+    .cancelar-card .brand-title {
+        font-size: 18px !important;
+    }
+
+
+    .cancelar-card .brand-subtitle {
+        font-size: 10px !important;
+    }
+
+
+    /* VOLVER */
+    .cancelar-card .back-btn-citas {
+        width: auto !important;
+
+        margin: 8px 0 14px !important;
+
+        padding: 8px 13px !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* ADVERTENCIA */
+    .warning-box {
+        margin: 10px 0 16px !important;
+
+        padding: 12px !important;
+
+        font-size: 13px !important;
+
+        line-height: 1.35 !important;
+    }
+
+
+    /* TITULO */
+    .cancelar-card h3 {
+        margin: 12px 0 14px !important;
+
+        font-size: 18px !important;
+
+        line-height: 1.25 !important;
+    }
+
+
+    /* DATOS */
+    .cancelar-card .detalle-table {
+        width: 100% !important;
+
+        margin-bottom: 14px !important;
+    }
+
+
+    .cancelar-card .detalle-row {
+        grid-template-columns: 1fr !important;
+
+        gap: 4px !important;
+
+        padding: 11px 12px !important;
+    }
+
+
+    .cancelar-card .detalle-row strong {
+        font-size: 13px !important;
+    }
+
+
+    .cancelar-card .detalle-row span {
+        font-size: 13px !important;
+    }
+
+
+    /* LABELS */
+    .cancelar-card label {
+        margin: 12px 0 5px !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* SELECT Y TEXTAREA */
+    .cancel-input,
+    .cancel-textarea {
+        width: 100% !important;
+
+        font-size: 13px !important;
+
+        padding: 11px !important;
+
+        margin-bottom: 12px !important;
+    }
+
+
+    .cancel-input {
+        height: 46px !important;
+    }
+
+
+    .cancel-textarea {
+        min-height: 80px !important;
+    }
+
+
+    /* BOTONES */
+    .cancel-buttons {
+        grid-template-columns: 1fr !important;
+
+        gap: 9px !important;
+
+        margin-top: 14px !important;
+    }
+
+
+    .btn-volver-rep,
+    .btn-cancelar-final {
+        width: 100% !important;
+
+        height: 46px !important;
+
+        margin: 0 !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* FOOTER YA NO FLOTANTE */
+    .cancelar-footer {
+        position: static !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 12px auto 0 !important;
+
+        min-height: 50px !important;
+
+        padding: 10px 12px !important;
+
+        font-size: 12px !important;
+
+        border-radius: 14px !important;
+
+        transform: none !important;
+    }
+}
+/* =========================================================
+   LOGIN DOCTOR - RESPONSIVE MOVIL FINAL
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    /* Página completa */
+    .doctor-login-page {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-height: 100vh !important;
+
+        margin: 0 !important;
+        padding: 10px 10px 25px !important;
+
+        overflow-x: hidden !important;
+    }
+
+
+    /* Tarjeta principal */
+    .doctor-login-card {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 auto !important;
+
+        padding: 14px 12px 20px !important;
+
+        border-radius: 18px !important;
+    }
+
+
+    /* Cabecera */
+    .doctor-login-header {
+        width: 100% !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        align-items: flex-start !important;
+
+        gap: 10px !important;
+
+        margin-bottom: 14px !important;
+    }
+
+
+    .doctor-login-header .brand-title {
+        font-size: 18px !important;
+    }
+
+
+    .doctor-login-header .brand-subtitle {
+        font-size: 10px !important;
+    }
+
+
+    /* Botón regresar */
+    .doctor-regresar-btn {
+        width: auto !important;
+
+        padding: 8px 13px !important;
+
+        margin: 0 !important;
+
+        font-size: 13px !important;
+    }
+
+
+    /* CONTENIDO:
+       una sola columna en celular
+    */
+    .doctor-login-content {
+        width: 100% !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        gap: 18px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /* Imagen */
+    .doctor-portada {
+        width: 100% !important;
+        max-width: 330px !important;
+
+        height: 260px !important;
+
+        margin: 0 auto !important;
+
+        padding: 0 !important;
+
+        border-radius: 20px !important;
+
+        overflow: hidden !important;
+    }
+
+
+    .doctor-portada-img {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 100% !important;
+
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+
+    /* CAJA DNI */
+    .doctor-dni-box {
+        width: 100% !important;
+        max-width: 360px !important;
+
+        margin: 0 auto !important;
+
+        padding: 24px 14px !important;
+
+        border-radius: 18px !important;
+    }
+
+
+    /* Título */
+    .doctor-dni-box h1 {
+        font-size: 26px !important;
+
+        margin: 0 0 8px !important;
+
+        line-height: 1.2 !important;
+    }
+
+
+    .doctor-dni-box > p {
+        font-size: 13px !important;
+
+        margin-bottom: 16px !important;
+    }
+
+
+    /* Pantalla DNI */
+    .doctor-dni-display {
+        width: 100% !important;
+
+        height: 60px !important;
+
+        margin: 0 0 15px !important;
+
+        padding: 0 8px !important;
+
+        font-size: 20px !important;
+        letter-spacing: 4px !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    /* Teclado */
+    .doctor-keypad {
+        width: 100% !important;
+
+        display: grid !important;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+
+        gap: 9px !important;
+    }
+
+
+    /* Botones teclado */
+    .doctor-keypad button {
+        width: 100% !important;
+        min-width: 0 !important;
+
+        height: 50px !important;
+
+        padding: 5px !important;
+
+        font-size: 19px !important;
+
+        border-radius: 11px !important;
+
+        overflow: hidden !important;
+    }
+
+
+    /* Botón LIMPIAR */
+    .doctor-keypad button:last-child {
+        font-size: 13px !important;
+
+        padding: 4px 2px !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    /* Ingresar */
+    .doctor-ingresar-btn {
+        width: 100% !important;
+
+        height: 52px !important;
+
+        margin-top: 16px !important;
+
+        font-size: 15px !important;
+    }
+
+
+    /* Mensaje de error */
+    .doctor-login-error {
+        width: 100% !important;
+
+        min-height: 18px !important;
+
+        margin: 8px 0 0 !important;
+
+        font-size: 12px !important;
+    }
+
+
+    /* Footer */
+    .doctor-login-footer {
+        position: static !important;
+
+        width: 100% !important;
+
+        margin-top: 18px !important;
+
+        padding: 13px 10px !important;
+
+        font-size: 12px !important;
+
+        line-height: 1.3 !important;
+
+        text-align: center !important;
+    }
+}
+/* ===== IMAGEN DOCTOR - CELULAR ===== */
+@media (max-width: 575.98px) {
+
+    .doctor-portada {
+        width: 80% !important;
+        max-width: 280px !important;
+        height: auto !important;
+
+        margin: 0 auto !important;
+
+        border-radius: 20px !important;
+        overflow: hidden !important;
+    }
+
+    .doctor-portada-img {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 280px !important;
+        height: auto !important;
+
+        margin: 0 auto !important;
+
+        object-fit: contain !important;
+        object-position: center !important;
+
+        border-radius: 20px !important;
+    }
+}
