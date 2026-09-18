@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IncluCita - Inicio</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bootstrap-responsive">
+
+<div class="app container-fluid px-2 px-sm-3">
+
+    <section id="screen-dni" class="screen active">
+      <div class="top">
+  <div class="brand">
+    <div class="logo">♡</div>
+    <div>
+      <div class="brand-title">IncluCita</div>
+      <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
+    </div>
+  </div>
+
+  <button class="voice-btn" onclick="openAssistant()">🔊 Asistencia por voz</button>
+</div>
+
+<div class="back-dni-area">
+  <button class="back-btn" onclick="window.location.href='pantallaPrincipal.html'">← Volver</button>
+</div>
+
+<div class="content dni-layout">
+  <div class="doctor-panel">
+  <div class="doctor-image-box">
+    <img src="Doctora.png" alt="Doctora IncluCita" class="doctor-img img-fluid">
+  </div>
+
+  <h3>Bienvenido</h3>
+  <p>Reserva tu cita médica de forma rápida, simple e inclusiva.</p>
+</div>      
+
+<div class="dni-card">
+        <h1>Ingrese su DNI</h1>
+        <p style="text-align:center;">Digite los 8 dígitos de su DNI</p>
+
+        <div id="dniDisplay" class="dni-display">________</div>
+        <div class="keypad">
+          <button onclick="addDni('1')">1</button>
+          <button onclick="addDni('2')">2</button>
+          <button onclick="addDni('3')">3</button>
+          <button onclick="addDni('4')">4</button>
+          <button onclick="addDni('5')">5</button>
+          <button onclick="addDni('6')">6</button>
+          <button onclick="addDni('7')">7</button>
+          <button onclick="addDni('8')">8</button>
+          <button onclick="addDni('9')">9</button>
+          <button onclick="deleteDni()">⌫</button>
+          <button onclick="addDni('0')">0</button>
+          <button onclick="clearDni()">Limpiar</button>
+        </div>
+<div style="max-width:500px; margin:18px auto 0;">
+  <button class="main-btn" style="width:100%;" onclick="confirmDniManual()">
+    Aceptar DNI
+  </button>
+  <button id="btnVerSolicitud" class="main-btn btn-ver-solicitud"
+        style="width:100%; margin-top:10px; display:none;"
+        onclick="mostrarSolicitudPaciente()">
+  📄 Ver solicitud
+</button>
+
+<div id="solicitudPacienteBox" class="register-box" style="display:none;">
+  <h2>Solicitud encontrada</h2>
+
+  <p><strong>Paciente:</strong> <span id="solPaciente"></span></p>
+  <p><strong>DNI:</strong> <span id="solDni"></span></p>
+  <p><strong>Especialidad:</strong> <span id="solEspecialidad"></span></p>
+  <p><strong>Fecha:</strong> <span id="solFecha"></span></p>
+  <p><strong>Hora:</strong> <span id="solHora"></span></p>
+
+  <div style="display:flex; gap:10px; margin-top:18px;">
+    <button class="main-btn" style="width:50%;" onclick="salirSolicitudPaciente()">
+      Salir
+    </button>
+
+    <button class="main-btn" style="width:50%;" onclick="imprimirSolicitudPaciente()">
+      Imprimir
+    </button>
+  </div>
+</div>
+</div>
+        <div id="registerBox" class="register-box">
+          <h2>Paciente no registrado</h2>
+          <p style="text-align:center;">
+            Ingrese su nombre y apellido para registrar su cita.
+          </p>
+
+          <label class="form-label">Nombre y apellido</label>
+          <input
+            id="fullNameInput"
+            class="input-text"
+            type="text"
+            placeholder="Ejemplo: Rafael Rosales">
+
+          <div style="margin-top:18px;">
+            <button class="main-btn" style="width:100%;" onclick="registerNewPatient()">
+              Registrar y continuar
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+</div>
+<div id="assistantModal" class="modal-bg">
+  <div class="modal">
+    <button class="close" onclick="closeAssistant()">Cerrar ✕</button>
+
+    <h2>Asistencia por voz e idioma</h2>
+
+    <p><strong>Idioma / Language</strong></p>
+
+    <div class="lang-grid">
+      <button id="btnSpanish" class="lang-btn active-lang" onclick="setLanguage('es')">
+        🌐 Español
+      </button>
+
+      <button id="btnQuechua" class="lang-btn" onclick="setLanguage('qu')">
+        🧑 Quechua
+      </button>
+    </div>
+
+    <div class="audio-box">
+      <p><strong>Audio guía</strong></p>
+
+      <button class="audio-btn" onclick="startVoiceMode()">
+        🔊 Activar asistencia
+      </button>
+
+      <button class="audio-btn" onclick="stopVoiceMode()">
+        ⊘ Detener
+      </button>
+
+      <div class="voice-result">
+        <strong>Texto reconocido:</strong>
+        <p id="textoReconocido">Aún no se detecta voz.</p>
+      </div>
+    </div>
+
+    <div id="voiceStatus" class="voice-status">
+      La información será leída en el idioma seleccionado.
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
