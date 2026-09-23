@@ -3116,6 +3116,14 @@ let doctoresSistema = JSON.parse(localStorage.getItem("doctoresSistema")) || [
   especialidad: "Ginecología",
   icono: "👩‍⚕️",
   consultorio: "Consultorio 10"
+},
+{
+  nombre: "Dr. Sebastián Liñán",
+  dni: "12345678",
+  telefono: "900123456",
+  especialidad: "Medicina General",
+  icono: "👨‍⚕️",
+  consultorio: "Consultorio 11"
 }
 
 ];
@@ -4776,16 +4784,38 @@ function clearDoctorDni() {
 
 function updateDoctorDniDisplay() {
   const display = document.getElementById("doctorDniDisplay");
+  const estado = document.getElementById("doctorDniStatus");
   if (!display) return;
 
   display.textContent = doctorDni.padEnd(8, "_").split("").join(" ");
+
+  // Indicador accesible de estado: error se limpia al escribir, y se marca
+  // visualmente cuando el DNI ya tiene los 8 dígitos ingresados.
+  if (doctorDni.length === 8) {
+    display.setAttribute("data-estado", "completo");
+  } else {
+    display.removeAttribute("data-estado");
+  }
+
+  const error = document.getElementById("doctorLoginError");
+  if (error && error.textContent) {
+    error.textContent = "";
+    display.removeAttribute("data-estado");
+  }
+
+  if (estado) {
+    estado.textContent = doctorDni.length + " de 8 dígitos ingresados" +
+      (doctorDni.length === 8 ? ". DNI completo." : ".");
+  }
 }
 
 function loginDoctorDni() {
   const error = document.getElementById("doctorLoginError");
+  const display = document.getElementById("doctorDniDisplay");
 
   if (doctorDni.length !== 8) {
     if (error) error.textContent = "Ingrese un DNI de 8 dígitos.";
+    if (display) display.setAttribute("data-estado", "error");
     return;
   }
 
@@ -4800,6 +4830,7 @@ function loginDoctorDni() {
 
   if (!doctorEncontrado) {
     if (error) error.textContent = "Número de DNI incorrecto.";
+    if (display) display.setAttribute("data-estado", "error");
     return;
   }
 
@@ -4810,6 +4841,27 @@ function loginDoctorDni() {
 
   window.location.href = "doctorMenu.html";
 }
+
+// Soporte de teclado físico en la pantalla de acceso del doctor.
+// Solo actúa si el teclado numérico en pantalla existe (DoctorLogin.html).
+document.addEventListener("keydown", function (e) {
+  const dniDisplay = document.getElementById("doctorDniDisplay");
+  if (!dniDisplay) return;
+
+  if (e.key >= "0" && e.key <= "9") {
+    e.preventDefault();
+    addDoctorDni(e.key);
+  } else if (e.key === "Backspace") {
+    e.preventDefault();
+    deleteDoctorDni();
+  } else if (e.key === "Escape") {
+    e.preventDefault();
+    clearDoctorDni();
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    loginDoctorDni();
+  }
+});
 function cargarMenuDoctor() {
   const titulo = document.getElementById("doctorBienvenida");
   if (!titulo) return;
@@ -4823,8 +4875,20 @@ function cerrarSesionDoctor() {
   localStorage.removeItem("doctorLogueadoDni");
   localStorage.removeItem("doctorLogueadoNombre");
   localStorage.removeItem("doctorLogueadoEspecialidad");
+  localStorage.removeItem("doctorLogueadoConsultorio");
 
   window.location.href = "DoctorLogin.html";
+}
+
+// Impide el acceso directo a las páginas internas del doctor sin haber
+// iniciado sesión con DNI. Cada página protegida la llama al cargar
+// (ver protegerPaginaDoctor() en el <head>, antes de pintar el contenido).
+function verificarSesionDoctor() {
+  if (!localStorage.getItem("doctorLogueadoDni")) {
+    window.location.replace("DoctorLogin.html");
+    return false;
+  }
+  return true;
 }
 
 document.addEventListener("DOMContentLoaded", cargarMenuDoctor);

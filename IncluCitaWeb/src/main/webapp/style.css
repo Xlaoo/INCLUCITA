@@ -4220,14 +4220,6 @@ body {
 #screen-date .box.gray{
   background: #e5e7eb !important;
 }
-.doctor-especialidad{
-    text-align:center;
-    font-size:18px;
-    font-weight:600;
-    color:#0b4dbb;
-    margin-top:-8px;
-    margin-bottom:12px;
-}
 /* ===== ARREGLO FINAL LISTA ENVIAR CITAS ===== */
 
 .lista-citas-enviar-dia{
@@ -4302,13 +4294,6 @@ body {
   color: #003b95 !important;
 }
 
-.doctor-especialidad{
-  text-align: center !important;
-  color: #003b95 !important;
-  font-weight: bold !important;
-  margin-top: -8px !important;
-  margin-bottom: 12px !important;
-}
 /* Nombre del paciente */
 .lista-citas-enviar-dia strong{
     font-size: 13px !important;
@@ -6194,21 +6179,26 @@ body {
 .doctor-dni-display {
   border: 1.8px solid #8be8ff;
   border-radius: 10px;
+  max-width: 500px;
   padding: 14px;
   font-size: 24px;
   letter-spacing: 8px;
   font-weight: 800;
   color: #00558a;
-  margin-bottom: 14px;
+  margin: 0 auto 14px;
 }
 
 .doctor-keypad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .doctor-keypad button {
+  width: 100%;
+  min-width: 0;
   height: 45px;
   border: 1px solid #cde4ff;
   background: white;
@@ -6285,15 +6275,16 @@ body {
 
 .doctor-login-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 42px;
-  padding: 20px 55px 35px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 30px;
+  padding: 45px 55px;
   align-items: center;
 }
 
 .doctor-portada {
   height: 560px;
-  border-radius: 22px;
+  min-width: 0;
+  border-radius: 30px;
   overflow: hidden;
   background: #eaf8ff;
   display: flex;
@@ -6308,61 +6299,76 @@ body {
 }
 
 .doctor-dni-box {
+  width: 100%;
+  max-width: 430px;
+  min-width: 0;
+  margin: 0 auto;
   background: white;
-  border: 1px solid #c7e4ff;
-  border-radius: 22px;
-  padding: 36px 28px;
+  border: 1px solid #a5f3fc;
+  border-radius: 26px;
+  padding: 38px 34px;
   text-align: center;
-  box-shadow: 0 14px 35px rgba(15, 63, 145, 0.12);
+  box-shadow: 0 18px 40px rgba(14, 165, 233, 0.18);
+  overflow: hidden;
 }
 
 .doctor-dni-box h1 {
   color: #075985;
-  font-size: 30px;
+  font-size: 28px;
   margin-bottom: 10px;
 }
 
 .doctor-dni-box p {
   color: #075985;
+  font-size: 15px;
   margin-bottom: 18px;
 }
 
 .doctor-dni-display {
-  height: 64px;
-  border: 2px solid #67e8f9;
+  height: 58px;
+  max-width: 500px;
+  border: 1px solid #67e8f9;
   border-radius: 14px;
   background: #f0fdff;
   color: #075985;
   font-size: 28px;
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
   overflow: hidden;
-  margin-bottom: 16px;
+  margin: 0 auto 18px;
 }
 
 .doctor-keypad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 11px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .doctor-keypad button {
-  height: 50px;
-  border: 1px solid #bfdbfe;
+  width: 100%;
+  min-width: 0;
+  height: 54px;
+  padding: 10px;
+  border: 1px solid #a5f3fc;
   background: white;
   color: #075985;
-  border-radius: 12px;
-  font-size: 20px;
+  border-radius: 14px;
+  font-size: 22px;
   font-weight: 900;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.08);
+  transition: 0.2s;
   cursor: pointer;
 }
 
 .doctor-keypad button:hover {
   background: #ecfeff;
+  transform: translateY(-2px);
 }
 
 .doctor-ingresar-btn {
@@ -6370,11 +6376,12 @@ body {
   height: 54px;
   margin-top: 18px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #2563eb, #0f3f91);
   color: white;
   font-weight: 900;
   font-size: 16px;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
   cursor: pointer;
 }
 
@@ -6383,6 +6390,35 @@ body {
   font-weight: 800;
   margin-top: 12px;
   min-height: 20px;
+}
+
+/* Indicadores accesibles de estado del DNI (error / completo) */
+.doctor-dni-display[data-estado="error"] {
+  border-color: #dc2626 !important;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.doctor-dni-display[data-estado="completo"] {
+  border-color: #16a34a !important;
+  background: #f0fdf4 !important;
+  color: #15803d !important;
+}
+
+.doctor-dni-hint {
+  color: #075985;
+  font-size: 12.5px;
+  margin: 0 0 14px;
+  opacity: 0.85;
+}
+
+.doctor-keypad button:focus-visible,
+.doctor-ingresar-btn:focus-visible,
+.doctor-regresar-btn:focus-visible,
+.doctor-logout-btn:focus-visible,
+.doctor-menu-option:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
 }
 
 .doctor-login-footer {
@@ -6437,6 +6473,15 @@ body {
   margin: 20px 0 8px;
 }
 
+.doctor-especialidad {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0b4dbb;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
 .doctor-menu-subtitle {
   text-align: center;
   color: #0f3f91;
@@ -6446,20 +6491,26 @@ body {
 
 .doctor-menu-options {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   max-width: 650px;
   margin: 0 auto;
 }
 
 .doctor-menu-option {
-  height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 210px;
+  width: 100%;
   border: 1px solid #dbeafe;
   background: white;
   border-radius: 16px;
   padding: 22px 14px;
   cursor: pointer;
   color: #0f3f91;
+  text-align: center;
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.10);
   transition: 0.2s;
 }
@@ -7163,14 +7214,6 @@ body {
   margin: 5px 0 0;
   font-size: 15px;
   color: #0f3f91;
-}
-.doctor-especialidad{
-  text-align:center;
-  font-size:18px;
-  font-weight:600;
-  color:#2563eb;
-  margin-top:-5px;
-  margin-bottom:10px;
 }
 .doctor-atendidas-page {
   min-height: 100vh;

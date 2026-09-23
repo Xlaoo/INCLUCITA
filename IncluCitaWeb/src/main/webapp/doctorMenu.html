@@ -4,17 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IncluCita - Menú Doctor</title>
+<script>
+  // Impide abrir esta página interna del doctor sin haber iniciado sesión
+  // con su DNI. Se ejecuta antes de pintar el contenido para no mostrarlo
+  // ni un instante si no hay sesión activa.
+  if (!localStorage.getItem("doctorLogueadoDni")) {
+    window.location.replace("DoctorLogin.html");
+  }
+</script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bootstrap-responsive">
 
-<div class="doctor-menu-page container-fluid px-2 px-sm-3">
+<div class="doctor-menu-page">
 
   <div class="doctor-menu-card">
 
- <div class="doctor-menu-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 gap-2 gap-sm-3">
+ <div class="doctor-menu-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 gap-sm-3">
       <div class="brand">
         <div class="logo">♡</div>
         <div>
@@ -23,7 +31,7 @@
         </div>
       </div>
 
-      <button class="doctor-logout-btn" onclick="cerrarSesionDoctor()">
+      <button type="button" class="doctor-logout-btn" onclick="cerrarSesionDoctor()">
         ← Cerrar sesión
       </button>
     </div>
@@ -34,23 +42,23 @@
 </p>
     <p class="doctor-menu-subtitle">Seleccione una opción para continuar</p>
 
-   <div class="doctor-menu-options row g-3">
+   <div class="doctor-menu-options">
 
-      <button class="doctor-menu-option col-12 col-md-6 col-lg-4" onclick="location.href='doctorPacientesHoy.html'">
+      <button type="button" class="doctor-menu-option" aria-label="Mis Pacientes de Hoy: ver la lista de pacientes asignados para el día de hoy" onclick="location.href='doctorPacientesHoy.html'">
         <div class="doctor-option-icon azul">👥</div>
-        <h3>Mis Pacientes<br>de Hoy</h3>
+        <h3>Mis Pacientes de Hoy</h3>
         <p>Ver la lista de pacientes asignados para el día de hoy.</p>
       </button>
 
-      <button class="doctor-menu-option col-12 col-md-6 col-lg-4" onclick="location.href='doctorAgenda.html'">
+      <button type="button" class="doctor-menu-option" aria-label="Mi Agenda: ver su horario de consultorios y citas programadas" onclick="location.href='doctorAgenda.html'">
         <div class="doctor-option-icon verde">📅</div>
         <h3>Mi Agenda</h3>
         <p>Ver su horario de consultorios y citas programadas.</p>
       </button>
 
-      <button class="doctor-menu-option col-12 col-md-6 col-lg-4"onclick="location.href='doctorCitasAtendidas.html'">
+      <button type="button" class="doctor-menu-option" aria-label="Mis Citas Atendidas: ver el historial de citas que ha atendido" onclick="location.href='doctorCitasAtendidas.html'">
         <div class="doctor-option-icon morado">📋</div>
-        <h3>Mis Citas<br>Atendidas</h3>
+        <h3>Mis Citas Atendidas</h3>
         <p>Ver el historial de citas que ha atendido.</p>
       </button>
 

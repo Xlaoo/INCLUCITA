@@ -14,7 +14,7 @@
 
   <div class="doctor-login-card">
 
-   <div class="doctor-login-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 gap-2 gap-sm-3">
+   <div class="doctor-login-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 gap-sm-3">
       <div class="brand">
         <div class="logo">♡</div>
         <div>
@@ -22,7 +22,7 @@
           <div class="brand-subtitle">Doctor</div>
         </div>
       </div>
-        <button class="doctor-regresar-btn" onclick="location.href='pantallaPrincipal.html'">
+        <button type="button" class="doctor-regresar-btn" onclick="location.href='pantallaPrincipal.html'">
     ← Regresar
   </button>
     </div>
@@ -39,28 +39,34 @@
         <h1>Ingreso de DNI</h1>
         <p>Digite los 8 dígitos de su DNI</p>
 
-        <div id="doctorDniDisplay" class="doctor-dni-display">_ _ _ _ _ _ _ _</div>
+        <div id="doctorDniDisplay" class="doctor-dni-display" aria-hidden="true">_ _ _ _ _ _ _ _</div>
+        <span id="doctorDniStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
 
-        <div class="doctor-keypad">
-          <button onclick="addDoctorDni('1')">1</button>
-          <button onclick="addDoctorDni('2')">2</button>
-          <button onclick="addDoctorDni('3')">3</button>
-          <button onclick="addDoctorDni('4')">4</button>
-          <button onclick="addDoctorDni('5')">5</button>
-          <button onclick="addDoctorDni('6')">6</button>
-          <button onclick="addDoctorDni('7')">7</button>
-          <button onclick="addDoctorDni('8')">8</button>
-          <button onclick="addDoctorDni('9')">9</button>
-          <button onclick="deleteDoctorDni()">⌫</button>
-          <button onclick="addDoctorDni('0')">0</button>
-          <button onclick="clearDoctorDni()">Limpiar</button>
+        <p class="doctor-dni-hint">
+          También puede usar su teclado: números para escribir, <kbd>Backspace</kbd> para borrar,
+          <kbd>Escape</kbd> para limpiar y <kbd>Enter</kbd> para ingresar.
+        </p>
+
+        <div class="doctor-keypad" role="group" aria-label="Teclado numérico de DNI">
+          <button type="button" aria-label="Uno" onclick="addDoctorDni('1')">1</button>
+          <button type="button" aria-label="Dos" onclick="addDoctorDni('2')">2</button>
+          <button type="button" aria-label="Tres" onclick="addDoctorDni('3')">3</button>
+          <button type="button" aria-label="Cuatro" onclick="addDoctorDni('4')">4</button>
+          <button type="button" aria-label="Cinco" onclick="addDoctorDni('5')">5</button>
+          <button type="button" aria-label="Seis" onclick="addDoctorDni('6')">6</button>
+          <button type="button" aria-label="Siete" onclick="addDoctorDni('7')">7</button>
+          <button type="button" aria-label="Ocho" onclick="addDoctorDni('8')">8</button>
+          <button type="button" aria-label="Nueve" onclick="addDoctorDni('9')">9</button>
+          <button type="button" aria-label="Borrar último dígito" onclick="deleteDoctorDni()">⌫</button>
+          <button type="button" aria-label="Cero" onclick="addDoctorDni('0')">0</button>
+          <button type="button" aria-label="Limpiar DNI" onclick="clearDoctorDni()">Limpiar</button>
         </div>
 
-        <button class="doctor-ingresar-btn" onclick="loginDoctorDni()">
+        <button type="button" class="doctor-ingresar-btn" onclick="loginDoctorDni()">
           🔒 Ingresar
         </button>
 
-        <p id="doctorLoginError" class="doctor-login-error"></p>
+        <p id="doctorLoginError" class="doctor-login-error" role="alert" aria-live="assertive"></p>
       </div>
 
     </div>
