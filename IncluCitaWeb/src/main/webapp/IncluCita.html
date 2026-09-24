@@ -517,12 +517,12 @@
             <!-- Acciones Principales -->
             <div class="d-flex flex-column gap-2 mt-4" style="max-width:440px; margin-left:auto; margin-right:auto;">
               
-              <button id="btnBuscarSunat" class="btn-sunat-lookup" onclick="buscarDatosSunatReniec()">
-                <span>🔍</span> Buscar datos en SUNAT / RENIEC
+              <button class="btn-clinic-primary w-100 py-3 fw-bold fs-5" onclick="confirmDniManual()">
+                Aceptar DNI y Continuar →
               </button>
 
-              <button class="btn-accept-dni" onclick="confirmDniManual()">
-                Aceptar DNI
+              <button id="btnBuscarSunat" class="btn btn-outline-primary fw-semibold py-2 d-flex align-items-center justify-content-center gap-2" style="border-radius:12px;" onclick="buscarDatosSunatReniec()">
+                <span>🔍</span> Verificar datos con RENIEC / Padrón
               </button>
 
               <button id="btnVerSolicitud" class="btn btn-outline-info fw-bold py-2" style="display:none; border-radius:12px;" onclick="mostrarSolicitudPaciente()">

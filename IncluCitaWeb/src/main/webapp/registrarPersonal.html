@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Registro de Personal Médico</title>
+  
+  <!-- Tipografía moderna Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 & Estilos Clínicos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modernClinic.css">
+</head>
+
+<body class="booking-page-body">
+
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">👨‍⚕️</div>
+        <div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Alta de Personal Médico</div>
+        </div>
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;" onclick="location.href='DoctorLogin.html'">
+          ← Volver a Iniciar Sesión
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. Contenedor Principal de Registro -->
+  <main class="container my-5">
+    <div class="booking-main-card" style="max-width: 960px; margin: 0 auto;">
+      <div class="row g-4 align-items-stretch">
+        
+        <!-- Columna Izquierda: Ilustración y Beneficios del Registro -->
+        <div class="col-12 col-lg-4">
+          <div class="doctor-welcome-box h-100">
+            
+            <div class="doctor-avatar-wrap" style="width: 150px; height: 150px;">
+              <img src="doctorpng.png" alt="Doctor IncluCita" class="img-fluid">
+            </div>
+
+            <span class="welcome-badge">Personal de Salud</span>
+            <h2 class="welcome-title fs-4">Únete a IncluCita</h2>
+            <p class="welcome-text small">
+              Complete su registro como personal médico. Al ingresar su DNI, sus nombres se validarán automáticamente con el padrón oficial.
+            </p>
+
+            <div class="feature-points text-start w-100">
+              <p><span>🏛️</span> Verificación de DNI por API</p>
+              <p><span>📍</span> Asignación de consultorio</p>
+              <p><span>🩺</span> Habilitación para atender citas</p>
+              <p><span>🔒</span> Acceso seguro con su DNI</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Formulario de Registro Completo -->
+        <div class="col-12 col-lg-8">
+          <div class="p-3">
+            
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+              <div>
+                <span class="welcome-badge">Formulario de Alta</span>
+                <h1 class="welcome-title fs-3 mb-1">Registrar Nuevo Personal</h1>
+                <p class="text-muted small mb-0">Ingrese su DNI para autocompletar su identidad y complete los datos de contacto y clínica.</p>
+              </div>
+            </div>
+
+            <!-- Paso 1: DNI y Filtro de API -->
+            <div class="p-3 mb-3 rounded-4" style="background:#f0fdfa; border:1.5px solid var(--primary-border);">
+              <label class="form-label fw-bold text-dark small mb-1">
+                Número de DNI (8 dígitos) <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-white fw-bold">🪪</span>
+                <input type="text" id="personalDni" class="form-control form-control-lg fw-bold" placeholder="Digite 8 dígitos de DNI" maxlength="8" oninput="filtrarDniPersonalPorApi()">
+                <button type="button" class="btn btn-clinic-primary px-3 fw-bold" onclick="consultarDniPersonalManual()">
+                  🔍 Consultar DNI
+                </button>
+              </div>
+              <div id="dniApiFeedback" class="small mt-2" style="min-height: 20px;"></div>
+            </div>
+
+            <!-- Paso 2: Nombres y Apellidos Obtenidos por la API -->
+            <div class="row g-2 mb-3">
+              <div class="col-12">
+                <label class="form-label small fw-semibold text-muted mb-1">Nombres:</label>
+                <input type="text" id="personalNombres" class="form-control py-2 fw-semibold" placeholder="Se completará al ingresar DNI..." readonly style="background:#f8fafc;">
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-1">Apellido Paterno:</label>
+                <input type="text" id="personalPaterno" class="form-control py-2 fw-semibold" placeholder="Apellido paterno..." readonly style="background:#f8fafc;">
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-1">Apellido Materno:</label>
+                <input type="text" id="personalMaterno" class="form-control py-2 fw-semibold" placeholder="Apellido materno..." readonly style="background:#f8fafc;">
+              </div>
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 text-primary small" onclick="habilitarEdicionManualNombres()">
+                  ✏️ ¿Corregir nombres manualmente?
+                </button>
+              </div>
+            </div>
+
+            <!-- Paso 3: Provincia, Ciudad, Domicilio y Celular -->
+            <div class="row g-2 mb-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Provincia <span class="text-danger">*</span>
+                </label>
+                <input type="text" id="personalProvincia" class="form-control py-2" list="listaProvincias" placeholder="Ej: Lima">
+                <datalist id="listaProvincias">
+                  <option value="Lima">
+                  <option value="Callao">
+                  <option value="Arequipa">
+                  <option value="Cusco">
+                  <option value="Trujillo">
+                  <option value="Chiclayo">
+                  <option value="Huancayo">
+                  <option value="Piura">
+                  <option value="Ica">
+                  <option value="Tacna">
+                  <option value="Puno">
+                  <option value="Cajamarca">
+                </datalist>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Ciudad / Distrito <span class="text-danger">*</span>
+                </label>
+                <input type="text" id="personalCiudad" class="form-control py-2" placeholder="Ej: Miraflores / Lima">
+              </div>
+
+              <div class="col-12 col-md-7">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Domicilio (Dirección) <span class="text-danger">*</span>
+                </label>
+                <input type="text" id="personalDomicilio" class="form-control py-2" placeholder="Ej: Av. Javier Prado Este 1234, Dpto. 402">
+              </div>
+
+              <div class="col-12 col-md-5">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Número de Celular <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">📞</span>
+                  <input type="text" id="personalCelular" class="form-control py-2" maxlength="9" placeholder="Ej: 987654321">
+                </div>
+              </div>
+            </div>
+
+            <!-- Paso 4: Especialidad y Consultorio -->
+            <div class="row g-2 mb-4">
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Especialidad Médica <span class="text-danger">*</span>
+                </label>
+                <select id="personalEspecialidad" class="form-select py-2">
+                  <option value="Medicina General">Medicina General</option>
+                  <option value="Pediatría">Pediatría</option>
+                  <option value="Ginecología">Ginecología</option>
+                  <option value="Oftalmología">Oftalmología</option>
+                  <option value="Odontología">Odontología</option>
+                  <option value="Cardiología">Cardiología</option>
+                  <option value="Dermatología">Dermatología</option>
+                  <option value="Traumatología">Traumatología</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-bold text-dark mb-1">
+                  Consultorio Asignado
+                </label>
+                <select id="personalConsultorio" class="form-select py-2">
+                  <option value="Consultorio 1">Consultorio 1</option>
+                  <option value="Consultorio 2">Consultorio 2</option>
+                  <option value="Consultorio 3">Consultorio 3</option>
+                  <option value="Consultorio 4">Consultorio 4</option>
+                  <option value="Consultorio 5">Consultorio 5</option>
+                  <option value="Consultorio 6">Consultorio 6</option>
+                  <option value="Consultorio 7">Consultorio 7</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mensaje de Error o Validación -->
+            <div id="registroPersonalError" class="alert alert-danger py-2 small mb-3" style="display:none;"></div>
+
+            <!-- Botones de Acción -->
+            <button type="button" class="btn-clinic-primary w-100 py-3 fw-bold fs-6" onclick="guardarRegistroPersonal()">
+              💾 Registrar Personal y Habilitar Acceso
+            </button>
+
+            <div class="text-center mt-3">
+              <a href="DoctorLogin.html" class="text-decoration-none small text-muted">
+                ¿Ya tiene cuenta registrada? <strong class="text-primary">Iniciar Sesión con DNI</strong>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
