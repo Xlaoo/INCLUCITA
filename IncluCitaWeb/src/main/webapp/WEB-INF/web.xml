@@ -2,14 +2,62 @@
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-         version="5.0">
+         version="5.0"
+         metadata-complete="false">
 
     <display-name>IncluCita</display-name>
 
     <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>pantallaPrincipal.jsp</welcome-file>
         <welcome-file>pantallaPrincipal.html</welcome-file>
         <welcome-file>IncluCita.html</welcome-file>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+    <!-- Controladores MVC (Servlets) -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.inclucita.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CitaServlet</servlet-name>
+        <servlet-class>com.inclucita.controller.CitaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CitaServlet</servlet-name>
+        <url-pattern>/citas</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DoctorServlet</servlet-name>
+        <servlet-class>com.inclucita.controller.DoctorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DoctorServlet</servlet-name>
+        <url-pattern>/doctores</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecialidadServlet</servlet-name>
+        <servlet-class>com.inclucita.controller.EspecialidadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecialidadServlet</servlet-name>
+        <url-pattern>/especialidades</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
 </web-app>

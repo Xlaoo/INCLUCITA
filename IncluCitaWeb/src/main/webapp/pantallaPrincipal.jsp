@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -547,10 +549,21 @@
         <span class="mx-2">•</span>
         <span>🕒 Atención inclusiva los 7 días de la semana</span>
       </div>
-      <div class="d-flex gap-3">
-        <a href="IncluCita.html" class="text-secondary text-decoration-none fw-semibold">Portal Paciente</a>
-        <a href="DoctorLogin.html" class="text-secondary text-decoration-none fw-semibold">Portal Médico</a>
-        <a href="SecretariaLogin.html" class="text-secondary text-decoration-none fw-semibold">Administración</a>
+      
+      <div class="d-flex align-items-center gap-3">
+        <c:choose>
+          <c:when test="${not empty sessionScope.usuarioLogueado}">
+            <span class="text-success fw-bold small">
+              👤 Conectado: <c:out value="${sessionScope.nombreCompleto}" /> (<c:out value="${sessionScope.rol}" />)
+            </span>
+            <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size:0.78rem;">Cerrar sesión</a>
+          </c:when>
+          <c:otherwise>
+            <a href="IncluCita.html" class="text-secondary text-decoration-none fw-semibold">Portal Paciente</a>
+            <a href="DoctorLogin.html" class="text-secondary text-decoration-none fw-semibold">Portal Médico</a>
+            <a href="SecretariaLogin.html" class="text-secondary text-decoration-none fw-semibold">Administración</a>
+          </c:otherwise>
+        </c:choose>
       </div>
     </div>
   </div>
@@ -558,7 +571,7 @@
   <!-- 2. Navbar -->
   <nav class="navbar navbar-expand-lg navbar-medical">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+      <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.jsp">
         <div class="brand-logo-circle">♡</div>
         <div>
           <div class="brand-name">IncluCita</div>
@@ -566,13 +579,13 @@
         </div>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-set="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse justify-content-center" id="navMenu">
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link nav-link-medical" href="pantallaPrincipal.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link nav-link-medical" href="pantallaPrincipal.jsp">Inicio</a></li>
           <li class="nav-item"><a class="nav-link nav-link-medical" href="#servicios">Especialidades</a></li>
           <li class="nav-item"><a class="nav-link nav-link-medical" href="#portales">Módulos</a></li>
           <li class="nav-item"><a class="nav-link nav-link-medical" href="#porque-nosotros">Nosotros</a></li>

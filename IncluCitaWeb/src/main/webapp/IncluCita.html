@@ -1,159 +1,638 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IncluCita - Inicio</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Reserva de Cita Médica Inclusiva</title>
+  
+  <!-- Tipografía moderna Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --primary-teal: #0fa998;
+      --primary-dark: #096359;
+      --primary-soft: #e6f7f5;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+
+    body.booking-page-body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Navbar unificada con la principal */
+    .booking-navbar {
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo-circle {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(15, 169, 152, 0.3);
+    }
+
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--primary-teal);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .voice-assist-pill {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 8px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(15, 169, 152, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .voice-assist-pill:hover {
+      background: var(--primary-teal);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Stepper de progreso */
+    .booking-stepper {
+      padding: 24px 0 10px 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .step-item.active {
+      color: var(--primary-teal);
+    }
+
+    .step-bubble {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+    }
+
+    .step-item.active .step-bubble {
+      background: var(--primary-teal);
+      color: #ffffff;
+    }
+
+    .step-divider {
+      flex: 1;
+      height: 2px;
+      background: #e2e8f0;
+      margin: 0 12px;
+    }
+
+    /* Card principal de bienvenida e identidad */
+    .booking-main-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04);
+      padding: 36px 32px;
+      margin-bottom: 40px;
+    }
+
+    /* Panel izquierdo de la doctora */
+    .doctor-welcome-box {
+      background: linear-gradient(145deg, #f0fdfa 0%, #e6f7f5 100%);
+      border-radius: 20px;
+      padding: 32px 24px;
+      border: 1px solid rgba(15, 169, 152, 0.2);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .doctor-avatar-wrap {
+      width: 160px;
+      height: 160px;
+      background: #ffffff;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 8px 24px rgba(15, 169, 152, 0.18);
+      margin-bottom: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .doctor-avatar-wrap img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .welcome-badge {
+      display: inline-block;
+      background: var(--primary-teal);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .welcome-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .welcome-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .feature-points {
+      text-align: left;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 18px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .feature-points p {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Panel derecho del Teclado y DNI */
+    .dni-form-panel {
+      padding: 10px 15px;
+    }
+
+    .dni-header-badge {
+      color: var(--primary-teal);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .dni-header-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    /* Pantalla visual del DNI */
+    .dni-display-screen {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 10px;
+      color: #0f172a;
+      font-family: 'Plus Jakarta Sans', monospace;
+      margin: 18px 0 20px 0;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    .dni-display-screen:focus-within,
+    .dni-display-screen[data-active="true"] {
+      border-color: var(--primary-teal);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(15, 169, 152, 0.15);
+    }
+
+    /* Teclado táctil moderno */
+    .modern-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .modern-keypad button {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      user-select: none;
+    }
+
+    .modern-keypad button:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary-teal);
+      color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(15, 169, 152, 0.15);
+    }
+
+    .modern-keypad button:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .modern-keypad button.key-action {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 1.15rem;
+    }
+
+    .modern-keypad button.key-action:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #b91c1c;
+    }
+
+    /* Botones de acción */
+    .btn-sunat-lookup {
+      background: linear-gradient(135deg, #0fa998 0%, #096359 100%);
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border-radius: 14px;
+      padding: 14px 20px;
+      border: none;
+      box-shadow: 0 8px 20px rgba(15, 169, 152, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .btn-sunat-lookup:hover {
+      background: linear-gradient(135deg, #096359 0%, #064039 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(15, 169, 152, 0.45);
+    }
+
+    .btn-accept-dni {
+      background: #ffffff;
+      color: var(--text-dark) !important;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 14px;
+      padding: 13px 20px;
+      border: 2px solid #cbd5e1;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-accept-dni:hover {
+      border-color: var(--primary-teal);
+      color: var(--primary-teal) !important;
+      background: var(--primary-soft);
+    }
+
+    /* Tarjeta oficial SUNAT / RENIEC */
+    .sunat-official-card {
+      background: #f0fdfa;
+      border: 2px solid var(--primary-teal);
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 20px;
+      box-shadow: 0 10px 25px rgba(15, 169, 152, 0.12);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-use-sunat {
+      background: #16a34a;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 12px;
+      padding: 12px 20px;
+      border: none;
+      width: 100%;
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-use-sunat:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+  </style>
 </head>
 
-<body class="bootstrap-responsive">
+<body class="booking-page-body">
 
-<div class="app container-fluid px-2 px-sm-3">
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <!-- Marca -->
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">♡</div>
+        <div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Clínica & Citas Inclusivas</div>
+        </div>
+      </a>
 
-    <section id="screen-dni" class="screen active">
-      <div class="top">
-  <div class="brand">
-    <div class="logo">♡</div>
-    <div>
-      <div class="brand-title">IncluCita</div>
-      <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
+      <!-- Botones de Utilidad -->
+      <div class="d-flex align-items-center gap-3">
+        <button class="voice-assist-pill" onclick="openAssistant()">
+          <span>🔊</span> Asistencia por voz
+        </button>
+
+        <a href="pantallaPrincipal.html" class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;">
+          ← Volver
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. Stepper del Proceso de Reserva -->
+  <div class="container booking-stepper">
+    <div class="d-flex align-items-center justify-content-between">
+      
+      <div class="step-item active">
+        <div class="step-bubble">1</div>
+        <span>Identificación</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">2</div>
+        <span>Especialidad</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">3</div>
+        <span>Fecha & Turno</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">4</div>
+        <span>Comprobante</span>
+      </div>
+
     </div>
   </div>
 
-  <button class="voice-btn" onclick="openAssistant()">🔊 Asistencia por voz</button>
-</div>
+  <!-- 3. Contenedor Principal -->
+  <main class="container my-4">
+    <div class="booking-main-card">
+      <div class="row g-4 align-items-stretch">
+        
+        <!-- Columna Izquierda: Imagen y Bienvenida Inclusiva -->
+        <div class="col-12 col-lg-5">
+          <div class="doctor-welcome-box">
+            
+            <div class="doctor-avatar-wrap">
+              <img src="Doctora.png" alt="Doctora de Atención Médica">
+            </div>
 
-<div class="back-dni-area">
-  <button class="back-btn" onclick="window.location.href='pantallaPrincipal.html'">← Volver</button>
-</div>
+            <span class="welcome-badge">Portal del Paciente</span>
+            <h2 class="welcome-title">Bienvenido a IncluCita</h2>
+            <p class="welcome-text">
+              Reserva tu cita médica de forma rápida, simple y accesible. Digita tu DNI para verificar tus datos oficiales en segundos.
+            </p>
 
-<div class="content dni-layout">
-  <div class="doctor-panel">
-  <div class="doctor-image-box">
-    <img src="Doctora.png" alt="Doctora IncluCita" class="doctor-img img-fluid">
-  </div>
+            <div class="feature-points">
+              <p><span>🏛️</span> Consulta oficial SUNAT y RENIEC</p>
+              <p><span>🎙️</span> Reconocimiento y dictado por voz</p>
+              <p><span>🎟️</span> Emisión inmediata de ticket médico</p>
+            </div>
 
-  <h3>Bienvenido</h3>
-  <p>Reserva tu cita médica de forma rápida, simple e inclusiva.</p>
-</div>      
-
-<div class="dni-card">
-        <h1>Ingrese su DNI</h1>
-        <p style="text-align:center;">Digite los 8 dígitos de su DNI</p>
-
-        <div id="dniDisplay" class="dni-display">________</div>
-        <div class="keypad">
-          <button onclick="addDni('1')">1</button>
-          <button onclick="addDni('2')">2</button>
-          <button onclick="addDni('3')">3</button>
-          <button onclick="addDni('4')">4</button>
-          <button onclick="addDni('5')">5</button>
-          <button onclick="addDni('6')">6</button>
-          <button onclick="addDni('7')">7</button>
-          <button onclick="addDni('8')">8</button>
-          <button onclick="addDni('9')">9</button>
-          <button onclick="deleteDni()">⌫</button>
-          <button onclick="addDni('0')">0</button>
-          <button onclick="clearDni()">Limpiar</button>
-        </div>
-<div style="max-width:500px; margin:18px auto 0;">
-  <button class="main-btn" style="width:100%;" onclick="confirmDniManual()">
-    Aceptar DNI
-  </button>
-  <button id="btnVerSolicitud" class="main-btn btn-ver-solicitud"
-        style="width:100%; margin-top:10px; display:none;"
-        onclick="mostrarSolicitudPaciente()">
-  📄 Ver solicitud
-</button>
-
-<div id="solicitudPacienteBox" class="register-box" style="display:none;">
-  <h2>Solicitud encontrada</h2>
-
-  <p><strong>Paciente:</strong> <span id="solPaciente"></span></p>
-  <p><strong>DNI:</strong> <span id="solDni"></span></p>
-  <p><strong>Especialidad:</strong> <span id="solEspecialidad"></span></p>
-  <p><strong>Fecha:</strong> <span id="solFecha"></span></p>
-  <p><strong>Hora:</strong> <span id="solHora"></span></p>
-
-  <div style="display:flex; gap:10px; margin-top:18px;">
-    <button class="main-btn" style="width:50%;" onclick="salirSolicitudPaciente()">
-      Salir
-    </button>
-
-    <button class="main-btn" style="width:50%;" onclick="imprimirSolicitudPaciente()">
-      Imprimir
-    </button>
-  </div>
-</div>
-</div>
-        <div id="registerBox" class="register-box">
-          <h2>Paciente no registrado</h2>
-          <p style="text-align:center;">
-            Ingrese su nombre y apellido para registrar su cita.
-          </p>
-
-          <label class="form-label">Nombre y apellido</label>
-          <input
-            id="fullNameInput"
-            class="input-text"
-            type="text"
-            placeholder="Ejemplo: Rafael Rosales">
-
-          <div style="margin-top:18px;">
-            <button class="main-btn" style="width:100%;" onclick="registerNewPatient()">
-              Registrar y continuar
-            </button>
           </div>
         </div>
+
+        <!-- Columna Derecha: Teclado Numérico y Validación de DNI -->
+        <div class="col-12 col-lg-7">
+          <div class="dni-form-panel">
+            
+            <span class="dni-header-badge">Paso 1 de 4</span>
+            <h1 class="dni-header-title">Ingrese su DNI</h1>
+            <p class="text-muted mb-3">
+              Digite los 8 dígitos con el teclado numérico en pantalla o con su teclado físico.
+            </p>
+
+            <!-- Pantalla Display de DNI -->
+            <div id="dniDisplay" class="dni-display-screen" aria-live="polite">_ _ _ _ _ _ _ _</div>
+
+            <!-- Teclado Numérico Táctil -->
+            <div class="modern-keypad" role="group" aria-label="Teclado numérico">
+              <button type="button" onclick="addDni('1')">1</button>
+              <button type="button" onclick="addDni('2')">2</button>
+              <button type="button" onclick="addDni('3')">3</button>
+              <button type="button" onclick="addDni('4')">4</button>
+              <button type="button" onclick="addDni('5')">5</button>
+              <button type="button" onclick="addDni('6')">6</button>
+              <button type="button" onclick="addDni('7')">7</button>
+              <button type="button" onclick="addDni('8')">8</button>
+              <button type="button" onclick="addDni('9')">9</button>
+              <button type="button" class="key-action" onclick="deleteDni()" title="Borrar último dígito">⌫</button>
+              <button type="button" onclick="addDni('0')">0</button>
+              <button type="button" class="key-action" onclick="clearDni()" title="Limpiar todo">Limpiar</button>
+            </div>
+
+            <!-- Acciones Principales -->
+            <div class="d-flex flex-column gap-2 mt-4" style="max-width:440px; margin-left:auto; margin-right:auto;">
+              
+              <button id="btnBuscarSunat" class="btn-sunat-lookup" onclick="buscarDatosSunatReniec()">
+                <span>🔍</span> Buscar datos en SUNAT / RENIEC
+              </button>
+
+              <button class="btn-accept-dni" onclick="confirmDniManual()">
+                Aceptar DNI
+              </button>
+
+              <button id="btnVerSolicitud" class="btn btn-outline-info fw-bold py-2" style="display:none; border-radius:12px;" onclick="mostrarSolicitudPaciente()">
+                📄 Ver solicitud anterior
+              </button>
+
+            </div>
+
+            <!-- Tarjeta Oficial de Resultados SUNAT / RENIEC -->
+            <div id="sunatResultBox" class="sunat-official-card" style="display:none; max-width:440px; margin:20px auto 0;">
+              
+              <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                <span style="font-size:24px;">🏛️</span>
+                <div>
+                  <strong style="color:var(--primary-dark); font-size:1.05rem;">Consulta Oficial SUNAT / RENIEC</strong><br>
+                  <small class="text-muted">Padrón Nacional de Identificación Ciudadana</small>
+                </div>
+              </div>
+
+              <div style="font-size:0.95rem; line-height:1.7;">
+                <p class="mb-1"><strong>DNI:</strong> <span id="sunatDni" class="badge bg-primary fs-6"></span></p>
+                <p class="mb-1"><strong>Nombres:</strong> <span id="sunatNombres" class="fw-semibold text-dark"></span></p>
+                <p class="mb-1"><strong>Apellido Paterno:</strong> <span id="sunatPaterno" class="fw-semibold text-dark"></span></p>
+                <p class="mb-1"><strong>Apellido Materno:</strong> <span id="sunatMaterno" class="fw-semibold text-dark"></span></p>
+                <p class="mb-1"><strong>Nombre Completo:</strong> <strong id="sunatCompleto" style="color:var(--primary-teal);"></strong></p>
+                <p class="mb-2"><strong>Condición:</strong> <span class="badge bg-success">ACTIVO / HABILITADO</span></p>
+              </div>
+
+              <button class="btn-use-sunat mt-3" onclick="aceptarDatosSunat()">
+                ✓ Usar estos datos y continuar
+              </button>
+
+            </div>
+
+            <!-- Solicitud Previa Encontrada -->
+            <div id="solicitudPacienteBox" class="sunat-official-card" style="display:none; max-width:440px; margin:20px auto 0;">
+              <h4 class="fw-bold mb-3 fs-5 text-primary">Solicitud de Cita Encontrada</h4>
+              <p class="mb-1"><strong>Paciente:</strong> <span id="solPaciente"></span></p>
+              <p class="mb-1"><strong>DNI:</strong> <span id="solDni"></span></p>
+              <p class="mb-1"><strong>Especialidad:</strong> <span id="solEspecialidad"></span></p>
+              <p class="mb-1"><strong>Fecha:</strong> <span id="solFecha"></span></p>
+              <p class="mb-1"><strong>Hora:</strong> <span id="solHora"></span></p>
+
+              <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-secondary w-50 fw-bold" onclick="salirSolicitudPaciente()">Salir</button>
+                <button class="btn btn-primary w-50 fw-bold" onclick="imprimirSolicitudPaciente()">Imprimir</button>
+              </div>
+            </div>
+
+            <!-- Caja de Registro de Paciente Nuevo -->
+            <div id="registerBox" class="sunat-official-card" style="display:none; max-width:440px; margin:20px auto 0;">
+              <h4 class="fw-bold mb-2 fs-5 text-primary">Paciente no registrado</h4>
+              <p class="small text-muted mb-3">
+                Ingrese sus nombres y apellidos para asociar su cita médica.
+              </p>
+
+              <label class="form-label fw-bold small">Nombre y Apellido:</label>
+              <input id="fullNameInput" class="form-control mb-3 py-2" type="text" placeholder="Ejemplo: Carlos Mendoza Silva">
+
+              <button class="btn-use-sunat" onclick="registerNewPatient()">
+                Registrar y Continuar
+              </button>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-      </div>
-    </section>
-
-</div>
-<div id="assistantModal" class="modal-bg">
-  <div class="modal">
-    <button class="close" onclick="closeAssistant()">Cerrar ✕</button>
-
-    <h2>Asistencia por voz e idioma</h2>
-
-    <p><strong>Idioma / Language</strong></p>
-
-    <div class="lang-grid">
-      <button id="btnSpanish" class="lang-btn active-lang" onclick="setLanguage('es')">
-        🌐 Español
-      </button>
-
-      <button id="btnQuechua" class="lang-btn" onclick="setLanguage('qu')">
-        🧑 Quechua
-      </button>
     </div>
+  </main>
 
-    <div class="audio-box">
-      <p><strong>Audio guía</strong></p>
-
-      <button class="audio-btn" onclick="startVoiceMode()">
-        🔊 Activar asistencia
-      </button>
-
-      <button class="audio-btn" onclick="stopVoiceMode()">
-        ⊘ Detener
-      </button>
-
-      <div class="voice-result">
-        <strong>Texto reconocido:</strong>
-        <p id="textoReconocido">Aún no se detecta voz.</p>
+  <!-- Modal de Asistencia por Voz -->
+  <div id="assistantModal" class="modal-bg">
+    <div class="modal p-4" style="background:#ffffff; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.2);">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold fs-5 mb-0 text-dark">Asistencia por Voz e Idioma</h3>
+        <button class="btn-close" onclick="closeAssistant()"></button>
       </div>
-    </div>
 
-    <div id="voiceStatus" class="voice-status">
-      La información será leída en el idioma seleccionado.
+      <p class="small text-muted mb-2">Seleccione el idioma preferido:</p>
+      <div class="d-flex gap-2 mb-3">
+        <button id="btnSpanish" class="btn btn-outline-primary btn-sm flex-fill fw-bold" onclick="setLanguage('es')">
+          🌐 Español
+        </button>
+        <button id="btnQuechua" class="btn btn-outline-primary btn-sm flex-fill fw-bold" onclick="setLanguage('qu')">
+          🧑 Quechua
+        </button>
+      </div>
+
+      <div class="p-3 bg-light rounded-3 mb-3 border">
+        <p class="small fw-bold mb-2">Comandos de audio:</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="startVoiceMode()">🔊 Activar</button>
+          <button class="btn btn-secondary btn-sm flex-fill fw-bold" onclick="stopVoiceMode()">⊘ Detener</button>
+        </div>
+        <div class="mt-2 small text-muted">
+          <strong>Reconocimiento:</strong> <span id="textoReconocido">Esperando voz...</span>
+        </div>
+      </div>
+
+      <div id="voiceStatus" class="small text-secondary text-center">
+        La información será leída en el idioma seleccionado.
+      </div>
     </div>
   </div>
-</div>
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>

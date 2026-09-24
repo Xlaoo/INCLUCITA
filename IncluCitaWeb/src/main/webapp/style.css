@@ -12255,3 +12255,113 @@ body {
         border-radius: 20px !important;
     }
 }
+
+/* =========================================================
+   MODERN MEDICAL CLINIC THEME (VitalCare / IncluCita Upgrade)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Tarjetas de Especialidad */
+.option-card {
+    border-radius: 18px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    padding: 24px 18px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.option-card:hover {
+    border-color: #0fa998 !important;
+    background: #f0fdfa !important;
+    color: #096359 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 12px 28px rgba(15, 169, 152, 0.15) !important;
+}
+
+.option-card .icon {
+    font-size: 2.2rem !important;
+    margin-bottom: 12px !important;
+    transition: transform 0.2s ease !important;
+}
+
+.option-card:hover .icon {
+    transform: scale(1.15) !important;
+}
+
+/* Resumen de cita */
+.summary-card {
+    border-radius: 20px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+    padding: 26px !important;
+}
+
+.summary-row {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.summary-icon {
+    width: 36px !important;
+    height: 36px !important;
+    background: #e6f7f5 !important;
+    color: #0fa998 !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Barra de Pasos */
+.step-bar .step.active-step {
+    background: #0fa998 !important;
+    box-shadow: 0 4px 12px rgba(15, 169, 152, 0.35) !important;
+}
+
+.step-bar .line {
+    background: #cbd5e1 !important;
+}
+
+/* Botones Principales y Volver */
+.main-btn {
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px !important;
+    transition: all 0.25s ease !important;
+}
+
+.main-btn:hover {
+    transform: translateY(-2px) !important;
+}
+
+.back-btn {
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #475569 !important;
+    transition: all 0.2s ease !important;
+}
+
+.back-btn:hover {
+    border-color: #0fa998 !important;
+    color: #0fa998 !important;
+    background: #f0fdfa !important;
+}
+
+/* Comprobante / Ticket */
+.ticket-modern {
+    border-radius: 22px !important;
+    border: 2px dashed #0fa998 !important;
+    box-shadow: 0 16px 40px rgba(15, 169, 152, 0.12) !important;
+    background: #ffffff !important;
+}
