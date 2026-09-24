@@ -498,6 +498,11 @@
             <!-- Pantalla Display de DNI -->
             <div id="dniDisplay" class="dni-display-screen" aria-live="polite">_ _ _ _ _ _ _ _</div>
 
+            <!-- Indicador en vivo de identificación automática por RENIEC -->
+            <div id="dniAutoBadge" class="dni-auto-badge" style="display:none; margin: -10px auto 16px auto; max-width: 440px; text-align: center;">
+              <div id="dniAutoBadgeContent" class="alert alert-light border shadow-sm py-2 px-3 mb-0 d-inline-flex align-items-center gap-2" style="border-radius:14px; font-size:0.92rem;"></div>
+            </div>
+
             <!-- Teclado Numérico Táctil -->
             <div class="modern-keypad" role="group" aria-label="Teclado numérico">
               <button type="button" onclick="addDni('1')">1</button>

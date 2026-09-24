@@ -102,12 +102,16 @@ function addDni(number) {
   if (dni.length < 8) {
     dni += number;
     updateDniDisplay();
+    if (dni.length === 8) {
+      buscarDatosSunatReniec(true);
+    }
   }
 }
 
 function deleteDni() {
   dni = dni.slice(0, -1);
   updateDniDisplay();
+  limpiarAutoDni();
 }
 
 function clearDni() {
@@ -120,6 +124,7 @@ function clearDni() {
   localStorage.removeItem("patientFullName");
 
   updateDniDisplay();
+  limpiarAutoDni();
 
   const btn = document.getElementById("btnVerSolicitud");
   if (btn) btn.style.display = "none";
@@ -128,16 +133,19 @@ function clearDni() {
   if (box) box.style.display = "none";
 
   const registerBox = document.getElementById("registerBox");
-  if (registerBox) registerBox.classList.remove("active");
+  if (registerBox) {
+    registerBox.classList.remove("active");
+    registerBox.style.display = "none";
+  }
 
   const fullNameInput = document.getElementById("fullNameInput");
   if (fullNameInput) fullNameInput.value = "";
   const btnAceptar = document.querySelector(".btn-primary");
-if (btnAceptar) {
-  btnAceptar.disabled = false;
-  btnAceptar.style.opacity = "1";
-  btnAceptar.style.cursor = "pointer";
-}
+  if (btnAceptar) {
+    btnAceptar.disabled = false;
+    btnAceptar.style.opacity = "1";
+    btnAceptar.style.cursor = "pointer";
+  }
 }
 
 function updateDniDisplay() {
@@ -147,6 +155,7 @@ function updateDniDisplay() {
     display.textContent = dni.padEnd(8, "_").split("").join(" ");
   }
 }
+
 function confirmDniManual() {
   if (dni.length !== 8) {
     showToast(t(
@@ -164,52 +173,169 @@ function confirmDniManual() {
     return;
   }
 
-  pendingAction = "confirm-dni";
-
-  if (voiceActive) {
-    speak(t(
-      "Usted ingresó el DNI " + dniEnIdioma(dni) +
-      ". ¿Es correcto? Si es correcto diga avanzar. Si no es correcto diga no es.",
-      "DNI yupaykita churanki: " + dniEnIdioma(dni) +
-      ". Allinchu? Allin kaptinqa ñawpaqman niy. Mana allin kaptinqa mana niy."
-    ), () => {
-      setTimeout(listenByScreen, 800);
-    });
-  } else {
-    continuarDespuesDni();
+  // Si ya tenemos el nombre verificado para este DNI, aceptar y continuar directamente
+  if (sunatUltimoResultado && sunatUltimoResultado.dni === dni) {
+    aceptarDatosSunat();
+    return;
   }
+
+  // Si aún no se completó la búsqueda, ejecutarla
+  buscarDatosSunatReniec(false);
 }
 
 let sunatUltimoResultado = null;
+let consultandoDniActivo = false;
 
-function buscarDatosSunatReniec() {
+function limpiarAutoDni() {
+  const badge = document.getElementById("dniAutoBadge");
+  if (badge) badge.style.display = "none";
+  const box = document.getElementById("sunatResultBox");
+  if (box) box.style.display = "none";
+  const reg = document.getElementById("registerBox");
+  if (reg) reg.style.display = "none";
+  sunatUltimoResultado = null;
+}
+
+function actualizarBadgeDni(html, display = "block") {
+  const badge = document.getElementById("dniAutoBadge");
+  const content = document.getElementById("dniAutoBadgeContent");
+  if (badge && content) {
+    content.innerHTML = html;
+    badge.style.display = display;
+  }
+}
+
+function capitalizarTexto(str) {
+  if (!str) return "";
+  return str.toLowerCase().replace(/(?:^|\s|-)\S/g, function(a) { return a.toUpperCase(); });
+}
+
+async function consultarApiDecolecta(numeroDni) {
+  // 1. Probar endpoints del Servlet Java backend (que lee DECOLECTA_API_KEY desde web.xml)
+  const servletUrls = [
+    `api/dni?dni=${encodeURIComponent(numeroDni)}`,
+    `/api/dni?dni=${encodeURIComponent(numeroDni)}`,
+    `consulta-dni?dni=${encodeURIComponent(numeroDni)}`,
+    `/consulta-dni?dni=${encodeURIComponent(numeroDni)}`
+  ];
+
+  // Si la aplicación corre bajo un contexto Tomcat (ej: /IncluCitaWeb/)
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  if (pathParts.length > 0 && pathParts[0] !== "IncluCita.html") {
+    servletUrls.unshift(`/${pathParts[0]}/api/dni?dni=${encodeURIComponent(numeroDni)}`);
+    servletUrls.unshift(`/${pathParts[0]}/consulta-dni?dni=${encodeURIComponent(numeroDni)}`);
+  }
+
+  for (const url of servletUrls) {
+    try {
+      const resp = await fetch(url, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+      });
+      if (resp.ok) {
+        const json = await resp.json();
+        if (json && (json.success || json.nombres || json.nombreCompleto)) {
+          const nom = capitalizarTexto(json.nombres || "");
+          const pat = capitalizarTexto(json.paterno || "");
+          const mat = capitalizarTexto(json.materno || "");
+          const comp = json.nombreCompleto ? capitalizarTexto(json.nombreCompleto) : `${nom} ${pat} ${mat}`.trim();
+          return {
+            nombres: nom,
+            paterno: pat,
+            materno: mat,
+            nombreCompleto: comp,
+            origen: "RENIEC Oficial (Decolecta)"
+          };
+        }
+      }
+    } catch (e) {
+      // Continuar al siguiente endpoint disponible
+    }
+  }
+
+  // 2. Fallback directo a la API de Decolecta usando el token configurado
+  try {
+    const directResp = await fetch(`https://api.decolecta.com/v1/reniec/dni?numero=${encodeURIComponent(numeroDni)}`, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer sk_19467.CHzcqqXEvj6oH28KMANRriG1x57bGBGD",
+        "Accept": "application/json"
+      }
+    });
+    if (directResp.ok) {
+      const d = await directResp.json();
+      const nom = capitalizarTexto(d.first_name || "");
+      const pat = capitalizarTexto(d.first_last_name || "");
+      const mat = capitalizarTexto(d.second_last_name || "");
+      const comp = `${nom} ${pat} ${mat}`.trim() || capitalizarTexto(d.full_name || "");
+      return {
+        nombres: nom,
+        paterno: pat,
+        materno: mat,
+        nombreCompleto: comp,
+        origen: "RENIEC Oficial (Decolecta)"
+      };
+    }
+  } catch (directErr) {
+    // Si CORS bloquea la llamada directa desde el cliente, se utilizará el padrón
+  }
+
+  return null;
+}
+
+async function buscarDatosSunatReniec(autoTrigger = false) {
   if (!dni || dni.length !== 8) {
-    showToast(t(
-      "Por favor digite los 8 dígitos de su DNI antes de consultar.",
-      "Ama hina kaspa, pusaq yupayniyuq DNIkita churay tapukunapaq."
-    ));
-    if (voiceActive) {
-      speak("Por favor ingrese su DNI de 8 dígitos para consultar en SUNAT y RENIEC.");
+    if (!autoTrigger) {
+      showToast(t(
+        "Por favor digite los 8 dígitos de su DNI antes de consultar.",
+        "Ama hina kaspa, pusaq yupayniyuq DNIkita churay tapukunapaq."
+      ));
+      if (voiceActive) {
+        speak("Por favor ingrese su DNI de 8 dígitos para consultar en SUNAT y RENIEC.");
+      }
     }
     return;
   }
 
-  showToast("Consultando padrón SUNAT / RENIEC...");
+  if (consultandoDniActivo) return;
+  consultandoDniActivo = true;
 
-  // 1. Revisar si el usuario ya corrigió o personalizó sus datos para este DNI
+  actualizarBadgeDni(
+    `<div class="spinner-border spinner-border-sm text-primary" role="status"></div> ` +
+    `<span class="fw-semibold text-muted">Consultando identidad en RENIEC...</span>`
+  );
+
+  if (!autoTrigger) {
+    showToast("Consultando padrón oficial RENIEC...");
+  }
+
+  // 1. Revisar si el usuario ya corrigió o personalizó sus datos para este DNI en este navegador
   const customPadron = JSON.parse(localStorage.getItem("padronOficialPersonalizado")) || {};
   if (customPadron[dni]) {
-    mostrarResultadoSunat(customPadron[dni]);
+    consultandoDniActivo = false;
+    mostrarResultadoSunat(customPadron[dni], autoTrigger);
     return;
   }
 
-  // Padrón oficial precargado de ciudadanos (con base de datos local)
+  // 2. Consulta a la API oficial de Decolecta (mediante el Servlet Java backend o fallback)
+  try {
+    const datosApi = await consultarApiDecolecta(dni);
+    if (datosApi && (datosApi.nombres || datosApi.nombreCompleto)) {
+      consultandoDniActivo = false;
+      mostrarResultadoSunat(datosApi, autoTrigger);
+      return;
+    }
+  } catch (err) {
+    console.warn("Error consultando API Decolecta:", err);
+  }
+
+  // 3. Padrón oficial precargado de contingencia
   const padronOficial = {
-    "76261461": { nombres: "Rodrigo Alonso", paterno: "De la Cruz", materno: "Mendoza" },
+    "76261461": { nombres: "Rodrigo Alonso", paterno: "De la Cruz", materno: "Carranza" },
     "12345678": { nombres: "Juan Carlos", paterno: "Pérez", materno: "Gómez" },
     "87654321": { nombres: "María Elena", paterno: "Flores", materno: "Ramos" },
     "74859612": { nombres: "Roberto", paterno: "Dávila", materno: "Sánchez" },
-    "72527818": { nombres: "Carmen Rosa", paterno: "Salas", materno: "Vega" },
+    "72527818": { nombres: "Rafael Hugo", paterno: "Rosales", materno: "Papuico" },
     "10000001": { nombres: "Luis Alberto", paterno: "Ramírez", materno: "Soto" },
     "10000002": { nombres: "María Fernanda", paterno: "López", materno: "Quispe" },
     "10000003": { nombres: "Carlos Eduardo", paterno: "Mendoza", materno: "Castro" },
@@ -219,34 +345,44 @@ function buscarDatosSunatReniec() {
     "10000007": { nombres: "Rosa Del Carmen", paterno: "Castillo", materno: "Chávez" }
   };
 
-  // Si existe en el padrón directo
   if (padronOficial[dni]) {
-    mostrarResultadoSunat(padronOficial[dni]);
+    consultandoDniActivo = false;
+    mostrarResultadoSunat(padronOficial[dni], autoTrigger);
     return;
   }
 
-  // Generador determinista inteligente con apellidos y nombres peruanos reales
-  const nombresLista = ["Alejandro", "Valeria", "Gabriel", "Fiorella", "Christian", "Daniela", "Renzo", "Milagros", "Julio César", "Luciana", "Diego", "Camila", "Jorge Luis", "Diana"];
-  const paternosLista = ["Quispe", "Flores", "Rodríguez", "Sánchez", "García", "Rojas", "Díaz", "Torres", "Espinoza", "Vásquez", "Castillo", "Morales"];
-  const maternosLista = ["Huamán", "Mendoza", "Mamani", "Chávez", "Gutierrez", "Navarro", "Salazar", "Romero", "Paredes", "Vega", "Silva", "Medina"];
+  // 4. Si no se encontró en la API ni en el padrón, solicitar registro
+  consultandoDniActivo = false;
+  actualizarBadgeDni(
+    `<span style="color:#d97706; font-size:1.1rem;">⚠️</span> ` +
+    `<span>DNI no registrado en el padrón. Ingrese sus nombres para continuar.</span>`
+  );
 
-  const numDni = parseInt(dni, 10) || 12345678;
-  const nom = nombresLista[numDni % nombresLista.length];
-  const pat = paternosLista[(numDni >> 2) % paternosLista.length];
-  const mat = maternosLista[(numDni >> 4) % maternosLista.length];
-
-  const resultado = {
-    nombres: nom,
-    paterno: pat,
-    materno: mat
-  };
-
-  mostrarResultadoSunat(resultado);
+  const registerBox = document.getElementById("registerBox");
+  if (registerBox) {
+    registerBox.style.display = "block";
+    registerBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }
 
-function mostrarResultadoSunat(datos) {
-  const nombreCompleto = `${datos.nombres} ${datos.paterno} ${datos.materno}`.trim();
+function mostrarResultadoSunat(datos, autoTrigger = false) {
+  const nombreCompleto = (datos.nombreCompleto || `${datos.nombres || ''} ${datos.paterno || ''} ${datos.materno || ''}`).trim();
   sunatUltimoResultado = { ...datos, nombreCompleto: nombreCompleto, dni: dni };
+
+  // Registrar globalmente al paciente
+  patientFullName = nombreCompleto;
+  localStorage.setItem("dni", dni);
+  localStorage.setItem("patientFullName", patientFullName);
+
+  fakePatientsDB = JSON.parse(localStorage.getItem("fakePatientsDB")) || fakePatientsDB;
+  fakePatientsDB[dni] = patientFullName;
+  localStorage.setItem("fakePatientsDB", JSON.stringify(fakePatientsDB));
+
+  // Actualizar el badge en vivo bajo el DNI
+  actualizarBadgeDni(
+    `<span style="color:#0fa998; font-size:1.15rem;">✓</span> ` +
+    `<span>Nombre detectado: <strong style="color:#096359;">${nombreCompleto}</strong></span>`
+  );
 
   const box = document.getElementById("sunatResultBox");
   if (box) {
@@ -258,20 +394,23 @@ function mostrarResultadoSunat(datos) {
     const editForm = document.getElementById("sunatEditForm");
 
     if (elDni) elDni.textContent = dni;
-    if (elNom) elNom.textContent = datos.nombres;
-    if (elPat) elPat.textContent = datos.paterno;
-    if (elMat) elMat.textContent = datos.materno;
+    if (elNom) elNom.textContent = datos.nombres || "";
+    if (elPat) elPat.textContent = datos.paterno || "";
+    if (elMat) elMat.textContent = datos.materno || "";
     if (elCom) elCom.textContent = nombreCompleto;
-    if (editForm) editForm.style.display = "none"; // Oculto al inicio
+    if (editForm) editForm.style.display = "none";
 
     box.style.display = "block";
     box.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
-  showToast("Datos encontrados en SUNAT / RENIEC");
+  const registerBox = document.getElementById("registerBox");
+  if (registerBox) registerBox.style.display = "none";
+
+  showToast("✓ Nombre verificado: " + nombreCompleto);
 
   if (voiceActive) {
-    speak("Se encontraron los datos de SUNAT y RENIEC para " + nombreCompleto + ". Presione usar estos datos para continuar.");
+    speak("Bienvenido " + nombreCompleto + ". Sus datos fueron verificados. Presione usar estos datos para continuar.");
   }
 }
 
@@ -1706,6 +1845,7 @@ if (numbers.length >= 8) {
   dni = numbers.slice(0, 8);
   localStorage.setItem("dni", dni);
   updateDniDisplay();
+  buscarDatosSunatReniec(true);
 
   pendingAction = "confirm-dni";
 
@@ -5099,6 +5239,30 @@ document.addEventListener("keydown", function (e) {
   } else if (e.key === "Enter") {
     e.preventDefault();
     loginDoctorDni();
+  }
+});
+
+// Soporte de teclado físico en la pantalla de DNI del paciente (IncluCita.html).
+// Permite ingresar los 8 dígitos, borrar y consultar automáticamente.
+document.addEventListener("keydown", function (e) {
+  const dniDisplay = document.getElementById("dniDisplay");
+  if (!dniDisplay) return;
+
+  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+  if (tag === "input" || tag === "textarea") return;
+
+  if (e.key >= "0" && e.key <= "9") {
+    e.preventDefault();
+    addDni(e.key);
+  } else if (e.key === "Backspace") {
+    e.preventDefault();
+    deleteDni();
+  } else if (e.key === "Escape") {
+    e.preventDefault();
+    clearDni();
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    confirmDniManual();
   }
 });
 function cargarMenuDoctor() {

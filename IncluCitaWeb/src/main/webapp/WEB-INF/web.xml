@@ -7,15 +7,34 @@
 
     <display-name>IncluCita</display-name>
 
+    <!-- Parámetro de contexto para la API de Decolecta (Consulta oficial RENIEC / DNI) -->
+    <context-param>
+        <param-name>DECOLECTA_API_KEY</param-name>
+        <param-value>sk_19467.CHzcqqXEvj6oH28KMANRriG1x57bGBGD</param-value>
+    </context-param>
+
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-        <welcome-file>pantallaPrincipal.jsp</welcome-file>
         <welcome-file>pantallaPrincipal.html</welcome-file>
+        <welcome-file>pantallaPrincipal.jsp</welcome-file>
         <welcome-file>IncluCita.html</welcome-file>
         <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Controladores MVC (Servlets) -->
+    <servlet>
+        <servlet-name>ConsultaDniServlet</servlet-name>
+        <servlet-class>com.inclucita.controller.ConsultaDniServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConsultaDniServlet</servlet-name>
+        <url-pattern>/api/dni</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaDniServlet</servlet-name>
+        <url-pattern>/consulta-dni</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.inclucita.controller.LoginServlet</servlet-class>
