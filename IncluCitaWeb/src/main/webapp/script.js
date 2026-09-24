@@ -196,8 +196,16 @@ function buscarDatosSunatReniec() {
 
   showToast("Consultando padrón SUNAT / RENIEC...");
 
+  // 1. Revisar si el usuario ya corrigió o personalizó sus datos para este DNI
+  const customPadron = JSON.parse(localStorage.getItem("padronOficialPersonalizado")) || {};
+  if (customPadron[dni]) {
+    mostrarResultadoSunat(customPadron[dni]);
+    return;
+  }
+
   // Padrón oficial precargado de ciudadanos (con base de datos local)
   const padronOficial = {
+    "76261461": { nombres: "Rodrigo Alonso", paterno: "De la Cruz", materno: "Mendoza" },
     "12345678": { nombres: "Juan Carlos", paterno: "Pérez", materno: "Gómez" },
     "87654321": { nombres: "María Elena", paterno: "Flores", materno: "Ramos" },
     "74859612": { nombres: "Roberto", paterno: "Dávila", materno: "Sánchez" },
@@ -247,12 +255,14 @@ function mostrarResultadoSunat(datos) {
     const elPat = document.getElementById("sunatPaterno");
     const elMat = document.getElementById("sunatMaterno");
     const elCom = document.getElementById("sunatCompleto");
+    const editForm = document.getElementById("sunatEditForm");
 
     if (elDni) elDni.textContent = dni;
     if (elNom) elNom.textContent = datos.nombres;
     if (elPat) elPat.textContent = datos.paterno;
     if (elMat) elMat.textContent = datos.materno;
     if (elCom) elCom.textContent = nombreCompleto;
+    if (editForm) editForm.style.display = "none"; // Oculto al inicio
 
     box.style.display = "block";
     box.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -263,6 +273,70 @@ function mostrarResultadoSunat(datos) {
   if (voiceActive) {
     speak("Se encontraron los datos de SUNAT y RENIEC para " + nombreCompleto + ". Presione usar estos datos para continuar.");
   }
+}
+
+function habilitarEdicionSunat() {
+  const editForm = document.getElementById("sunatEditForm");
+  if (!editForm) return;
+
+  const isHidden = editForm.style.display === "none" || editForm.style.display === "";
+  editForm.style.display = isHidden ? "block" : "none";
+
+  if (isHidden && sunatUltimoResultado) {
+    const inNom = document.getElementById("editSunatNombres");
+    const inPat = document.getElementById("editSunatPaterno");
+    const inMat = document.getElementById("editSunatMaterno");
+    if (inNom) inNom.value = sunatUltimoResultado.nombres || "";
+    if (inPat) inPat.value = sunatUltimoResultado.paterno || "";
+    if (inMat) inMat.value = sunatUltimoResultado.materno || "";
+    if (inNom) inNom.focus();
+  }
+}
+
+function guardarDatosCorregidosSunat() {
+  const inNom = document.getElementById("editSunatNombres");
+  const inPat = document.getElementById("editSunatPaterno");
+  const inMat = document.getElementById("editSunatMaterno");
+
+  const nom = inNom ? inNom.value.trim() : "";
+  const pat = inPat ? inPat.value.trim() : "";
+  const mat = inMat ? inMat.value.trim() : "";
+
+  if (!nom || !pat) {
+    showToast("Por favor ingrese al menos sus nombres y apellido paterno.");
+    return;
+  }
+
+  const nombreCompleto = `${nom} ${pat} ${mat}`.trim();
+  const datosActualizados = {
+    nombres: nom,
+    paterno: pat,
+    materno: mat,
+    nombreCompleto: nombreCompleto,
+    dni: dni
+  };
+
+  // Guardar en el padrón personalizado en localStorage para persistencia permanente
+  let customPadron = JSON.parse(localStorage.getItem("padronOficialPersonalizado")) || {};
+  customPadron[dni] = datosActualizados;
+  localStorage.setItem("padronOficialPersonalizado", JSON.stringify(customPadron));
+
+  sunatUltimoResultado = datosActualizados;
+
+  // Actualizar la vista de la tarjeta
+  const elNom = document.getElementById("sunatNombres");
+  const elPat = document.getElementById("sunatPaterno");
+  const elMat = document.getElementById("sunatMaterno");
+  const elCom = document.getElementById("sunatCompleto");
+  if (elNom) elNom.textContent = nom;
+  if (elPat) elPat.textContent = pat;
+  if (elMat) elMat.textContent = mat;
+  if (elCom) elCom.textContent = nombreCompleto;
+
+  showToast("Datos actualizados correctamente: " + nombreCompleto);
+
+  // Proceder a aceptar
+  aceptarDatosSunat();
 }
 
 function aceptarDatosSunat() {

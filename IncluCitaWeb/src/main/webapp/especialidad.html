@@ -1,77 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IncluCita - Especialidad</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Selección de Especialidad Médica</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modernClinic.css">
 </head>
 
-<body class="bootstrap-responsive">
+<body class="booking-page-body">
 
-<div class="app container-fluid px-2 px-sm-3">
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <!-- Marca -->
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">♡</div>
+        <div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Clínica & Citas Inclusivas</div>
+        </div>
+      </a>
 
-    <section id="screen-specialty" class="screen active">
-      <div class="top">
-  <div class="brand">
-    <div class="logo">♡</div>
-    <div>
-      <div class="brand-title">IncluCita</div>
-      <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
+      <!-- Botones de Utilidad -->
+      <div class="d-flex align-items-center gap-3">
+        <button class="voice-assist-pill" onclick="openAssistant()">
+          <span>🔊</span> Asistencia por voz
+        </button>
+
+        <button class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;" onclick="goTo('screen-dni')">
+          ← Volver
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. Stepper del Proceso de Reserva -->
+  <div class="container booking-stepper">
+    <div class="d-flex align-items-center justify-content-between">
+      
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Identificación</span>
+      </div>
+
+      <div class="step-divider" style="background:var(--accent-green);"></div>
+
+      <div class="step-item active">
+        <div class="step-bubble">2</div>
+        <span>Especialidad</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">3</div>
+        <span>Fecha & Turno</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">4</div>
+        <span>Comprobante</span>
+      </div>
+
     </div>
   </div>
-</div>
-      <div class="content">
-        <div class="header-line">
-          <button class="back-btn" onclick="goTo('screen-dni')">← Volver</button>
+
+  <!-- 3. Contenedor Principal -->
+  <main class="container my-4">
+    <div class="booking-main-card">
+      <div class="row g-4 align-items-stretch">
+        
+        <!-- Columna Izquierda: Información de Especialidades -->
+        <div class="col-12 col-lg-4">
+          <div class="doctor-welcome-box">
+            
+            <div class="doctor-avatar-wrap">
+              <img src="Doctora.png" alt="Doctora de Atención Médica">
+            </div>
+
+            <span class="welcome-badge">Paso 2 de 4</span>
+            <h2 class="welcome-title">Especialidad Médica</h2>
+            <p class="welcome-text">
+              Seleccione el área médica o consulta que necesita para su atención personalizada.
+            </p>
+
+            <div class="feature-points">
+              <p><span>🩺</span> Médicos certificados y colegiados</p>
+              <p><span>⏱️</span> Turnos puntuales garantizados</p>
+              <p><span>💙</span> Atención inclusiva y adaptada</p>
+            </div>
+
+          </div>
         </div>
 
-        <div class="step-bar">
-          <div class="step active-step">1</div><div class="line"></div>
-          <div class="step">2</div><div class="line"></div>
-          <div class="step">3</div>
+        <!-- Columna Derecha: Cuadrícula de Especialidades -->
+        <div class="col-12 col-lg-8">
+          <div class="p-2">
+            <span class="welcome-badge">Catálogo Clínico</span>
+            <h1 class="welcome-title fs-3 mb-2">¿Qué especialidad médica busca?</h1>
+            <p class="text-muted mb-4">Haga clic o toque la especialidad para ver los médicos y turnos disponibles.</p>
+
+            <!-- Grid de Especialidades Principales -->
+            <div class="specialty-grid-modern">
+              
+              <div class="specialty-card-modern" onclick="selectSpecialty('Medicina General')">
+                <div class="specialty-icon-bubble">💙</div>
+                <div class="specialty-title-text">Medicina General</div>
+                <span class="specialty-badge-sub">Atención Primaria</span>
+              </div>
+
+              <div class="specialty-card-modern" onclick="selectSpecialty('Pediatría')">
+                <div class="specialty-icon-bubble">👶</div>
+                <div class="specialty-title-text">Pediatría</div>
+                <span class="specialty-badge-sub">Salud Infantil</span>
+              </div>
+
+              <div class="specialty-card-modern" onclick="selectSpecialty('Traumatología')">
+                <div class="specialty-icon-bubble">🦴</div>
+                <div class="specialty-title-text">Traumatología</div>
+                <span class="specialty-badge-sub">Huesos & Articulaciones</span>
+              </div>
+
+              <div class="specialty-card-modern" onclick="selectSpecialty('Oftalmología')">
+                <div class="specialty-icon-bubble">👁️</div>
+                <div class="specialty-title-text">Oftalmología</div>
+                <span class="specialty-badge-sub">Salud Visual</span>
+              </div>
+
+              <div class="specialty-card-modern" onclick="selectSpecialty('Odontología')">
+                <div class="specialty-icon-bubble">🦷</div>
+                <div class="specialty-title-text">Odontología</div>
+                <span class="specialty-badge-sub">Salud Bucal</span>
+              </div>
+
+              <div class="specialty-card-modern" onclick="showOtherSpecialties()">
+                <div class="specialty-icon-bubble">✨</div>
+                <div class="specialty-title-text">Otras Especialidades</div>
+                <span class="specialty-badge-sub">Cardiología, Derma...</span>
+              </div>
+
+            </div>
+
+            <!-- Caja desplegable para otras especialidades -->
+            <div id="otherSpecialtiesBox" class="mt-4 p-3 bg-light rounded-4 border" style="display:none;">
+              <h3 class="fw-bold fs-5 text-dark mb-3">Otras especialidades disponibles:</h3>
+              <div id="especialidadesOtras" class="specialty-grid-modern"></div>
+            </div>
+
+          </div>
         </div>
 
-        <h2>Seleccione la especialidad</h2>
-
-        <div class="options-grid">
-          <button class="option-card" onclick="selectSpecialty('Medicina General')">
-            <div class="icon">♥</div>Medicina General
-          </button>
-
-          <button class="option-card" onclick="selectSpecialty('Pediatría')">
-            <div class="icon">👶</div>Pediatría
-          </button>
-
-          <button class="option-card" onclick="selectSpecialty('Traumatología')">
-            <div class="icon">🦴</div>Traumatología
-          </button>
-
-          <button class="option-card" onclick="selectSpecialty('Oftalmología')">
-            <div class="icon">👁</div>Oftalmología
-          </button>
-
-          <button class="option-card" onclick="selectSpecialty('Odontología')">
-            <div class="icon">🦷</div>Odontología
-          </button>
-
-          <button class="option-card" onclick="showOtherSpecialties()">
-          <div class="icon">•••</div>Otras especialidades
-          </button>
-        </div>
-        <div id="otherSpecialtiesBox" class="other-specialties-box">
-  <h3>Otras especialidades disponibles</h3>
-  <div id="especialidadesOtras" class="options-grid"></div>
-</div>
       </div>
-      <div class="footer-note">Toque la especialidad que necesita</div>
-    </section>
+    </div>
+  </main>
 
-</div>
+  <div id="toast" class="toast"></div>
 
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>

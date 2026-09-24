@@ -3,82 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IncluCita - Doctor</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <title>IncluCita - Acceso Médico</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modernClinic.css">
 </head>
 
-<body class="bootstrap-responsive">
+<body class="booking-page-body">
 
-<div class="doctor-login-page container-fluid px-2 px-sm-3">
-
-  <div class="doctor-login-card">
-
-   <div class="doctor-login-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 gap-sm-3">
-      <div class="brand">
-        <div class="logo">♡</div>
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">👨‍⚕️</div>
         <div>
-          <div class="brand-title">IncluCita</div>
-          <div class="brand-subtitle">Doctor</div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Portal del Médico</div>
         </div>
-      </div>
-        <button type="button" class="doctor-regresar-btn" onclick="location.href='pantallaPrincipal.html'">
-    ← Regresar
-  </button>
+      </a>
+
+      <button type="button" class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;" onclick="location.href='pantallaPrincipal.html'">
+        ← Regresar al Inicio
+      </button>
+
     </div>
+  </header>
 
-   <div class="doctor-login-content row g-4 align-items-center">
+  <!-- 2. Contenedor Principal de Login -->
+  <main class="container my-5">
+    <div class="booking-main-card" style="max-width: 900px; margin: 0 auto;">
+      <div class="row g-4 align-items-center">
+        
+        <!-- Columna Izquierda: Ilustración Doctor -->
+        <div class="col-12 col-lg-5">
+          <div class="doctor-welcome-box">
+            
+            <div class="doctor-avatar-wrap" style="width: 170px; height: 170px;">
+              <img src="doctorpng.png" alt="Doctor IncluCita" class="img-fluid">
+            </div>
 
-      <div class="doctor-portada col-12 col-lg-5 text-center">
-        <img src="doctorpng.png"
-     alt="Doctor IncluCita"
-     class="doctor-portada-img img-fluid">
-      </div>
+            <span class="welcome-badge">Acceso para Personal Médico</span>
+            <h2 class="welcome-title">Bienvenido, Doctor</h2>
+            <p class="welcome-text">
+              Ingrese su DNI médico para consultar sus citas programadas y registrar atenciones clínicas.
+            </p>
 
-     <div class="doctor-dni-box col-12 col-lg-7">
-        <h1>Ingreso de DNI</h1>
-        <p>Digite los 8 dígitos de su DNI</p>
+            <div class="feature-points">
+              <p><span>🩺</span> Agenda de pacientes del día</p>
+              <p><span>📋</span> Registro de diagnóstico e indicaciones</p>
+              <p><span>🔒</span> Acceso seguro y confidencial</p>
+            </div>
 
-        <div id="doctorDniDisplay" class="doctor-dni-display" aria-hidden="true">_ _ _ _ _ _ _ _</div>
-        <span id="doctorDniStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
-
-        <p class="doctor-dni-hint">
-          También puede usar su teclado: números para escribir, <kbd>Backspace</kbd> para borrar,
-          <kbd>Escape</kbd> para limpiar y <kbd>Enter</kbd> para ingresar.
-        </p>
-
-        <div class="doctor-keypad" role="group" aria-label="Teclado numérico de DNI">
-          <button type="button" aria-label="Uno" onclick="addDoctorDni('1')">1</button>
-          <button type="button" aria-label="Dos" onclick="addDoctorDni('2')">2</button>
-          <button type="button" aria-label="Tres" onclick="addDoctorDni('3')">3</button>
-          <button type="button" aria-label="Cuatro" onclick="addDoctorDni('4')">4</button>
-          <button type="button" aria-label="Cinco" onclick="addDoctorDni('5')">5</button>
-          <button type="button" aria-label="Seis" onclick="addDoctorDni('6')">6</button>
-          <button type="button" aria-label="Siete" onclick="addDoctorDni('7')">7</button>
-          <button type="button" aria-label="Ocho" onclick="addDoctorDni('8')">8</button>
-          <button type="button" aria-label="Nueve" onclick="addDoctorDni('9')">9</button>
-          <button type="button" aria-label="Borrar último dígito" onclick="deleteDoctorDni()">⌫</button>
-          <button type="button" aria-label="Cero" onclick="addDoctorDni('0')">0</button>
-          <button type="button" aria-label="Limpiar DNI" onclick="clearDoctorDni()">Limpiar</button>
+          </div>
         </div>
 
-        <button type="button" class="doctor-ingresar-btn" onclick="loginDoctorDni()">
-          🔒 Ingresar
-        </button>
+        <!-- Columna Derecha: Teclado y Validación de DNI -->
+        <div class="col-12 col-lg-7">
+          <div class="dni-form-panel p-2">
+            
+            <span class="welcome-badge">Identificación Profesional</span>
+            <h1 class="welcome-title fs-3 mb-2">Ingreso con DNI</h1>
+            <p class="text-muted mb-3">
+              Digite sus 8 dígitos en el teclado táctil o con su teclado físico.
+            </p>
 
-        <p id="doctorLoginError" class="doctor-login-error" role="alert" aria-live="assertive"></p>
+            <!-- Display de DNI -->
+            <div id="doctorDniDisplay" class="dni-display-screen" aria-hidden="true">_ _ _ _ _ _ _ _</div>
+            <span id="doctorDniStatus" class="visually-hidden" role="status" aria-live="polite"></span>
+
+            <p class="small text-muted mb-3 text-center">
+              DNI de prueba: <strong>10000001</strong> (Dr. Ramírez) o <strong>10000002</strong> (Dra. López)
+            </p>
+
+            <!-- Teclado Numérico Táctil -->
+            <div class="modern-keypad" role="group" aria-label="Teclado numérico de DNI">
+              <button type="button" onclick="addDoctorDni('1')">1</button>
+              <button type="button" onclick="addDoctorDni('2')">2</button>
+              <button type="button" onclick="addDoctorDni('3')">3</button>
+              <button type="button" onclick="addDoctorDni('4')">4</button>
+              <button type="button" onclick="addDoctorDni('5')">5</button>
+              <button type="button" onclick="addDoctorDni('6')">6</button>
+              <button type="button" onclick="addDoctorDni('7')">7</button>
+              <button type="button" onclick="addDoctorDni('8')">8</button>
+              <button type="button" onclick="addDoctorDni('9')">9</button>
+              <button type="button" class="key-action" onclick="deleteDoctorDni()" title="Borrar último dígito">⌫</button>
+              <button type="button" onclick="addDoctorDni('0')">0</button>
+              <button type="button" class="key-action" onclick="clearDoctorDni()" title="Limpiar DNI">Limpiar</button>
+            </div>
+
+            <!-- Botón Ingresar -->
+            <div class="mt-4" style="max-width: 440px; margin-left: auto; margin-right: auto;">
+              <button type="button" class="btn-clinic-primary w-100 py-3" onclick="loginDoctorDni()">
+                🔒 Ingresar al Módulo Médico
+              </button>
+
+              <p id="doctorLoginError" class="doctor-login-error text-center mt-3 mb-0" role="alert" aria-live="assertive"></p>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-
     </div>
+  </main>
 
-    <div class="doctor-login-footer">
-      Ingrese su DNI para acceder al módulo del doctor
-    </div>
+  <div id="toast" class="toast"></div>
 
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
 </body>
 </html>

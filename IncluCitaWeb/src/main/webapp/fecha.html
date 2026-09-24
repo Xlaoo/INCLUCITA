@@ -1,73 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IncluCita - Fecha</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Selección de Fecha</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modernClinic.css">
 </head>
 
-<body class="bootstrap-responsive">
+<body class="booking-page-body">
 
-<div class="app container-fluid px-2 px-sm-3">
-
-    <section id="screen-date" class="screen active">
-      <div class="top">
-  <div class="brand">
-    <div class="logo">♡</div>
-    <div>
-      <div class="brand-title">IncluCita</div>
-      <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
-    </div>
-  </div>
-</div>
-      <div class="content">
-        <div class="header-line">
-          <button class="back-btn" onclick="goTo('screen-specialty')">← Volver</button>
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <!-- Marca -->
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">♡</div>
+        <div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Clínica & Citas Inclusivas</div>
         </div>
+      </a>
 
-        <div class="step-bar">
-          <div class="step">1</div><div class="line"></div>
-          <div class="step active-step">2</div><div class="line"></div>
-          <div class="step">3</div>
-        </div>
+      <!-- Botones de Utilidad -->
+      <div class="d-flex align-items-center gap-3">
+        <button class="voice-assist-pill" onclick="openAssistant()">
+          <span>🔊</span> Asistencia por voz
+        </button>
 
-        <h2>Seleccione la fecha disponible</h2>
-
-       <div class="calendar">
-  <div class="calendar-title">
-      <span>‹</span>
-      <span id="calendarMonthTitle">Mayo 2026</span>
-      <span>›</span>
-  </div>
-
-  <div class="calendar-grid" id="calendarHeader">
-      <div>LUN</div>
-      <div>MAR</div>
-      <div>MIÉ</div>
-      <div>JUE</div>
-      <div>VIE</div>
-      <div>SÁB</div>
-      <div>DOM</div>
-  </div>
-
-  <div class="calendar-grid" id="calendarDays"></div>
-</div>
-
-        <div class="legend">
-  <div><span class="box free"></span> Libre</div>
-  <div><span class="box partial"></span> Algunos horarios ocupados</div>
-  <div><span class="box gray"></span> Sin disponibilidad</div>
-</div>
+        <button class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;" onclick="goTo('screen-specialty')">
+          ← Volver
+        </button>
       </div>
 
-      <div class="footer-note">Seleccione un día con disponibilidad</div>
-    </section>
+    </div>
+  </header>
 
-</div>
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+  <!-- 2. Stepper del Proceso de Reserva -->
+  <div class="container booking-stepper">
+    <div class="d-flex align-items-center justify-content-between">
+      
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Identificación</span>
+      </div>
+
+      <div class="step-divider" style="background:var(--accent-green);"></div>
+
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Especialidad</span>
+      </div>
+
+      <div class="step-divider" style="background:var(--accent-green);"></div>
+
+      <div class="step-item active">
+        <div class="step-bubble">3</div>
+        <span>Fecha & Turno</span>
+      </div>
+
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-bubble">4</div>
+        <span>Comprobante</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. Contenedor Principal -->
+  <main class="container my-4">
+    <div class="booking-main-card">
+      <div class="row g-4 align-items-stretch">
+        
+        <!-- Columna Izquierda: Información -->
+        <div class="col-12 col-lg-4">
+          <div class="doctor-welcome-box">
+            
+            <div class="doctor-avatar-wrap">
+              <img src="Doctora.png" alt="Doctora de Atención Médica">
+            </div>
+
+            <span class="welcome-badge">Paso 3 de 4</span>
+            <h2 class="welcome-title">Fecha de Atención</h2>
+            <p class="welcome-text">
+              Elija el día en el calendario que mejor se acomode a su disponibilidad.
+            </p>
+
+            <div class="feature-points">
+              <p><span>🟢</span> Días en verde: turnos disponibles</p>
+              <p><span>🟡</span> Días en ámbar: pocos turnos</p>
+              <p><span>⚪</span> Días en gris: no disponibles</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Calendario Clínico -->
+        <div class="col-12 col-lg-8">
+          <div class="p-2">
+            <span class="welcome-badge">Agenda Médica</span>
+            <h1 class="welcome-title fs-3 mb-2">Seleccione el día de su consulta</h1>
+            <p class="text-muted mb-4">Los días con horarios habilitados están resaltados en verde.</p>
+
+            <div class="calendar">
+              <div class="calendar-title">
+                <span>‹</span>
+                <span id="calendarMonthTitle">Mayo 2026</span>
+                <span>›</span>
+              </div>
+
+              <div class="calendar-grid mb-2" id="calendarHeader">
+                <div>LUN</div>
+                <div>MAR</div>
+                <div>MIÉ</div>
+                <div>JUE</div>
+                <div>VIE</div>
+                <div>SÁB</div>
+                <div>DOM</div>
+              </div>
+
+              <div class="calendar-grid" id="calendarDays"></div>
+
+              <div class="legend">
+                <div><span class="box free"></span> Disponible</div>
+                <div><span class="box partial"></span> Algunos horarios ocupados</div>
+                <div><span class="box gray"></span> Sin disponibilidad</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>

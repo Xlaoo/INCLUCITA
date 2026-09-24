@@ -1,0 +1,1001 @@
+/* =========================================================
+   INCLUCITA - MODERN CLINIC DESIGN SYSTEM
+   Paleta médica profesional, moderna, accesible y responsiva.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-teal: #0f766e;
+  --primary-teal-hover: #0d9488;
+  --primary-dark: #0e3d59;
+  --primary-soft: #f0fdfa;
+  --primary-border: #ccfbf1;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --accent-cyan: #06b6d4;
+  --accent-amber: #d97706;
+  --accent-green: #16a34a;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 10px 25px rgba(15, 118, 110, 0.07);
+  --shadow-lg: 0 18px 45px rgba(15, 118, 110, 0.12);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+body.booking-page-body,
+body.modern-clinic-body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%) !important;
+  color: var(--text-dark) !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* 1. Navbar Unificada de Alta Gama */
+.booking-navbar {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand-logo-circle {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.3);
+}
+
+.brand-name {
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--text-dark);
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 0.75rem;
+  color: var(--primary-teal);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voice-assist-pill {
+  background: var(--primary-soft);
+  color: var(--primary-teal);
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--primary-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.voice-assist-pill:hover {
+  background: var(--primary-teal);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+}
+
+/* 2. Stepper del Proceso de Citas */
+.booking-stepper {
+  padding: 24px 0 12px 0;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.step-item.active {
+  color: var(--primary-teal);
+}
+
+.step-item.completed {
+  color: var(--accent-green);
+}
+
+.step-bubble {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+
+.step-item.active .step-bubble {
+  background: var(--primary-teal);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.35);
+}
+
+.step-item.completed .step-bubble {
+  background: var(--accent-green);
+  color: #ffffff;
+}
+
+.step-divider {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 12px;
+}
+
+/* 3. Card Principal */
+.booking-main-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  padding: 36px 32px;
+  margin-bottom: 40px;
+}
+
+/* 4. Panel Lateral Doctor / Asistente */
+.doctor-welcome-box {
+  background: linear-gradient(145deg, #f0fdfa 0%, #e6f7f5 100%);
+  border-radius: 20px;
+  padding: 32px 24px;
+  border: 1px solid rgba(15, 118, 110, 0.15);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.doctor-avatar-wrap {
+  width: 150px;
+  height: 150px;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 8px 24px rgba(15, 118, 110, 0.18);
+  margin-bottom: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doctor-avatar-wrap img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.welcome-badge {
+  background: #ffffff;
+  color: var(--primary-teal);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--primary-border);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.welcome-title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.welcome-text {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.feature-points {
+  text-align: left;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 16px;
+  border-radius: 14px;
+}
+
+.feature-points p {
+  margin-bottom: 8px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feature-points p:last-child {
+  margin-bottom: 0;
+}
+
+/* 5. Tarjetas de Especialidad Médica */
+.specialty-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.specialty-card-modern {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 22px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  text-decoration: none;
+  color: var(--text-dark);
+}
+
+.specialty-card-modern:hover {
+  border-color: var(--primary-teal);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 118, 110, 0.12);
+  background: #f0fdfa;
+}
+
+.specialty-card-modern.selected {
+  border-color: var(--primary-teal);
+  background: #f0fdfa;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.2);
+}
+
+.specialty-icon-bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #e6f7f5 0%, #ccfbf1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: transform 0.2s ease;
+}
+
+.specialty-card-modern:hover .specialty-icon-bubble {
+  transform: scale(1.1);
+}
+
+.specialty-title-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.specialty-badge-sub {
+  font-size: 0.76rem;
+  color: var(--primary-teal);
+  font-weight: 600;
+}
+
+/* 6. Calendario Clínico Moderno */
+.modern-calendar-wrap {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+}
+
+.calendar-header-modern {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calendar-month-badge {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.calendar-nav-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--primary-dark);
+  transition: all 0.2s;
+}
+
+.calendar-nav-btn:hover {
+  background: var(--primary-teal);
+  color: white;
+}
+
+.calendar-weekdays-modern {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.calendar-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-day-modern {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.calendar-day-modern.available {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.calendar-day-modern.available:hover {
+  background: #16a34a;
+  color: white;
+  transform: scale(1.05);
+}
+
+.calendar-day-modern.partial {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.calendar-day-modern.selected {
+  background: var(--primary-teal) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.4);
+}
+
+.calendar-day-modern.empty {
+  cursor: default;
+  opacity: 0.25;
+}
+
+/* 7. Horarios / Time Slots */
+.timeslot-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.timeslot-chip {
+  padding: 12px 8px;
+  border-radius: 14px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-dark);
+}
+
+.timeslot-chip:hover {
+  border-color: var(--primary-teal);
+  background: #f0fdfa;
+  color: var(--primary-teal);
+  transform: translateY(-2px);
+}
+
+.timeslot-chip.active {
+  background: var(--primary-teal);
+  border-color: var(--primary-teal);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(15, 118, 110, 0.35);
+}
+
+.timeslot-chip.occupied {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* 8. Resumen de Cita & Comprobante */
+.summary-card-modern {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-row-modern {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.summary-row-modern:last-child {
+  border-bottom: none;
+}
+
+.summary-label-modern {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.summary-value-modern {
+  font-weight: 800;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+}
+
+/* 9. Botones de Acción Primarios & Secundarios */
+.btn-clinic-primary {
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 14px 28px;
+  border: none;
+  box-shadow: 0 6px 20px rgba(15, 118, 110, 0.28);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-clinic-primary:hover {
+  background: linear-gradient(135deg, var(--primary-teal-hover), var(--primary-dark));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+}
+
+.btn-clinic-secondary {
+  background: #f1f5f9;
+  color: var(--text-dark) !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  padding: 12px 24px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-clinic-secondary:hover {
+  background: #e2e8f0;
+  color: var(--text-dark);
+}
+
+/* 10. Tablas Clínicas (Doctor y Secretaria) */
+.clinic-table {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.clinic-table th {
+  background: #f8fafc;
+  color: var(--primary-dark);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.clinic-table td {
+  padding: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
+}
+
+.clinic-badge-atendida {
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.clinic-badge-pendiente {
+  background: #fef3c7;
+  color: #b45309;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.clinic-badge-cancelada {
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+/* 11. Modal Moderno */
+.modal-content.modern-modal {
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.modal-header.modern-modal-header {
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+  color: white;
+  padding: 20px 24px;
+}
+
+/* 12. Calendario Nativo de script.js */
+.calendar {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.calendar-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.calendar-title span:first-child,
+.calendar-title span:last-child {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--primary-teal);
+  transition: all 0.2s ease;
+}
+
+.calendar-title span:first-child:hover,
+.calendar-title span:last-child:hover {
+  background: var(--primary-teal);
+  color: white;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  text-align: center;
+}
+
+#calendarHeader div {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 6px 0;
+  text-transform: uppercase;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1.5px solid transparent;
+}
+
+.day.disabled {
+  background: #f8fafc;
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.day.available {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.day.available:hover {
+  background: var(--primary-teal);
+  color: white;
+  border-color: var(--primary-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.3);
+}
+
+.day.reserved-day {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.day.today {
+  border: 2px solid var(--accent-cyan);
+}
+
+.day.selected {
+  background: var(--primary-teal) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(15, 118, 110, 0.4);
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.box {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.box.free { background: #bbf7d0; border: 1px solid #16a34a; }
+.box.partial { background: #fde68a; border: 1px solid #d97706; }
+.box.gray { background: #e2e8f0; border: 1px solid #94a3b8; }
+
+/* 13. Horarios / Slots */
+.time-section {
+  margin-bottom: 24px;
+}
+
+.time-section > strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  font-weight: 800;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+}
+
+.time-btn {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.time-btn:hover:not(:disabled) {
+  background: var(--primary-soft);
+  border-color: var(--primary-teal);
+  color: var(--primary-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.15);
+}
+
+.time-btn.selected {
+  background: var(--primary-teal) !important;
+  color: #ffffff !important;
+  border-color: var(--primary-teal) !important;
+  box-shadow: 0 6px 16px rgba(15, 118, 110, 0.35);
+}
+
+.time-btn.blocked-time {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.time-btn.expired-time {
+  background: #f8fafc;
+  border-color: #f1f5f9;
+  color: #cbd5e1;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.time-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.time-legend > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.available-box { background: var(--primary-soft); border: 1.5px solid var(--primary-teal); }
+.occupied-box { background: #f1f5f9; border: 1.5px solid #cbd5e1; }
+
+/* 14. Resumen de Cita */
+.summary-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  max-width: 600px;
+  margin: 0 auto 28px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--primary-soft);
+  color: var(--primary-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.summary-row strong {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  width: 140px;
+}
+
+.summary-row span {
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* 15. Ticket / Comprobante de Alta Calidad */
+.ticket-preview {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.ticket.ticket-modern {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 2px dashed #94a3b8;
+  padding: 36px 32px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.ticket-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.ticket-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+  color: white;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+}
+
+.ticket-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ticket-column p {
+  margin-bottom: 12px;
+}
+
+.ticket-column strong {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ticket-column span {
+  display: block;
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+.print-btn {
+  background: linear-gradient(135deg, var(--primary-teal), var(--primary-dark));
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 12px 28px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.3);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.print-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* 16. Cards de Estadísticas Médicas / Dashboard */
+.stat-card-modern {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+}
+
+.stat-card-modern:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+

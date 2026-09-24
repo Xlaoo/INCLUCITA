@@ -1,91 +1,145 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IncluCita - Comprobante</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncluCita - Comprobante de Cita Médica</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modernClinic.css">
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
+    }
+  </style>
 </head>
 
-<body class="bootstrap-responsive">
+<body class="booking-page-body">
 
-<div class="app container-fluid px-2 px-sm-3">
+  <!-- 1. Barra de Navegación -->
+  <header class="booking-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <!-- Marca -->
+      <a class="d-flex align-items-center gap-2 text-decoration-none" href="pantallaPrincipal.html">
+        <div class="brand-logo-circle">♡</div>
+        <div>
+          <div class="brand-name">IncluCita</div>
+          <div class="brand-sub">Clínica & Citas Inclusivas</div>
+        </div>
+      </a>
 
-    <section id="screen-ticket" class="screen active">
-      <div class="top">
-  <div class="brand">
-    <div class="logo">♡</div>
-    <div>
-      <div class="brand-title">IncluCita</div>
-      <div class="brand-subtitle">Plataforma de citas médica inclusiva</div>
-    </div>
-  </div>
-</div>
-      <div class="content">
-
-        <button class="back-btn" onclick="resetSystem()">
-          ← Volver al inicio
+      <!-- Botones de Utilidad -->
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-outline-secondary btn-sm fw-bold px-3 py-2" style="border-radius:10px;" onclick="resetSystem()">
+          🏠 Volver al inicio
         </button>
+      </div>
 
-        <h2>Vista previa del comprobante</h2>
+    </div>
+  </header>
 
-        <button class="print-btn" onclick="fakePrint()">
-          🖨️ Imprimir comprobante
-        </button>
+  <!-- 2. Stepper de Proceso Completado -->
+  <div class="container booking-stepper">
+    <div class="d-flex align-items-center justify-content-between">
+      
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Identificación</span>
+      </div>
 
-        <div class="ticket-preview">
-<div class="ticket ticket-modern" id="printArea">
+      <div class="step-divider" style="background:var(--accent-green);"></div>
 
-  <div class="ticket-header">
-    <div class="ticket-logo">♡</div>
-    <div>
-      <strong style="font-size:18px;">IncluCita</strong><br>
-      <small>Plataforma de citas médica inclusiva</small>
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Especialidad</span>
+      </div>
+
+      <div class="step-divider" style="background:var(--accent-green);"></div>
+
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Fecha & Turno</span>
+      </div>
+
+      <div class="step-divider" style="background:var(--accent-green);"></div>
+
+      <div class="step-item completed">
+        <div class="step-bubble">✓</div>
+        <span>Comprobante</span>
+      </div>
+
     </div>
   </div>
 
-  <div class="ticket-body">
-    <div class="ticket-column">
-      <p><strong>Paciente:</strong><br><span id="ticketPatient"></span></p>
-      <p><strong>DNI:</strong><br><span id="ticketDni"></span></p>
-      <p><strong>Especialidad:</strong><br><span id="ticketSpecialty"></span></p>
-      <p><strong>Médico:</strong><br><span id="ticketDoctor"></span></p>
+  <!-- 3. Contenedor Principal del Ticket -->
+  <main class="container my-4 text-center">
+    
+    <div class="d-inline-block text-center mb-3">
+      <span class="welcome-badge">¡Cita Registrada Exitosamente!</span>
+      <h1 class="welcome-title fs-2 mt-2">Comprobante Oficial de Cita Médica</h1>
+      <p class="text-muted">Presente este comprobante en la admisión o ventanilla el día de su consulta.</p>
+
+      <button class="print-btn" onclick="fakePrint()">
+        🖨️ Imprimir Comprobante Oficial
+      </button>
     </div>
 
-    <div class="ticket-column ticket-right">
-      <p><strong>Consultorio:</strong><br><span id="ticketConsultorio"></span></p>
-      <p><strong>Fecha:</strong><br><span id="ticketDate"></span></p>
-      <p><strong>Hora:</strong><br><span id="ticketTime"></span></p>
+    <!-- Ticket Card Imprimible -->
+    <div class="ticket-preview">
+      <div class="ticket ticket-modern" id="printArea">
 
+        <div class="ticket-header">
+          <div class="ticket-logo">♡</div>
+          <div class="text-start">
+            <strong style="font-size:20px; color:var(--primary-dark);">IncluCita Salud</strong><br>
+            <small class="text-muted">Centro Clínico Especializado e Inclusivo</small>
+          </div>
+        </div>
 
-    </div>
-  </div>
+        <div class="ticket-body text-start">
+          <div class="ticket-column">
+            <p><strong>Paciente</strong><span id="ticketPatient"></span></p>
+            <p><strong>DNI Ciudadano</strong><span id="ticketDni"></span></p>
+            <p><strong>Especialidad</strong><span id="ticketSpecialty"></span></p>
+            <p><strong>Médico Tratante</strong><span id="ticketDoctor"></span></p>
+          </div>
 
-  <hr>
+          <div class="ticket-column ticket-right">
+            <p><strong>Consultorio</strong><span id="ticketConsultorio"></span></p>
+            <p><strong>Fecha Programada</strong><span id="ticketDate"></span></p>
+            <p><strong>Hora de Atención</strong><span id="ticketTime"></span></p>
+            <p><strong>Estado de Cita</strong><span class="badge bg-success text-white mt-1">CONFIRMADA</span></p>
+          </div>
+        </div>
 
-  <p style="text-align:center;">
-    <strong>💙 ¡Gracias por confiar en nosotros!</strong>
-  </p>
+        <hr style="border-top:1.5px dashed #cbd5e1; margin:20px 0;">
 
-</div>
-
-
+        <div class="d-flex justify-content-between align-items-center text-start">
+          <div>
+            <small class="text-muted d-block">Presentarse 10 minutos antes.</small>
+            <strong style="color:var(--primary-teal); font-size:0.95rem;">💙 ¡Gracias por confiar en nosotros!</strong>
+          </div>
+          <div style="font-size:30px;">🏥</div>
         </div>
 
       </div>
+    </div>
 
-      <div class="footer-note">
-        Toque "Imprimir comprobante"
-      </div>
+    <div class="mt-4">
+      <button class="btn-clinic-secondary" onclick="resetSystem()">
+        ← Reservar otra cita
+      </button>
+    </div>
 
-    </section>
+  </main>
 
-</div>
-<div id="toast" class="toast"></div>
+  <div id="toast" class="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>

@@ -551,9 +551,36 @@
                 <p class="mb-2"><strong>Condición:</strong> <span class="badge bg-success">ACTIVO / HABILITADO</span></p>
               </div>
 
-              <button class="btn-use-sunat mt-3" onclick="aceptarDatosSunat()">
-                ✓ Usar estos datos y continuar
-              </button>
+              <div class="d-flex flex-column gap-2 mt-3">
+                <button class="btn-use-sunat" onclick="aceptarDatosSunat()">
+                  ✓ Usar estos datos y continuar
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold" style="border-radius:10px; padding:7px;" onclick="habilitarEdicionSunat()">
+                  ✏️ No son mis datos / Corregir mis datos
+                </button>
+              </div>
+
+              <!-- Formulario de edición rápida si los datos no coinciden -->
+              <div id="sunatEditForm" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed #cbd5e1; text-align:left;">
+                <p class="text-muted small mb-2"><strong>✍️ Ingrese sus datos reales:</strong></p>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Nombres:</label>
+                  <input type="text" id="editSunatNombres" class="form-control form-control-sm" placeholder="Ej: Rodrigo Alonso">
+                </div>
+                <div class="row g-2 mb-2">
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Apellido Paterno:</label>
+                    <input type="text" id="editSunatPaterno" class="form-control form-control-sm" placeholder="Ej: De la Cruz">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Apellido Materno:</label>
+                    <input type="text" id="editSunatMaterno" class="form-control form-control-sm" placeholder="Ej: Mendoza">
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success btn-sm w-100 fw-bold py-2 mt-1" style="border-radius:10px;" onclick="guardarDatosCorregidosSunat()">
+                  💾 Guardar mis datos reales y continuar
+                </button>
+              </div>
 
             </div>
 
