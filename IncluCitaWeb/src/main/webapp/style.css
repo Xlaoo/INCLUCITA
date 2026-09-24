@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* =========================================================
    INCLUCITA - CSS CONSOLIDADO
    Se eliminó una copia accidental casi completa de style.css.
@@ -1998,8 +2000,8 @@ body {
   max-width: 1200px !important;
   min-height: 100vh !important;
   background:
-    radial-gradient(circle at 8% 25%, rgba(125,211,252,.28) 0 35px, transparent 36px),
-    radial-gradient(circle at 92% 25%, rgba(125,211,252,.28) 0 35px, transparent 36px),
+    radial-gradient(circle at 8% 25%, rgba(125,211,252,.28) 0%, rgba(125,211,252,.28) 35px, transparent 36px),
+    radial-gradient(circle at 92% 25%, rgba(125,211,252,.28) 0%, rgba(125,211,252,.28) 35px, transparent 36px),
     linear-gradient(180deg, #f8fdff 0%, #eaf8ff 100%) !important;
   position: relative !important;
   overflow: hidden !important;
@@ -12259,8 +12261,6 @@ body {
 /* =========================================================
    MODERN MEDICAL CLINIC THEME (VitalCare / IncluCita Upgrade)
    ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;

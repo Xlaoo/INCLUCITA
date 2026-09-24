@@ -12,9 +12,17 @@ import java.sql.Statement;
 public class ConexionBD {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/inclucitadb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima&characterEncoding=UTF-8";
-    private static final String USUARIO = "root";
-    private static final String PASSWORD = ""; // Por defecto en XAMPP está en blanco
+    private static final String URL = getEnvOrProp("DB_URL", "jdbc:mysql://localhost:3306/inclucitadb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima&characterEncoding=UTF-8");
+    private static final String USUARIO = getEnvOrProp("DB_USER", "root");
+    private static final String PASSWORD = getEnvOrProp("DB_PASSWORD", ""); // Por defecto en XAMPP está en blanco
+
+    private static String getEnvOrProp(String name, String defaultValue) {
+        String val = System.getenv(name);
+        if (val == null || val.trim().isEmpty()) {
+            val = System.getProperty(name);
+        }
+        return (val != null && !val.trim().isEmpty()) ? val.trim() : defaultValue;
+    }
 
     static {
         try {
