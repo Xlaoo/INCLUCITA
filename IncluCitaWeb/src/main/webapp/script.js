@@ -5495,9 +5495,6 @@ function loginDoctorDni() {
     return String(doc.dni).trim() === String(doctorDni).trim();
   });
 
-  console.log("DNI ingresado:", doctorDni);
-  console.log("Doctor encontrado:", doctorEncontrado);
-
   if (!doctorEncontrado) {
     if (error) error.textContent = "Número de DNI incorrecto.";
     if (display) display.setAttribute("data-estado", "error");

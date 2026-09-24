@@ -185,11 +185,11 @@ public class LoginServlet extends HttpServlet {
             } else {
                 // Redireccionar según el rol
                 if (usuario.getIdRol() == 2) { // Doctor
-                    response.sendRedirect(request.getContextPath() + "/doctorMenu.jsp");
+                    response.sendRedirect(request.getContextPath() + "/doctorMenu.html");
                 } else if (usuario.getIdRol() == 3) { // Secretaria / Admin
                     response.sendRedirect(request.getContextPath() + "/secretariaDashboard.jsp");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/especialidad.jsp");
+                    response.sendRedirect(request.getContextPath() + "/especialidad.html");
                 }
             }
         } else {

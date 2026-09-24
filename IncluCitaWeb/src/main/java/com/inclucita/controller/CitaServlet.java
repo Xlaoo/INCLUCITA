@@ -2,10 +2,8 @@ package com.inclucita.controller;
 
 import com.google.gson.Gson;
 import com.inclucita.dao.CitaDAO;
-import com.inclucita.dao.DoctorDAO;
 import com.inclucita.dao.UsuarioDAO;
 import com.inclucita.model.Cita;
-import com.inclucita.model.Doctor;
 import com.inclucita.model.ObservacionClinica;
 import com.inclucita.model.Usuario;
 
@@ -31,14 +29,12 @@ public class CitaServlet extends HttpServlet {
 
     private CitaDAO citaDAO;
     private UsuarioDAO usuarioDAO;
-    private DoctorDAO doctorDAO;
     private Gson gson;
 
     @Override
     public void init() throws ServletException {
         citaDAO = new CitaDAO();
         usuarioDAO = new UsuarioDAO();
-        doctorDAO = new DoctorDAO();
         gson = new Gson();
     }
 
