@@ -560,7 +560,7 @@
           <c:otherwise>
             <a href="IncluCita.html" class="text-secondary text-decoration-none fw-semibold">Portal Paciente</a>
             <a href="DoctorLogin.html" class="text-secondary text-decoration-none fw-semibold">Portal Médico</a>
-            <a href="SecretariaLogin.html" class="text-secondary text-decoration-none fw-semibold">Administración</a>
+            <a href="SecretariaLogin.html" class="text-secondary text-decoration-none fw-semibold">Secretaría</a>
           </c:otherwise>
         </c:choose>
       </div>
@@ -772,9 +772,9 @@
           <!-- Secretaria -->
           <div class="col-12 col-md-4">
             <div class="portal-box">
-              <img src="secretaria.png" alt="Portal Administrativo" class="portal-avatar-img">
-              <h4 class="fw-bold fs-5">Secretaria / Admin</h4>
-              <p class="small text-white-50">Administración de citas, reprogramaciones, médicos y dashboard.</p>
+              <img src="secretaria.png" alt="Portal de Secretaría" class="portal-avatar-img">
+              <h4 class="fw-bold fs-5">Secretaría</h4>
+              <p class="small text-white-50">Gestión de citas, reprogramaciones, médicos y dashboard clínico.</p>
               <a href="SecretariaLogin.html" class="btn-portal-go">Acceder al Panel →</a>
             </div>
           </div>

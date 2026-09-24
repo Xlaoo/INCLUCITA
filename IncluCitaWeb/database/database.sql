@@ -36,6 +36,11 @@ CREATE TABLE usuarios (
     nombre_completo VARCHAR(150) NOT NULL,
     telefono VARCHAR(20),
     email VARCHAR(100),
+    departamento VARCHAR(50) NULL,
+    provincia VARCHAR(50) NULL,
+    distrito VARCHAR(50) NULL,
+    condicion VARCHAR(50) DEFAULT 'Sin condición especial',
+    detalle_condicion VARCHAR(100) NULL,
     id_rol INT NOT NULL,
     estado ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO',
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -109,10 +114,10 @@ INSERT INTO especialidades (id_especialidad, nombre, icono, descripcion) VALUES
 (6, 'Cardiología', '❤️', 'Cuidado y diagnóstico del sistema cardiovascular'),
 (7, 'Dermatología', '🧴', 'Cuidado y tratamiento de enfermedades de la piel');
 
--- Inserción de Usuarios Administradores (Secretarias)
+-- Inserción de Usuarios Administrativos (Secretarias)
 INSERT INTO usuarios (dni, username, password, nombre_completo, telefono, email, id_rol) VALUES
 ('00000001', 'secretaria', 'secretaria123', 'Lic. Carmen Rosa Salas', '987111222', 'secretaria@inclucita.com', 3),
-('00000002', 'admin', 'admin123', 'Administrador General', '987333444', 'admin@inclucita.com', 3);
+('72527818', 'secretaria2', '123456', 'Recepcionista Turno Tarde', '987333444', 'recepcion@inclucita.com', 3);
 
 -- Inserción de Usuarios Médicos
 INSERT INTO usuarios (dni, username, password, nombre_completo, telefono, email, id_rol) VALUES

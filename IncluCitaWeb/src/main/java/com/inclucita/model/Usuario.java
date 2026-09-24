@@ -16,6 +16,11 @@ public class Usuario implements Serializable {
     private String nombreCompleto;
     private String telefono;
     private String email;
+    private String departamento;
+    private String provincia;
+    private String distrito;
+    private String condicion;
+    private String detalleCondicion;
     private int idRol;
     private String nombreRol;
     private String estado;
@@ -91,6 +96,46 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
+    public String getCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
+    }
+
+    public String getDetalleCondicion() {
+        return detalleCondicion;
+    }
+
+    public void setDetalleCondicion(String detalleCondicion) {
+        this.detalleCondicion = detalleCondicion;
     }
 
     public int getIdRol() {

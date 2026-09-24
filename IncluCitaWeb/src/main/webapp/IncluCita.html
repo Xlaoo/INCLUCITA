@@ -519,15 +519,11 @@
               <button type="button" class="key-action" onclick="clearDni()" title="Limpiar todo">Limpiar</button>
             </div>
 
-            <!-- Acciones Principales -->
+            <!-- Acciones Principales de Ingreso -->
             <div class="d-flex flex-column gap-2 mt-4" style="max-width:440px; margin-left:auto; margin-right:auto;">
               
-              <button class="btn-clinic-primary w-100 py-3 fw-bold fs-5" onclick="confirmDniManual()">
-                Aceptar DNI y Continuar →
-              </button>
-
-              <button id="btnBuscarSunat" class="btn btn-outline-primary fw-semibold py-2 d-flex align-items-center justify-content-center gap-2" style="border-radius:12px;" onclick="buscarDatosSunatReniec()">
-                <span>🔍</span> Verificar datos con RENIEC / Padrón
+              <button id="btnIngresarPaciente" class="btn-clinic-primary w-100 py-3 fw-bold fs-5 shadow-sm" onclick="validarIngresoPaciente()">
+                INGRESAR
               </button>
 
               <button id="btnVerSolicitud" class="btn btn-outline-info fw-bold py-2" style="display:none; border-radius:12px;" onclick="mostrarSolicitudPaciente()">
@@ -536,57 +532,126 @@
 
             </div>
 
-            <!-- Tarjeta Oficial de Resultados SUNAT / RENIEC -->
-            <div id="sunatResultBox" class="sunat-official-card" style="display:none; max-width:440px; margin:20px auto 0;">
-              
-              <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-                <span style="font-size:24px;">🏛️</span>
-                <div>
-                  <strong style="color:var(--primary-dark); font-size:1.05rem;">Consulta Oficial SUNAT / RENIEC</strong><br>
-                  <small class="text-muted">Padrón Nacional de Identificación Ciudadana</small>
+            <!-- Alerta: Paciente No Registrado en IncluCita -->
+            <div id="noRegistradoBox" style="display:none; max-width:440px; margin:18px auto 0;" class="alert alert-warning border shadow-sm text-center p-3 rounded-4">
+              <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                <span style="font-size:1.35rem;">⚠️</span>
+                <span id="noRegistradoMensaje" class="fw-bold text-dark" style="font-size:0.95rem;">
+                  El DNI ingresado no se encuentra registrado en IncluCita.
+                </span>
+              </div>
+              <p class="small text-muted mb-2">Para reservar citas médicas por primera vez, debe registrarse en el sistema.</p>
+              <button id="btnRegistrarme" type="button" class="btn btn-primary fw-bold px-4 py-2" style="border-radius:12px; font-size:1rem;" onclick="abrirFormularioRegistro()">
+                📝 REGISTRARME
+              </button>
+            </div>
+
+            <!-- Formulario de Registro de Paciente (Verificación oficial con API RENIEC) -->
+            <div id="seccionRegistroPaciente" class="sunat-official-card" style="display:none; max-width:460px; margin:22px auto 0; text-align:left;">
+              <div class="d-flex align-items-center justify-content-between pb-2 mb-3 border-bottom">
+                <div class="d-flex align-items-center gap-2">
+                  <span style="font-size:1.5rem;">🏥</span>
+                  <div>
+                    <strong style="color:var(--primary-dark); font-size:1.05rem;">Registro de Paciente</strong><br>
+                    <small class="text-muted">Consulta de identidad oficial y datos de contacto</small>
+                  </div>
                 </div>
+                <button type="button" class="btn-close" onclick="cancelarRegistroPaciente()" aria-label="Cerrar" title="Cerrar registro"></button>
               </div>
 
-              <div style="font-size:0.95rem; line-height:1.7;">
-                <p class="mb-1"><strong>DNI:</strong> <span id="sunatDni" class="badge bg-primary fs-6"></span></p>
-                <p class="mb-1"><strong>Nombres:</strong> <span id="sunatNombres" class="fw-semibold text-dark"></span></p>
-                <p class="mb-1"><strong>Apellido Paterno:</strong> <span id="sunatPaterno" class="fw-semibold text-dark"></span></p>
-                <p class="mb-1"><strong>Apellido Materno:</strong> <span id="sunatMaterno" class="fw-semibold text-dark"></span></p>
-                <p class="mb-1"><strong>Nombre Completo:</strong> <strong id="sunatCompleto" style="color:var(--primary-teal);"></strong></p>
-                <p class="mb-2"><strong>Condición:</strong> <span class="badge bg-success">ACTIVO / HABILITADO</span></p>
+              <!-- Paso 1: Verificación de Identidad con API Oficial -->
+              <div class="mb-3">
+                <label for="regDniInput" class="form-label fw-bold text-dark small mb-1">DNI:</label>
+                <div class="input-group">
+                  <input type="text" id="regDniInput" class="form-control fw-bold fs-5 text-center" maxlength="8" placeholder="Ingrese 8 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                  <button id="btnVerificarDniApi" class="btn btn-primary fw-bold px-3" type="button" onclick="verificarDniRegistro()">
+                    🔍 VERIFICAR DNI
+                  </button>
+                </div>
+                <div id="regDniFeedback" class="small mt-1"></div>
               </div>
 
-              <div class="d-flex flex-column gap-2 mt-3">
-                <button class="btn-use-sunat" onclick="aceptarDatosSunat()">
-                  ✓ Usar estos datos y continuar
-                </button>
-                <button type="button" class="btn btn-outline-secondary btn-sm fw-semibold" style="border-radius:10px; padding:7px;" onclick="habilitarEdicionSunat()">
-                  ✏️ No son mis datos / Corregir mis datos
-                </button>
-              </div>
-
-              <!-- Formulario de edición rápida si los datos no coinciden -->
-              <div id="sunatEditForm" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed #cbd5e1; text-align:left;">
-                <p class="text-muted small mb-2"><strong>✍️ Ingrese sus datos reales:</strong></p>
+              <!-- Paso 2: Datos Oficiales Verificados (Solo Lectura) -->
+              <div id="datosVerificadosBox" style="display:none; background:#ffffff; border:1px solid #99f6e4; border-radius:12px; padding:14px; margin-bottom:14px; box-shadow:0 4px 12px rgba(15,169,152,0.06);">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span style="color:#0fa998; font-weight:bold; font-size:1.1rem;">✓</span>
+                  <strong class="text-dark small text-uppercase">Datos Verificados Oficialmente</strong>
+                </div>
                 <div class="mb-2">
-                  <label class="form-label small text-muted mb-1">Nombres:</label>
-                  <input type="text" id="editSunatNombres" class="form-control form-control-sm" placeholder="Ej: Rodrigo Alonso">
+                  <label class="form-label small text-muted mb-0">DNI Verificado:</label>
+                  <input type="text" id="regDniVerif" class="form-control form-control-sm bg-light fw-bold" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-0">Nombres:</label>
+                  <input type="text" id="regNombres" class="form-control form-control-sm bg-light" readonly>
                 </div>
                 <div class="row g-2 mb-2">
                   <div class="col-6">
-                    <label class="form-label small text-muted mb-1">Apellido Paterno:</label>
-                    <input type="text" id="editSunatPaterno" class="form-control form-control-sm" placeholder="Ej: De la Cruz">
+                    <label class="form-label small text-muted mb-0">Apellido Paterno:</label>
+                    <input type="text" id="regPaterno" class="form-control form-control-sm bg-light" readonly>
                   </div>
                   <div class="col-6">
-                    <label class="form-label small text-muted mb-1">Apellido Materno:</label>
-                    <input type="text" id="editSunatMaterno" class="form-control form-control-sm" placeholder="Ej: Mendoza">
+                    <label class="form-label small text-muted mb-0">Apellido Materno:</label>
+                    <input type="text" id="regMaterno" class="form-control form-control-sm bg-light" readonly>
                   </div>
                 </div>
-                <button type="button" class="btn btn-success btn-sm w-100 fw-bold py-2 mt-1" style="border-radius:10px;" onclick="guardarDatosCorregidosSunat()">
-                  💾 Guardar mis datos reales y continuar
-                </button>
+                <div class="mb-1">
+                  <label class="form-label small text-muted mb-0">Nombre Completo:</label>
+                  <input type="text" id="regNombreCompleto" class="form-control form-control-sm bg-light fw-bold text-teal" style="color:var(--primary-dark) !important;" readonly>
+                </div>
               </div>
 
+              <!-- Paso 3: Datos a completar por el paciente -->
+              <div id="datosCompletarBox" style="display:none;">
+                <div class="mb-2">
+                  <label for="regEmail" class="form-label small fw-bold mb-1">Correo electrónico: <span class="text-danger">*</span></label>
+                  <input type="email" id="regEmail" class="form-control form-control-sm" placeholder="ejemplo@correo.com" required>
+                  <div class="form-text small" style="font-size:0.75rem;">Obligatorio. Recibirá su comprobante de cita.</div>
+                </div>
+
+                <div class="mb-2">
+                  <label for="regTelefono" class="form-label small fw-bold mb-1">Número de celular: <span class="text-danger">*</span></label>
+                  <input type="tel" id="regTelefono" class="form-control form-control-sm" maxlength="9" placeholder="Ej: 987654321" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                  <div class="form-text small" style="font-size:0.75rem;">Obligatorio (9 dígitos).</div>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label for="regDepartamento" class="form-label small fw-bold mb-1">Departamento:</label>
+                    <input type="text" id="regDepartamento" class="form-control form-control-sm" placeholder="Ej: Lima">
+                  </div>
+                  <div class="col-4">
+                    <label for="regProvincia" class="form-label small fw-bold mb-1">Provincia:</label>
+                    <input type="text" id="regProvincia" class="form-control form-control-sm" placeholder="Ej: Lima">
+                  </div>
+                  <div class="col-4">
+                    <label for="regDistrito" class="form-label small fw-bold mb-1">Distrito:</label>
+                    <input type="text" id="regDistrito" class="form-control form-control-sm" placeholder="Ej: Miraflores">
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label for="regCondicion" class="form-label small fw-bold mb-1">Condición: <span class="text-danger">*</span></label>
+                  <select id="regCondicion" class="form-select form-select-sm" onchange="toggleDetalleCondicion()">
+                    <option value="Sin condición especial">Sin condición especial</option>
+                    <option value="Adulto mayor">Adulto mayor</option>
+                    <option value="Discapacidad visual">Discapacidad visual</option>
+                    <option value="Discapacidad auditiva">Discapacidad auditiva</option>
+                    <option value="Discapacidad física">Discapacidad física</option>
+                    <option value="Otra">Otra</option>
+                  </select>
+                </div>
+
+                <div id="regDetalleCondicionWrap" class="mb-3" style="display:none;">
+                  <label for="regDetalleCondicion" class="form-label small fw-bold mb-1">Especifique su condición:</label>
+                  <input type="text" id="regDetalleCondicion" class="form-control form-control-sm" placeholder="Detalle de la condición">
+                </div>
+
+                <!-- Botón Único REGISTRAR -->
+                <button id="btnRegistrarFinal" type="button" class="btn btn-success w-100 py-3 fw-bold fs-5 mt-2 shadow-sm" style="border-radius:12px;" onclick="enviarRegistroPaciente()">
+                  REGISTRAR
+                </button>
+              </div>
             </div>
 
             <!-- Solicitud Previa Encontrada -->
@@ -602,21 +667,6 @@
                 <button class="btn btn-secondary w-50 fw-bold" onclick="salirSolicitudPaciente()">Salir</button>
                 <button class="btn btn-primary w-50 fw-bold" onclick="imprimirSolicitudPaciente()">Imprimir</button>
               </div>
-            </div>
-
-            <!-- Caja de Registro de Paciente Nuevo -->
-            <div id="registerBox" class="sunat-official-card" style="display:none; max-width:440px; margin:20px auto 0;">
-              <h4 class="fw-bold mb-2 fs-5 text-primary">Paciente no registrado</h4>
-              <p class="small text-muted mb-3">
-                Ingrese sus nombres y apellidos para asociar su cita médica.
-              </p>
-
-              <label class="form-label fw-bold small">Nombre y Apellido:</label>
-              <input id="fullNameInput" class="form-control mb-3 py-2" type="text" placeholder="Ejemplo: Carlos Mendoza Silva">
-
-              <button class="btn-use-sunat" onclick="registerNewPatient()">
-                Registrar y Continuar
-              </button>
             </div>
 
           </div>

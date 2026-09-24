@@ -102,9 +102,6 @@ function addDni(number) {
   if (dni.length < 8) {
     dni += number;
     updateDniDisplay();
-    if (dni.length === 8) {
-      buscarDatosSunatReniec(true);
-    }
   }
 }
 
@@ -132,20 +129,11 @@ function clearDni() {
   const box = document.getElementById("solicitudPacienteBox");
   if (box) box.style.display = "none";
 
-  const registerBox = document.getElementById("registerBox");
-  if (registerBox) {
-    registerBox.classList.remove("active");
-    registerBox.style.display = "none";
-  }
+  const noReg = document.getElementById("noRegistradoBox");
+  if (noReg) noReg.style.display = "none";
 
-  const fullNameInput = document.getElementById("fullNameInput");
-  if (fullNameInput) fullNameInput.value = "";
-  const btnAceptar = document.querySelector(".btn-primary");
-  if (btnAceptar) {
-    btnAceptar.disabled = false;
-    btnAceptar.style.opacity = "1";
-    btnAceptar.style.cursor = "pointer";
-  }
+  const secReg = document.getElementById("seccionRegistroPaciente");
+  if (secReg) secReg.style.display = "none";
 }
 
 function updateDniDisplay() {
@@ -156,31 +144,345 @@ function updateDniDisplay() {
   }
 }
 
-function confirmDniManual() {
-  if (dni.length !== 8) {
+// =========================================================================
+// FLUJO PACIENTE: 1. VALIDAR INGRESO CON BD LOCAL MYSQL
+// =========================================================================
+async function validarIngresoPaciente() {
+  if (!dni || dni.length !== 8) {
     showToast(t(
-      "El DNI debe tener 8 dígitos.",
-      "DNIqa pusaq yupayniyuq kanan."
+      "Por favor ingrese su DNI de 8 dígitos.",
+      "DNIqa pusaq yupayniyuq kanan. DNI yupaykita allinta churay."
     ));
 
     if (voiceActive) {
       speak(t(
-        "El DNI debe tener ocho dígitos. Ingrese su número de DNI correctamente.",
+        "Por favor ingrese su DNI de ocho dígitos para ingresar.",
         "DNIqa pusaq yupayniyuq kanan. DNI yupaykita allinta churay."
       ));
     }
-
     return;
   }
 
-  // Si ya tenemos el nombre verificado para este DNI, aceptar y continuar directamente
-  if (sunatUltimoResultado && sunatUltimoResultado.dni === dni) {
-    aceptarDatosSunat();
+  const noRegBox = document.getElementById("noRegistradoBox");
+  if (noRegBox) noRegBox.style.display = "none";
+  const secReg = document.getElementById("seccionRegistroPaciente");
+  if (secReg) secReg.style.display = "none";
+
+  const btnIngresar = document.getElementById("btnIngresarPaciente");
+  if (btnIngresar) {
+    btnIngresar.disabled = true;
+    btnIngresar.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Validando en IncluCita...`;
+  }
+
+  // Preparar endpoints para consultar el servlet LoginServlet
+  const servletUrls = ["login", "/login"];
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  if (pathParts.length > 0 && pathParts[0] !== "IncluCita.html") {
+    servletUrls.unshift(`/${pathParts[0]}/login`);
+  }
+
+  let respuestaJson = null;
+  for (const url of servletUrls) {
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          action: "validar_paciente",
+          dni: dni.trim(),
+          format: "json"
+        }).toString()
+      });
+      if (resp.ok) {
+        respuestaJson = await resp.json();
+        break;
+      }
+    } catch (e) {
+      // Intentar siguiente URL relativa
+    }
+  }
+
+  if (btnIngresar) {
+    btnIngresar.disabled = false;
+    btnIngresar.textContent = "INGRESAR";
+  }
+
+  // Verificar si la respuesta confirma que el paciente ya está registrado en la base de datos local
+  const estaRegistrado = respuestaJson && respuestaJson.success && 
+    (respuestaJson.registrado === true || (respuestaJson.data && respuestaJson.data.registrado === true));
+
+  if (estaRegistrado) {
+    const pData = (respuestaJson.data && respuestaJson.data.paciente) ? respuestaJson.data.paciente : (respuestaJson.paciente || {});
+    const nombre = pData.nombreCompleto || pData.nombre_completo || "Paciente";
+    patientFullName = nombre;
+    localStorage.setItem("dni", dni);
+    localStorage.setItem("patientFullName", patientFullName);
+    if (pData.condicion) {
+      localStorage.setItem("patientCondicion", pData.condicion);
+    }
+
+    showToast("✓ Bienvenido(a) " + patientFullName);
+
+    if (voiceActive) {
+      speak(t(
+        "Bienvenido " + patientFullName + ". Pasando a selección de especialidad.",
+        "Allin hamusqayki " + patientFullName + ". Kunan hampi especialidadta akllanki."
+      ), () => {
+        window.location.href = "especialidad.html";
+      });
+    } else {
+      setTimeout(() => {
+        window.location.href = "especialidad.html";
+      }, 400);
+    }
+  } else {
+    // El paciente NO está registrado en la base de datos local
+    const msg = "El DNI ingresado no se encuentra registrado en IncluCita.";
+    if (noRegBox) {
+      const txtEl = document.getElementById("noRegistradoMensaje");
+      if (txtEl) txtEl.textContent = msg;
+      noRegBox.style.display = "block";
+      noRegBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    showToast(msg);
+    if (voiceActive) {
+      speak("El DNI ingresado no se encuentra registrado en IncluCita. Presione el botón registrarme para crear su cuenta.");
+    }
+  }
+}
+
+// Mantener compatibilidad con llamadas por teclado (Enter)
+function confirmDniManual() {
+  validarIngresoPaciente();
+}
+
+// =========================================================================
+// FLUJO PACIENTE: 2. APERTURA Y FORMULARIO DE REGISTRO
+// =========================================================================
+function abrirFormularioRegistro() {
+  const noRegBox = document.getElementById("noRegistradoBox");
+  if (noRegBox) noRegBox.style.display = "none";
+
+  const secReg = document.getElementById("seccionRegistroPaciente");
+  if (!secReg) return;
+
+  secReg.style.display = "block";
+
+  const regDni = document.getElementById("regDniInput");
+  if (regDni) {
+    regDni.value = dni || "";
+    regDni.focus();
+  }
+
+  const verifBox = document.getElementById("datosVerificadosBox");
+  if (verifBox) verifBox.style.display = "none";
+
+  const complBox = document.getElementById("datosCompletarBox");
+  if (complBox) complBox.style.display = "none";
+
+  const fb = document.getElementById("regDniFeedback");
+  if (fb) fb.innerHTML = "";
+
+  secReg.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+  if (voiceActive) {
+    speak("Registro de paciente. Presione verificar DNI para consultar sus datos en RENIEC.");
+  }
+}
+
+function cancelarRegistroPaciente() {
+  const secReg = document.getElementById("seccionRegistroPaciente");
+  if (secReg) secReg.style.display = "none";
+}
+
+let datosRegistroVerificados = null;
+
+// =========================================================================
+// FLUJO PACIENTE: 3. VERIFICAR DNI CON API OFICIAL (RENIEC / DECOLECTA)
+// =========================================================================
+async function verificarDniRegistro() {
+  const inputDni = document.getElementById("regDniInput");
+  const fb = document.getElementById("regDniFeedback");
+  const num = inputDni ? inputDni.value.trim() : "";
+
+  if (num.length !== 8) {
+    if (fb) fb.innerHTML = `<span class="text-danger fw-bold">El DNI debe tener 8 dígitos numéricos.</span>`;
+    showToast("El DNI debe tener 8 dígitos.");
     return;
   }
 
-  // Si aún no se completó la búsqueda, ejecutarla
-  buscarDatosSunatReniec(false);
+  if (fb) {
+    fb.innerHTML = `<div class="spinner-border spinner-border-sm text-primary" role="status"></div> ` +
+                   `<span class="fw-semibold text-muted">Consultando identidad en RENIEC...</span>`;
+  }
+
+  const btnVerif = document.getElementById("btnVerificarDniApi");
+  if (btnVerif) btnVerif.disabled = true;
+
+  try {
+    const datosApi = await consultarApiDecolecta(num);
+    if (btnVerif) btnVerif.disabled = false;
+
+    if (datosApi && (datosApi.nombres || datosApi.nombreCompleto)) {
+      datosRegistroVerificados = datosApi;
+      const elDni = document.getElementById("regDniVerif");
+      const elNom = document.getElementById("regNombres");
+      const elPat = document.getElementById("regPaterno");
+      const elMat = document.getElementById("regMaterno");
+      const elCom = document.getElementById("regNombreCompleto");
+
+      if (elDni) elDni.value = num;
+      if (elNom) elNom.value = datosApi.nombres || "";
+      if (elPat) elPat.value = datosApi.paterno || "";
+      if (elMat) elMat.value = datosApi.materno || "";
+      const nombreCompleto = datosApi.nombreCompleto || `${datosApi.nombres || ""} ${datosApi.paterno || ""} ${datosApi.materno || ""}`.trim();
+      if (elCom) elCom.value = nombreCompleto;
+
+      const verifBox = document.getElementById("datosVerificadosBox");
+      if (verifBox) verifBox.style.display = "block";
+
+      const complBox = document.getElementById("datosCompletarBox");
+      if (complBox) complBox.style.display = "block";
+
+      if (fb) fb.innerHTML = `<span class="text-success fw-bold">✓ Datos oficiales obtenidos con éxito.</span>`;
+      showToast("✓ Datos oficiales obtenidos con éxito");
+
+      if (voiceActive) {
+        speak("Identidad verificada: " + nombreCompleto + ". Complete sus datos de contacto y condición para registrarse.");
+      }
+    } else {
+      if (fb) fb.innerHTML = `<span class="text-danger fw-bold">No se encontró el DNI en el padrón oficial de RENIEC.</span>`;
+      showToast("No se encontró información en RENIEC.");
+      if (voiceActive) {
+        speak("No se encontró el DNI en el padrón de RENIEC. Verifique el número ingresado.");
+      }
+    }
+  } catch (err) {
+    if (btnVerif) btnVerif.disabled = false;
+    if (fb) fb.innerHTML = `<span class="text-danger fw-bold">Error de comunicación con el servicio de DNI.</span>`;
+    showToast("Error al consultar el servicio de DNI.");
+  }
+}
+
+function toggleDetalleCondicion() {
+  const sel = document.getElementById("regCondicion");
+  const wrap = document.getElementById("regDetalleCondicionWrap");
+  if (sel && wrap) {
+    wrap.style.display = (sel.value === "Otra") ? "block" : "none";
+  }
+}
+
+// =========================================================================
+// FLUJO PACIENTE: 4. BOTÓN ÚNICO "REGISTRAR" -> GUARDAR EN MYSQL
+// =========================================================================
+async function enviarRegistroPaciente() {
+  if (!datosRegistroVerificados) {
+    showToast("Primero debe verificar su DNI con el botón 'VERIFICAR DNI'.");
+    return;
+  }
+
+  const dniVal = (document.getElementById("regDniVerif")?.value || "").trim();
+  const nombreVal = (document.getElementById("regNombreCompleto")?.value || "").trim();
+  const emailVal = (document.getElementById("regEmail")?.value || "").trim();
+  const telVal = (document.getElementById("regTelefono")?.value || "").trim();
+  const deptoVal = (document.getElementById("regDepartamento")?.value || "").trim();
+  const provVal = (document.getElementById("regProvincia")?.value || "").trim();
+  const distVal = (document.getElementById("regDistrito")?.value || "").trim();
+  const condVal = (document.getElementById("regCondicion")?.value || "Sin condición especial").trim();
+  const detCondVal = (document.getElementById("regDetalleCondicion")?.value || "").trim();
+
+  // Validaciones estrictas
+  if (!emailVal || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailVal)) {
+    showToast("Por favor ingrese un correo electrónico válido.");
+    document.getElementById("regEmail")?.focus();
+    return;
+  }
+
+  if (!telVal || !/^9\d{8}$/.test(telVal)) {
+    showToast("Por favor ingrese un número de celular válido de 9 dígitos (debe empezar con 9).");
+    document.getElementById("regTelefono")?.focus();
+    return;
+  }
+
+  if (condVal === "Otra" && !detCondVal) {
+    showToast("Por favor detalle su condición en el campo correspondiente.");
+    document.getElementById("regDetalleCondicion")?.focus();
+    return;
+  }
+
+  const btnReg = document.getElementById("btnRegistrarFinal");
+  if (btnReg) {
+    btnReg.disabled = true;
+    btnReg.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Registrando en IncluCita...`;
+  }
+
+  const servletUrls = ["login", "/login"];
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  if (pathParts.length > 0 && pathParts[0] !== "IncluCita.html") {
+    servletUrls.unshift(`/${pathParts[0]}/login`);
+  }
+
+  const params = new URLSearchParams({
+    action: "registrar_paciente",
+    dni: dniVal,
+    nombreCompleto: nombreVal,
+    email: emailVal,
+    telefono: telVal,
+    departamento: deptoVal,
+    provincia: provVal,
+    distrito: distVal,
+    condicion: condVal,
+    detalleCondicion: detCondVal,
+    format: "json"
+  });
+
+  let respuestaJson = null;
+  for (const url of servletUrls) {
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
+      });
+      if (resp.ok) {
+        respuestaJson = await resp.json();
+        break;
+      }
+    } catch (e) {}
+  }
+
+  if (btnReg) {
+    btnReg.disabled = false;
+    btnReg.textContent = "REGISTRAR";
+  }
+
+  if (respuestaJson && respuestaJson.success) {
+    // Mensaje estipulado: "Registro realizado correctamente. Ahora puede ingresar con su DNI."
+    const mensajeExito = "Registro realizado correctamente. Ahora puede ingresar con su DNI.";
+
+    // Ocultar sección de registro y panel de no registrado
+    cancelarRegistroPaciente();
+    const noRegBox = document.getElementById("noRegistradoBox");
+    if (noRegBox) noRegBox.style.display = "none";
+
+    // Regresar al estado de ingreso con el DNI digitado listo en pantalla
+    dni = dniVal;
+    updateDniDisplay();
+
+    actualizarBadgeDni(
+      `<span style="color:#0fa998; font-weight:bold; font-size:0.95rem;">✓ ` +
+      `<span>${mensajeExito}</span></span>`
+    );
+
+    showToast("✓ " + mensajeExito);
+    if (voiceActive) {
+      speak(mensajeExito);
+    }
+  } else {
+    const errorMsg = (respuestaJson && respuestaJson.mensaje) ? respuestaJson.mensaje : "Error al registrar el paciente en IncluCita.";
+    showToast(errorMsg);
+    if (voiceActive) speak(errorMsg);
+  }
 }
 
 let sunatUltimoResultado = null;
@@ -191,8 +493,10 @@ function limpiarAutoDni() {
   if (badge) badge.style.display = "none";
   const box = document.getElementById("sunatResultBox");
   if (box) box.style.display = "none";
-  const reg = document.getElementById("registerBox");
-  if (reg) reg.style.display = "none";
+  const noReg = document.getElementById("noRegistradoBox");
+  if (noReg) noReg.style.display = "none";
+  const secReg = document.getElementById("seccionRegistroPaciente");
+  if (secReg) secReg.style.display = "none";
   sunatUltimoResultado = null;
 }
 
